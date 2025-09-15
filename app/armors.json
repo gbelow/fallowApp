@@ -1,0 +1,32 @@
+{
+  "Skin": {
+    "name": "Skin",
+    "RES": 0,
+    "TEN":0,
+    "INS":0,
+    "prot":0,
+    "cover":0,
+    "penalty":0,
+    "type": "light"
+  },
+  "Gambeson":{
+    "name": "Gambeson",
+    "RES": 50,
+    "TEN":5,
+    "INS":6,
+    "prot":5,
+    "cover":10,
+    "penalty":1,
+    "type": "light"
+  },
+  "Brigandine":{
+    "name": "Brigandine",
+    "RES": 50,
+    "TEN":20,
+    "INS":8,
+    "prot":12,
+    "cover":12,
+    "penalty":3,
+    "type": "medium"
+  }
+}
