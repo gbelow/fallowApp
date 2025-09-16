@@ -51,11 +51,11 @@ export function PlayPanel({mode}:{mode: string}){
 
   }, [currentCharacter, characters])
 
-  const updateResource = (rssName: string, value: any) => {
+  const updateResource = (rssName: string, value: number|string|object) => {
     setCurrentCharacter((prev) => (prev ? {...prev, resources: {...prev?.resources, [rssName]: value }} : undefined))
   }
 
-  const updateInjury = (val:number, ind:number, type: 'light' | 'mid' | 'dead') => {
+  const updateInjury = (val:number|string, ind:number, type: 'light' | 'mid' | 'dead') => {
     const injs = currentCharacter?.resources.injuries[type]
     if(injs){
       const newInjs = injs.map((el: number, index: number) => index == ind ? val : el )
@@ -150,7 +150,7 @@ export function PlayPanel({mode}:{mode: string}){
     }
   }
 
-  const updatePenalty = (value: number, name: string) => {
+  const updatePenalty = (value: number | string, name: string) => {
     if(currentCharacter){
       const skills = {...currentCharacter.skills}
       const pens = {...currentCharacter.resources.penalties, [name]: value}
@@ -282,7 +282,7 @@ export function PlayPanel({mode}:{mode: string}){
               <SimpleSkill name={'reflex'} value={currentCharacter.resources.skills['reflex']}/>
               <SimpleSkill name={'block'} value={currentCharacter.resources.skills['block']}/>
               <SimpleSkill name={'grapple'} value={currentCharacter.resources.skills['grapple']}/>
-              <SimpleSkill name={'DP'} value={8-MHArr[(currentCharacter.size-1) ?? 3]*2}/>
+              <SimpleSkill name={'DP'} value={8-MHArr[(currentCharacter.size-1) ]*2}/>
             </div>
             <div className='flex flex-row gap-2 justify-center'>
               <SimpleSkill name={'balance'} value={currentCharacter.resources.skills['balance']}/>
@@ -321,7 +321,7 @@ export function PlayPanel({mode}:{mode: string}){
   )
 }
 
-function Injury({cures, setRss, type}: {cures: number, type:string, setRss: (val:any) => void }){
+function Injury({cures, setRss, type}: {cures: number, type:string, setRss: (val:string | number) => void }){
   const step = type == 'light' ? 2 : type == 'mid' ? 10 : type == 'dead' ? 20 : 1
   return(
     <div className={'flex flex-col border rounded-full text-center p-1 w-12 h-12 text-center items-center justify-center '+(cures>0 ? 'bg-red-600' : null)}>
@@ -331,7 +331,7 @@ function Injury({cures, setRss, type}: {cures: number, type:string, setRss: (val
   )
 }
 
-function SimpleResource({name, value, setRss}: {name: string, value: number, setRss: (val:any) => void }){
+function SimpleResource({name, value, setRss}: {name: string, value: number, setRss: (val:string | number) => void }){
 
   return(
     <div className='flex flex-row border rounded text-center justify-around p-1 w-16 overflow-hidden'>
