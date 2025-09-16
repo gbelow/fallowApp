@@ -194,7 +194,7 @@ export function App(){
           {/* <input className={'p-1 w-full hover:bg-gray-500 '+ (selectedPage == 'Select' ? 'bg-white text-black' : '')} type={'button'} aria-label={'head_select'} value={'Select'} onClick={() => setSelectedPage('Select')}/> */}
           <input className={'py-1 rounded px-2 hover:bg-gray-500 '+ (selectedPage == 'Character' ? 'bg-white text-black' : '')} type={'button'} aria-label={'head_char'} value={'Character'} onClick={() => setSelectedPage('Character')}/>
           <input className={'py-1 rounded px-2 hover:bg-gray-500 '+ (selectedPage == 'Play' ? 'bg-white text-black' : '')} type={'button'} aria-label={'head_play'} value={'Play'} onClick={() => setSelectedPage('Play')}/>
-          <input className={'py-1 rounded px-2 hover:bg-gray-500 '+ (selectedPage == 'Run' ? 'bg-white text-black' : '')} type={'button'} aria-label={'head_play'} value={'Run'} onClick={() => setSelectedPage('Run')}/>
+          <input className={'py-1 rounded px-2 hover:bg-gray-500 hidden md:block '+ (selectedPage == 'Run' ? 'bg-white text-black' : '')} type={'button'} aria-label={'head_play'} value={'Run'} onClick={() => setSelectedPage('Run')}/>
         </div>
       </header>
 

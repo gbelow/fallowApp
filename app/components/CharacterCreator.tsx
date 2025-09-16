@@ -129,11 +129,12 @@ export function CharacterCreator() {
   const resetSkills = () => setSkills(skillsList)
 
   const StatDial = ({natStat, stat, setStat, title}:{natStat: number, stat: number, setStat: React.Dispatch<React.SetStateAction<number>>, title: string}) => {
+    const [val, setVal] = useState(stat+'')
 
     return(
       <div className='flex flex-col w-10 md:w-16 overflow-hidden'>
         <label>{title}</label>
-        <input className='p-1 border border-white rounded w-10 md:w-16 text-center' title={title} type='number' inputMode="numeric" value={stat} onChange={(e) => setStat((isNaN(parseInt(e.target.value)) ? 0 :parseInt(e.target.value))-stat+natStat)} />
+        <input className='p-1 border border-white rounded w-10 md:w-16 text-center' title={title} type='number' inputMode="numeric" value={val} onChange={(e) => setVal(e.target.value)} onBlur={() => setStat((isNaN(parseInt(val)) ? 0 :parseInt(val))-stat+natStat)} />
       </div>
     )
   }
