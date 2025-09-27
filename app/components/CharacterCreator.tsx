@@ -5,7 +5,7 @@ import bus from "../eventBus";
 import baseArmor from '../baseArmor.json'
 import baseWeapon from '../baseWeapon.json'
 import { deleteCharacter, saveCharacter } from '../actions';
-import { MHArr, dmgArr, skillsList, CharacterType, ArmorType, WeaponType, SkillsListKeys, SkillsList } from '../types';
+import { MHArr, dmgArr, skillsList, CharacterType, ArmorType, WeaponType, SkillsListKeys, SkillsList, movementList } from '../types';
 import { scaleArmor } from './utils';
 import { WeaponPanel } from './WeaponPanel';
 import { ArmorPanel } from './ArmorPanel';
@@ -50,6 +50,7 @@ export function CharacterCreator() {
   const [hasGauntlets, setHasGauntlets ] = useState(0)
   const [hasHelm, setHasHelm ] = useState(0)
 
+  const [movement, setMovement] = useState(movementList) 
   const [skills, setSkills] = useState(skillsList) 
   const [armor, setArmor] = useState(baseArmor) 
   const [scaledArmor, setScaledArmor] = useState(baseArmor) 
@@ -57,11 +58,12 @@ export function CharacterCreator() {
 
   const [notes, setNotes ] = useState('')
 
-  const handleSaveCharacterClick = async () => {
+  const makeCharacter = () => {
     const character: CharacterType = {
       name,
       size, 
       attributes:{STR, AGI, CON, INT, POW, PER},
+      movement,
       natSTR,
       natAGI,
       natCON,
@@ -86,6 +88,16 @@ export function CharacterCreator() {
       skills,
       notes
     }
+    return character
+  }
+
+  const handleLogCharacterClick =() => {
+    const character: CharacterType = makeCharacter()
+    console.log(character)
+  }
+
+  const handleSaveCharacterClick = async () => {
+    const character: CharacterType = makeCharacter()
 
     await saveCharacter(character)
   }
@@ -97,7 +109,6 @@ export function CharacterCreator() {
   }
 
   const loadCharacter = (payload: {character: CharacterType}) => {
-    console.log(payload.character)
 
     setName(payload.character.name)
     setSize(payload.character.size)
@@ -127,17 +138,6 @@ export function CharacterCreator() {
   }
 
   const resetSkills = () => setSkills(skillsList)
-
-  const StatDial = ({natStat, stat, setStat, title}:{natStat: number, stat: number, setStat: React.Dispatch<React.SetStateAction<number>>, title: string}) => {
-    const [val, setVal] = useState(stat+'')
-
-    return(
-      <div className='flex flex-col w-10 md:w-16 overflow-hidden'>
-        <label>{title}</label>
-        <input className='p-1 border border-white rounded w-10 md:w-16 text-center' title={title} type='number' inputMode="numeric" value={val} onChange={(e) => setVal(e.target.value)} onBlur={() => setStat((isNaN(parseInt(val)) ? 0 :parseInt(val))-stat+natStat)} />
-      </div>
-    )
-  }
 
   const resetAll = () => {
     resetSkills()
@@ -196,7 +196,6 @@ export function CharacterCreator() {
   },[])
 
   
-
   // size, race, abilities, armor penalties, injuries, movements, AP, STA, STA regen
   return (
     <div className='grid grid-col-1 md:grid-cols-12 w-full px-1'>
@@ -208,6 +207,7 @@ export function CharacterCreator() {
             <label htmlFor="name" className='font-bold'>Nome: </label>
             <input id='name' className='border rounded p-1 w-64' type='text' value={name} onChange={(e)=> setName(e.target.value)} />
             <input id='del' className='border rounded bg-red-700 w-12 p-1' type='button' value={'delete'} onClick={()=> setShowConfirm(true)} />
+            <input id='log' className='border rounded w-12 p-1' type='button' value={'log'} onClick={handleLogCharacterClick} />
           </div>
         <div className='flex flex-row gap-2 justify-center'>
           <div>PA: {AGI-(armor.type == "medium" ? 1 : armor.type == "heavy" ? 2 : 0)}</div>
@@ -215,6 +215,18 @@ export function CharacterCreator() {
           <div>STA regen: {Math.floor(CON/3)}</div>
           <div>Ferimentos leves: {Math.floor(CON/2)}</div>
           <div>Ferimentos sérios: {Math.floor(CON/5)}</div>
+        </div>
+        <div className='flex flex-row gap-2 justify-center'>
+          <TextItem stat={movement.basic} setStat={(val)=> setMovement({...movement, basic:val})} title={'basic (1PA)'} />
+          <TextItem stat={movement.careful} setStat={(val)=> setMovement({...movement, careful:val})} title={'care (1PA)'} />
+          <TextItem stat={movement.crawl} setStat={(val)=> setMovement({...movement, crawl:val})} title={'crawl (1PA)'} />
+          <TextItem stat={movement.run} setStat={(val)=> setMovement({...movement, run:val})} title={'run (2PA +1STA)'} />
+        </div>
+        <div className='flex flex-row gap-2 justify-center'>
+          <TextItem stat={movement.swim} setStat={(val)=> setMovement({...movement, swim:val})} title={'swim (1PA)'} />
+          <TextItem stat={movement['fast swim']} setStat={(val)=> setMovement({...movement, "fast swim":val})} title={'fast swim (1PA+1STA)'} />
+          <TextItem stat={movement.jump} setStat={(val)=> setMovement({...movement, jump:val})} title={'jump (1PA+1STA)'} />
+          <TextItem stat={movement.stand} setStat={(val)=> setMovement({...movement, stand:val})} title={'stand up'} />
         </div>
         <div className='flex flex-row gap-2 justify-center'>
           <StatDial stat={STR} natStat={natSTR} setStat={setNatSTR} title={'FOR'} />
@@ -284,7 +296,7 @@ export function CharacterCreator() {
       </div>
       <div className='flex flex-col text-center md:col-span-5  items-center mx-2 gap-2'>
         <ArmorPanel RESnat={RESnat} INSnat={INSnat} TENnat={TENnat} scaledArmor={scaledArmor} />
-        <WeaponPanel characterWeapons={characterWeapons} setCharacterWeapons={setCharacterWeapons}/>
+        <WeaponPanel characterWeapons={characterWeapons} setCharacterWeapons={setCharacterWeapons} STR={STR}/>
       </div>
       {showConfirm && (
         <div className="fixed inset-0 flex items-center justify-center bg-black w-64 h-32 m-auto">
@@ -338,6 +350,28 @@ const SkillItem = ({statName, calculatedValue, title, skills, setSkills}:{statNa
       <label>{title.slice(0,10)}</label>
       <input className='p-1 border border-white rounded w-10 md:w-16 text-center' title={title} type='number' inputMode="numeric" value={val} onChange={(e) => setSkills({...skills, [statName]:parseInt(e.target.value)})} />
       <button type='button' className='text-xs bg-gray-800 border' onClick={() => setSkills({...skills, [statName]: calculatedValue})}>Reset</button>
+    </div>
+  )
+}
+
+const StatDial = ({natStat, stat, setStat, title}:{natStat: number, stat: number, setStat: React.Dispatch<React.SetStateAction<number>>, title: string}) => {
+  const [val, setVal] = useState(stat+'')
+
+  return(
+    <div className='flex flex-col w-10 md:w-16 overflow-hidden'>
+      <label>{title}</label>
+      <input className='p-1 border border-white rounded w-10 md:w-16 text-center' title={title} type='number' inputMode="numeric" value={val} onChange={(e) => setVal(e.target.value)} onBlur={() => setStat((isNaN(parseInt(val)) ? 0 :parseInt(val))-stat+natStat)} />
+    </div>
+  )
+}
+
+const TextItem = ({stat, setStat, title}:{stat: string, setStat: (val:string) => void, title: string}) => {
+  const [val, setVal] = useState(stat)
+
+  return(
+    <div className='flex flex-col w-20 md:w-20 overflow-hidden justify-center align-center content-center text-center'>
+      <label>{title}</label>
+      <input className='p-1 border border-white rounded w-16 text-center' title={title} type='text'  value={val} onChange={(e) => setVal(e.target.value)} onBlur={() => setStat(val)} />
     </div>
   )
 }

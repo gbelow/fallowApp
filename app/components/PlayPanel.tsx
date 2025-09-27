@@ -96,7 +96,7 @@ export function PlayPanel({mode}:{mode: string}){
     const handleEquipWeaponClick = (payload: {weapon: WeaponType}) => {
       updateResource('equippedWeapons', {...currentCharacter?.resources.equippedWeapons, [payload.weapon.name+payload.weapon.scale]:payload.weapon} )
     }
-
+ 
     bus.on("select-character", handleSelectCharacterClick);
     bus.on("equip-weapon", handleEquipWeaponClick);
     
@@ -108,15 +108,17 @@ export function PlayPanel({mode}:{mode: string}){
 
   const startTurn = () => {
     if(currentCharacter?.resources.turnToken){
-      const charKeys = Object.keys(characters)
-      const newChars = {...characters}
-      charKeys.forEach(el => newChars[el].resources.isPlaying = false)
-      newChars[currentCharacter?.resources.fightName].resources.isPlaying = true
-      newChars[currentCharacter?.resources.fightName].resources.turnToken = false
-      newChars[currentCharacter?.resources.fightName].resources.turn = turnCounter  
-      setCharacters(newChars)
+      if(mode == 'run'){
+        const charKeys = Object.keys(characters)
+        const newChars = {...characters}
+        charKeys.forEach(el => newChars[el].resources.isPlaying = false)
+        newChars[currentCharacter?.resources.fightName].resources.isPlaying = true
+        newChars[currentCharacter?.resources.fightName].resources.turnToken = false
+        newChars[currentCharacter?.resources.fightName].resources.turn = turnCounter  
+        setCharacters(newChars)
+        setTurnCounter(turnCounter+1)
+      }
       setCurrentCharacter({...currentCharacter, resources: {...currentCharacter.resources, isPlaying: true, turnToken: false, turn: turnCounter, PA: Math.min(currentCharacter.resources.PA+currentCharacter.attributes.AGI, currentCharacter.attributes.AGI)}})
-      setTurnCounter(turnCounter+1)
     }
   }
   
@@ -312,7 +314,7 @@ export function PlayPanel({mode}:{mode: string}){
               <SimpleSkill name={'TEN nat'} value={currentCharacter.TENnat}/>
               <SimpleSkill name={'INS nat'} value={currentCharacter.INSnat}/>
             </div>
-            <WeaponPanel characterWeapons={currentCharacter.resources.equippedWeapons} setCharacterWeapons={(val)=> updateResource('equippedWeapons', val)} />
+            <WeaponPanel characterWeapons={currentCharacter.resources.equippedWeapons} setCharacterWeapons={(val)=> updateResource('equippedWeapons', val)} STR={currentCharacter.attributes.STR}/>
           </div>
         </div>
         : null

@@ -32,6 +32,16 @@
     "will": 10,
     "cunning": 10
   },
+  "movement": {
+    "basic":"1m",
+    "careful":"0.5m",
+    "crawl":"0.33m",
+    "run":"6m",
+    "jump":"2m",
+    "swim":"0.33m",
+    "fast swim":"0.5m",
+    "stand":"2PA"
+  },
   "name": "Humano",
   "size": 3,
   "natSTR": 10,
@@ -60,28 +70,28 @@
       "penalty": 0,
       "scale": 3,
       "attacks": [
-          {
-              "impact": 0,
-              "heavyMod": 0,
-              "penMod": 0,
-              "range": "short",
-              "RES": 20,
-              "TEN": 20,
-              "PA": 2,
-              "deflection": 0,
-              "props": "agarrar, sacar"
-          },
-          {
-              "impact": 4,
-              "heavyMod": 0.5,
-              "penMod": 0.2,
-              "range": "short",
-              "RES": 20,
-              "TEN": 20,
-              "PA": 2,
-              "deflection": 0,
-              "props": "pesado I, sacar"
-          }
+        {
+            "impact": 0,
+            "heavyMod": 0,
+            "penMod": 0,
+            "range": "short",
+            "RES": 20,
+            "TEN": 20,
+            "PA": 2,
+            "deflection": 0,
+            "props": "agarrar, sacar"
+        },
+        {
+            "impact": 4,
+            "heavyMod": 0.5,
+            "penMod": 0.2,
+            "range": "short",
+            "RES": 20,
+            "TEN": 20,
+            "PA": 2,
+            "deflection": 0,
+            "props": "pesado I, sacar"
+        }
       ]
     }
   },

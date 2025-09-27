@@ -142,3 +142,16 @@ export type CharResourcestype = typeof charResources
 export type ActiveCharType = CharacterType & {
   resources: CharResourcestype
 }
+
+export const movementList = {
+  "basic":"1m",
+  "careful":"0.5m",
+  "crawl":"0.33m",
+  "run":"6m",
+  "jump":"2m",
+  "swim":"0.33m",
+  "fast swim":"0.5m",
+  "stand":"2PA"
+}
+
+export type MovementTypes = typeof movementList

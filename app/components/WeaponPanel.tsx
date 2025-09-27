@@ -2,7 +2,7 @@
 
 import { WeaponType } from "../types";
 
-export function WeaponPanel({characterWeapons, setCharacterWeapons}:{characterWeapons: {[key:string]: WeaponType}, setCharacterWeapons?: React.Dispatch<React.SetStateAction<{[key:string]: WeaponType}>> }){
+export function WeaponPanel({characterWeapons, setCharacterWeapons, STR=10}:{characterWeapons: {[key:string]: WeaponType}, setCharacterWeapons?: React.Dispatch<React.SetStateAction<{[key:string]: WeaponType}>>, STR:number }){
 
   return(
     <div className='flex flex-col justify-center w-84 md:w-full'>
@@ -17,12 +17,6 @@ export function WeaponPanel({characterWeapons, setCharacterWeapons}:{characterWe
                     {
                       setCharacterWeapons ?
                       <>
-                        {/* <input aria-label={key} type='number' value={el.scale} onChange={
-                          (val) => { 
-                            const weap = scaleWeapon(weapons[typedKey], parseInt(val.target.value))
-                            setCharacterWeapons(weap ? {...characterWeapons, [key]: weap } : characterWeapons)
-                          }
-                        } className='border rounded p-1 w-12' /> */}
                         <span>Tamanho: {el.scale}</span>
                         <input type='button' value='unequip' onClick={() => { const {[key]: _ , ...rest } = characterWeapons; setCharacterWeapons(rest)}} className='border rounded p-1' />
                       </> :
@@ -46,7 +40,7 @@ export function WeaponPanel({characterWeapons, setCharacterWeapons}:{characterWe
                           <tr key={el+index.toString()}>
                             <td>{atk.RES}</td>
                             <td>{atk.TEN}</td>
-                            <td>{atk.impact+ '/' +Math.floor(atk.impact*atk.penMod)}</td>
+                            <td>{atk.impact+(atk.heavyMod ? '+'+ Math.floor(atk.heavyMod*STR) : '') + '/' +Math.floor(atk.impact*atk.penMod)+(atk.heavyMod ? '+'+Math.floor(atk.heavyMod*atk.penMod*STR) : '')}</td>
                             <td>{atk.PA}</td>
                             <td>{atk.range}</td>
                             <td>{atk.props}</td>
