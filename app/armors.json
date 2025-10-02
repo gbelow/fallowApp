@@ -16,7 +16,7 @@
     "INS":6,
     "prot":5,
     "cover":10,
-    "penalty":1,
+    "penalty":0,
     "type": "light"
   },
   "Brigandine":{
@@ -26,7 +26,7 @@
     "INS":8,
     "prot":12,
     "cover":12,
-    "penalty":3,
+    "penalty":2,
     "type": "medium"
   }
 }
