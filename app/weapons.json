@@ -37,12 +37,12 @@
     "attacks":[
       {
         "impact": 6,
-        "heavyMod": 0.5,
+        "heavyMod": 0,
         "penMod": 2,
         "range": "short",
         "RES": 20,
         "TEN": 20,
-        "PA": 2,
+        "PA": 3,
         "deflection":0,        
         "props": "DEF, sacar, preciso"
       }
@@ -61,9 +61,28 @@
         "range": "short",
         "RES": 20,
         "TEN": 40,
-        "PA": 2,
+        "PA": 3,
         "deflection":0,
         "props": "DEF, pesado I, preciso "
+      }
+    ]
+  },
+  "Wooden shield":{
+    "name": "Escudo de madeira",
+    "handed":"one", 
+    "penalty":1,
+    "scale":3,
+    "attacks":[
+      {
+        "impact": 6,
+        "heavyMod": 0.5,
+        "penMod": 0.2,
+        "range": "short",
+        "RES": 50,
+        "TEN": 30,
+        "PA": 3,
+        "deflection":3,
+        "props": "DEF, pesado I"
       }
     ]
   }

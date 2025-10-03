@@ -51,11 +51,11 @@
           "basic":"1m",
           "careful":"0.5m",
           "crawl":"0.33m",
-          "run":"5m",
-          "jump":"2m",
+          "run":0,
+          "jump":0,
           "swim":"0.33m",
           "fast swim":"0.5m",
-          "stand":"3PA"
+          "stand":0
         },
         "name": "Humano",
         "size": 3,

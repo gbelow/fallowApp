@@ -50,6 +50,7 @@ export function CharacterCreator() {
   const [characterWeapons, setCharacterWeapons] = useState({[baseWeapon.name]:baseWeapon}) 
 
   const [notes, setNotes ] = useState('')
+  const [packItems, setPackItems ] = useState('')
 
   const makeCharacter = () => {
     const character: CharacterType = {
@@ -80,7 +81,8 @@ export function CharacterCreator() {
       characterWeapons,
       armor,
       skills,
-      notes
+      notes,
+      packItems
     }
     return character
   }
@@ -133,6 +135,7 @@ export function CharacterCreator() {
     setArmor(payload.character.armor)
     setSkills(payload.character.skills)
     setNotes(payload.character.notes)
+    setPackItems(payload.character.packItems)
   }
 
   const resetSkills = () => setSkills(skillsList)
@@ -211,13 +214,14 @@ export function CharacterCreator() {
           <TextItem stat={movement.basic} setStat={(val)=> setMovement({...movement, basic:val})} title={'basic (1PA)'} />
           <TextItem stat={movement.careful} setStat={(val)=> setMovement({...movement, careful:val})} title={'care (1PA)'} />
           <TextItem stat={movement.crawl} setStat={(val)=> setMovement({...movement, crawl:val})} title={'crawl (1PA)'} />
-          <TextItem stat={movement.run} setStat={(val)=> setMovement({...movement, run:val})} title={'run (2PA )'} />
+          {/* <TextItem stat={movement.run} setStat={(val)=> setMovement({...movement, run:val})} title={'run (2PA )'} /> */}
+          <Movementinput stat={movement.run} calculatedValue={Math.floor((AGI-gearPen)/2)} setStat={(val)=> setMovement({...movement, run:val})} title={'run (2PA )'} />
         </div>
         <div className='flex flex-row gap-2 justify-center'>
           <TextItem stat={movement.swim} setStat={(val)=> setMovement({...movement, swim:val})} title={'swim (1PA)'} />
           <TextItem stat={movement['fast swim']} setStat={(val)=> setMovement({...movement, "fast swim":val})} title={'fast swim (1PA+1STA)'} />
-          <TextItem stat={movement.jump} setStat={(val)=> setMovement({...movement, jump:val})} title={'jump (1PA+1STA)'} />
-          <TextItem stat={movement.stand} setStat={(val)=> setMovement({...movement, stand:val})} title={'stand up'} />
+          <Movementinput stat={movement.jump} calculatedValue={Math.floor((AGI-gearPen)/4)} setStat={(val)=> setMovement({...movement, jump:val})} title={'jump (1PA+1STA)'} />
+          <Movementinput stat={movement.stand} calculatedValue={5-Math.floor((AGI-gearPen)/5)} setStat={(val)=> setMovement({...movement, stand:val})} title={'stand up'} />
         </div>
         <div className='flex flex-row gap-2 justify-center'>
           <StatDial stat={STR} natStat={STR} setStat={setSTR} title={'FOR'} />
@@ -296,6 +300,8 @@ export function CharacterCreator() {
       <div className='flex flex-col text-center md:col-span-5  items-center mx-2 gap-2'>
         <ArmorPanel RESnat={RESnat} INSnat={INSnat} TENnat={TENnat} scaledArmor={scaledArmor} />
         <WeaponPanel characterWeapons={characterWeapons} setCharacterWeapons={setCharacterWeapons} STR={STR}/>
+        <span>Items</span>
+        <textarea aria-label='pack' className='border rounded p-1 min-h-32 w-full' onChange={val => setPackItems(val.target.value)} value={packItems} />
       </div>
       {showConfirm && (
         <div className="fixed inset-0 flex items-center justify-center bg-black w-64 h-32 m-auto">
@@ -309,7 +315,7 @@ export function CharacterCreator() {
                 Cancel
               </button>
               <button
-                onClick={() => handleDeleteCharacterClick(name)}
+                onClick={() => {handleDeleteCharacterClick(name); setShowConfirm(false)}}
                 className="px-3 py-1 bg-red-500 text-white rounded"
               >
                 Confirm
@@ -372,6 +378,17 @@ const TextItem = ({stat, setStat, title}:{stat: string, setStat: (val:string) =>
     <div className='flex flex-col w-20 md:w-20 overflow-hidden justify-center align-center content-center text-center'>
       <label className='text-xs'>{title}</label>
       <input className='p-1 border border-white rounded w-16 text-center' title={title} type='text'  value={val} onChange={(e) => setVal(e.target.value)} onBlur={() => setStat(val)} />
+    </div>
+  )
+}
+
+function Movementinput  ({stat, setStat, calculatedValue, title}:{stat: number, calculatedValue: number, setStat: (val:number) => void, title: string}){
+  const [val, setVal] = useState(stat)
+
+  return(
+    <div className='flex flex-col w-20 md:w-20 overflow-hidden justify-center align-center content-center text-center'>
+      <label className='text-xs'>{title}</label>
+      <input className='p-1 border border-white rounded w-16 text-center' title={title} type='number'  value={val+calculatedValue} onChange={(e) => setVal(parseInt(e.target.value)-calculatedValue)} onBlur={() => setStat(val)} />
     </div>
   )
 }

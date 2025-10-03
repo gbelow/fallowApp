@@ -142,9 +142,9 @@ const afflictions: {[key:string]: AfflictionItemType} = {
   distracted: {isActive: false, controlable: true},
   dominated: {isActive: false, controlable: true},
   
-  weakened: {isActive: false, health: 1, controlable: true},
+  weakened: {isActive: false, health: 2, controlable: true},
   malnourished: {isActive: false, health: 2, controlable: true},
-  thirsty: {isActive: false, health: 1, controlable: true},
+  thirsty: {isActive: false, health: 2, controlable: true},
   dehydrated: {isActive: false, health: 2, controlable: true},
   tired: {isActive: false, mental: 1, controlable: true},
   exhausted: {isActive: false, mental: 2, controlable: true},
@@ -169,7 +169,7 @@ export const charResources = {
   survival:{hunger:0, thirst:0, exhaustion:0},
   injuries:{light:[0], mid:[0], dead:[0]}, 
   penalties:{mobility:0, injury:0, health:0, mental:0, vision: 0}, 
-  equippedWeapons:{}, surgeToken:true, isPlaying: false, 
+  equippedWeapons:{}, equippedArmor: baseArmor,surgeToken:true, isPlaying: false, 
   skills: baseCharacter.skills, afflictions
 }
 
@@ -179,15 +179,16 @@ export type ActiveCharType = CharacterType & {
   resources: CharResourcestype
 }
 
+//run, jump and stand without calculated component
 export const movementList = {
   "basic":"1m",
   "careful":"0.5m",
   "crawl":"0.33m",
-  "run":"5m",
-  "jump":"2m",
+  "run":0,
+  "jump":0,
   "swim":"0.33m",
   "fast swim":"0.5m",
-  "stand":"3PA"
+  "stand":0
 }
 
 export type MovementTypes = typeof movementList
