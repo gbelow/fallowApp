@@ -1,10 +1,10 @@
 'use client'
 
-import { useEffect, useMemo, useState } from 'react'
+import { useEffect, useMemo, useRef, useState } from 'react'
 import bus from "../eventBus";
 import baseArmor from '../baseArmor.json'
 import baseWeapon from '../baseWeapon.json'
-import { deleteCharacter, saveCharacter } from '../actions';
+import { createNewCharacter, deleteCharacter, saveCharacter } from '../actions';
 import { MHArr, dmgArr, skillsList, CharacterType, ArmorType, WeaponType, SkillsListKeys, SkillsList, movementList } from '../types';
 import { scaleArmor } from './utils';
 import { WeaponPanel } from './WeaponPanel';
@@ -18,6 +18,8 @@ export function CharacterCreator() {
   const [size, setSize ] = useState(3)
   const MH = MHArr[size-1]
   const MD = dmgArr[size-1]
+
+  const [path, setPath] = useState('')
 
   const [skey, setSkey] = useState(0)
   const [STR, setSTR ] = useState(10)
@@ -54,6 +56,7 @@ export function CharacterCreator() {
 
   const makeCharacter = () => {
     const character: CharacterType = {
+      path,
       name,
       size, 
       attributes:{STR, AGI, STA, CON, INT, SPI, DEX},
@@ -89,7 +92,9 @@ export function CharacterCreator() {
 
   const handleLogCharacterClick =() => {
     const character: CharacterType = makeCharacter()
-    console.log(character)
+    createNewCharacter(character.path, character.name, character).then(()=>{
+      bus.emit("save-character", null);
+    })
   }
 
   const handleSaveCharacterClick = async () => {
@@ -106,6 +111,7 @@ export function CharacterCreator() {
 
   const loadCharacter = (payload: {character: CharacterType}) => {
 
+    setPath(payload.character.path)
     setName(payload.character.name)
     setSize(payload.character.size)
     setSTR(payload.character.STR)
@@ -201,7 +207,7 @@ export function CharacterCreator() {
             <label htmlFor="name" className='font-bold'>Nome: </label>
             <input id='name' className='border rounded p-1 w-64' type='text' value={name} onChange={(e)=> setName(e.target.value)} />
             <input id='del' className='border rounded bg-red-700 w-12 p-1' type='button' value={'delete'} onClick={()=> setShowConfirm(true)} />
-            <input id='log' className='border rounded w-12 p-1' type='button' value={'log'} onClick={handleLogCharacterClick} />
+            <input id='log' className='border rounded w-12 p-1' type='button' value={'save'} onClick={handleLogCharacterClick} />
           </div>
         <div className='flex flex-row gap-2 justify-center'>
           <div>PA: {6}</div>
@@ -264,6 +270,7 @@ export function CharacterCreator() {
           <SkillItem key={skey+'reflex'} statName='reflex' calculatedValue={ detection+ranged - 2*MH- 3*hasHelm } title={'Reflexos'} skills={skills} setSkills={setSkills}/>
           <SkillItem key={skey+'block'} statName='block' calculatedValue={ melee - 2*MH} title={'Bloquear'} skills={skills} setSkills={setSkills}/>
           <SkillItem key={skey+'grapple'} statName='grapple' calculatedValue={melee + 5*MH} title={'Agarrar'}  skills={skills} setSkills={setSkills}/>
+          <SkillItem key={skey+'DP'} statName='DP' calculatedValue={-2-MH*2} title={'DP'}  skills={skills} setSkills={setSkills}/>
         </div>
         <div className='flex flex-row gap-2 justify-center'>
           <SkillItem key={skey+'balance'} statName='balance' calculatedValue={AGI} title={'Equilíbrio'} skills={skills} setSkills={setSkills}/>
@@ -299,7 +306,7 @@ export function CharacterCreator() {
       </div>
       <div className='flex flex-col text-center md:col-span-5  items-center mx-2 gap-2'>
         <ArmorPanel RESnat={RESnat} INSnat={INSnat} TENnat={TENnat} scaledArmor={scaledArmor} />
-        <WeaponPanel characterWeapons={characterWeapons} setCharacterWeapons={setCharacterWeapons} STR={STR}/>
+        <WeaponPanel characterWeapons={characterWeapons} setCharacterWeapons={setCharacterWeapons} STR={STR} strike={skills.strike} precision={skills.precision} />
         <span>Items</span>
         <textarea aria-label='pack' className='border rounded p-1 min-h-32 w-full' onChange={val => setPackItems(val.target.value)} value={packItems} />
       </div>
@@ -331,18 +338,18 @@ export function CharacterCreator() {
 
 const SkillItem = ({statName, calculatedValue, title, skills, setSkills}:{statName: SkillsListKeys, calculatedValue: number, title: string, skills: SkillsList, setSkills: React.Dispatch<React.SetStateAction<SkillsList>> }) => {
 
-  const [bonus, setBonus] = useState(skills[statName]-calculatedValue)
   const val = skills[statName]
-
+  const bonus = useRef(val-calculatedValue)
+  
   useEffect(()=>{
-    if(val != calculatedValue+bonus){
-      setSkills((prev)=> ({...prev,  [statName]: calculatedValue+bonus}))
+    if(val != calculatedValue+bonus.current){
+      setSkills((prev)=> ({...prev,  [statName]: calculatedValue+bonus.current}))
     }
   }, [calculatedValue])
-
+ 
   useEffect(()=>{
-    if(val != calculatedValue+bonus){
-      setBonus(val-calculatedValue)
+    if(val != calculatedValue+bonus.current){
+      bonus.current = (val-calculatedValue)
     }
   }, [val])
 
@@ -358,7 +365,7 @@ const SkillItem = ({statName, calculatedValue, title, skills, setSkills}:{statNa
 
 const StatDial = ({natStat, stat, setStat, title}:{natStat: number, stat: number, setStat: React.Dispatch<React.SetStateAction<number>>, title: string}) => {
   const [val, setVal] = useState(stat+'')
-
+  
   useEffect(()=>{
     setVal(stat+'')
   }, [stat])

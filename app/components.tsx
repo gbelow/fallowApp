@@ -3,12 +3,13 @@ import { useEffect, useState } from 'react'
 import bus from "./eventBus";
 import armors from './armors.json'
 import weapons from './weapons.json'
-import charactersList from './characters.json'
 import { ArmorType, WeaponType, CharacterType } from './types';
 import { PlayPanel } from './components/PlayPanel';
 import { CharacterCreator } from './components/CharacterCreator';
 import { scaleWeapon } from './components/utils';
-import { getCharacter, getCharacterList } from './actions';
+import { createNewCharacter, deleteBaseCharacter, getBasicCharList, getCharacter, getCharacterList } from './actions';
+import baseCharacter from './baseCharacter.json'
+
 
 export function ArmorSelector(){
 
@@ -17,7 +18,7 @@ export function ArmorSelector(){
   };
 
   return(
-    <div className='text-center'>
+    <div className='text-center w-full'>
       {
         Object.values(armors).map(el => {
           return(
@@ -39,7 +40,7 @@ export function WeaponSelector(){
   const [sWeapons, setSWeapons] = useState(weapons)
 
   return(
-    <div className='text-center'>
+    <div className='text-center w-full'>
       {
         Object.values(sWeapons).map((el:WeaponType) => {
           return(
@@ -50,17 +51,19 @@ export function WeaponSelector(){
           )
         })
       }
-
     </div>
   )
 }
 
 
 
-export function CharacterSelector({charList}: {charList: string[]}){
+export function CharacterSelector({charList, selectedPage}: {charList: string[], selectedPage: string}){
 
   const [open, setOpen] = useState<{ [key: string]: boolean }>({});
   const [openPlayer, setOpenPlayer] = useState(false)
+  const [charactersList, setCharactersList] = useState(undefined)
+  const [isLoading, setIsLoading] = useState(true)
+  
   
   const handleSelectCharacterClick = (character: CharacterType) => {
     bus.emit("select-character", { character });
@@ -75,9 +78,38 @@ export function CharacterSelector({charList}: {charList: string[]}){
     setOpen((prev) => ({ ...prev, [key]: !prev[key] }));
   };
 
+  useEffect(() => {
+    if(isLoading){
+      getBasicCharList().then(resp => {
+        setCharactersList(resp)
+        setIsLoading(false)
+      })
+
+    }
+  }, [isLoading])
+
+  useEffect(()=>{
+    const getlist = () => setIsLoading(true)
+    bus.on("save-character", getlist);
+
+    return () => {
+      bus.off("save-character", getlist); // cleanup on unmount
+    };
+  }, [])
+
+  const createCharacter = (path:string) => {
+    createNewCharacter(path, '', {...baseCharacter, path})
+    setIsLoading(true)
+  }
+
+  const handleDeleteCharacter = (path:string, name:string) => {
+    deleteBaseCharacter(path, name)
+    setIsLoading(true)
+  }
+
   return (
     <div className="bg-gray-900 text-white p-2">
-      {Object.entries(charactersList).sort((a,b) => a[0] > b[0] ? 1 : -1).map(([topKey, sub]) => (
+      {charactersList && Object.entries(charactersList).sort((a,b) => a[0] > b[0] ? 1 : -1).map(([topKey, sub]) => (
         <div key={topKey} className="mb-2">
           {/* Top level */}
           <button
@@ -87,41 +119,55 @@ export function CharacterSelector({charList}: {charList: string[]}){
             {topKey}
           </button>
           {open[topKey] && (
-            <div className="ml-4 mt-1">
-              {Object.entries(sub).sort((a,b) => a[0] > b[0] ? 1 : -1).map(([midKey, chars]) => (
-                <div key={midKey} className="mb-1">
-                  {/* Second level */}
-                  <button
-                    onClick={() => {
-                      const char = chars as CharacterType
-                      if(char.name && char.natAGI ){
-                        handleSelectCharacterClick(char)
-                      }else{
-                        toggle(`${topKey}-${midKey}`)
-                      }
-                    }}
-                    className="w-full text-left font-semibold p-1 bg-gray-700 rounded"
-                  >
-                    {midKey}
-                  </button>
-                  {open[`${topKey}-${midKey}`] && (
-                    <div className="ml-4 mt-1 space-y-1">
-                      {Object.entries(chars).sort((a,b) => a[0] > b[0] ? 1 : -1).map(([charKey, charVal]) => {
-                        const val = charVal as CharacterType
-                        return(
-                          <div
-                            key={charKey}
-                            className="p-1 bg-gray-600 rounded cursor-pointer hover:bg-gray-500"
-                          >
-                            <input type={'button'} key={charKey} className='text-center w-full hover:bg-gray-500 p-1 ' value={charKey} aria-label={charKey} onClick={() => handleSelectCharacterClick(val)}/>
-                            {/* {charKey} */}
-                          </div>
-                        )
-                      })}
-                    </div>
-                  )}
+            <div className=" ml-4 mt-1">
+              {sub ? Object.entries(sub).sort((a,b) => a[0] > b[0] ? 1 : -1).map(([midKey, chars]) => (
+                <div key={midKey} className='pb-1'>
+                  <div key={midKey} className="flex flex-row mb-1 gap-1">
+                    {/* Second level */}
+                    <button
+                      onClick={() => {
+                        const char = chars as CharacterType
+                        if(char.name && char.AGI ){
+                          handleSelectCharacterClick(char)
+                        }else{
+                          toggle(`${topKey}-${midKey}`)
+                        }
+                      }}
+                      className="w-full text-left font-semibold p-1 bg-gray-700 rounded"
+                    >
+                      {midKey}
+                    </button >
+                    <button className="w-6 text-left font-semibold p-1 bg-gray-700 rounded" onClick={() => createCharacter(topKey+'/'+midKey)}>
+                      +
+                    </button>
+                  </div>
+                  <div>
+                    {open[`${topKey}-${midKey}`] && (
+                      <div className="ml-4 mt-1 space-y-1">
+                        {Object.entries(chars).sort((a,b) => a[0] > b[0] ? 1 : -1).map(([charKey, charVal]) => {
+                          const val = charVal as CharacterType
+                          return(
+                            <div
+                              key={charKey}
+                              className="flex felx-row p-1 bg-gray-600 rounded cursor-pointer hover:bg-gray-500"
+                            >
+                              <input type={'button'} key={charKey} className='text-center w-full hover:bg-gray-500 p-1 ' value={charKey} aria-label={charKey} onClick={() => handleSelectCharacterClick(val)}/>
+                              {/* {charKey} */}
+                              {
+                                selectedPage == 'Character' ?
+                                <button className="w-6 text-left font-semibold p-1 bg-red-500 rounded" onClick={() => handleDeleteCharacter(topKey+'/'+midKey, charKey)}>
+                                  -
+                                </button>
+                                : null
+                              }
+                            </div>
+                          )
+                        })}
+                      </div>
+                    )}
+                  </div>
                 </div>
-              ))}
+              )): null}
             </div>
           )}
         </div>
@@ -145,7 +191,7 @@ export function CharacterSelector({charList}: {charList: string[]}){
   );
 }
 
-export function Sidebar(){
+export function Sidebar({selectedPage}:{selectedPage: string}){
 
   const [selectedSidebar, setSelectedSidebar] = useState('') 
   const [charList, setCharList] = useState<string[]>([])
@@ -169,7 +215,7 @@ export function Sidebar(){
         selectedSidebar == 'Weapon' ?
         <WeaponSelector /> :
         selectedSidebar == 'Character' ?
-        <CharacterSelector charList={charList} />
+        <CharacterSelector charList={charList} selectedPage={selectedPage}/>
         : null
       }
     </>
@@ -183,10 +229,6 @@ export function App(){
 
   const [open, setOpen] = useState(false)
 
-  
-
-
-
   return(
     <>      
       <header className="py-4 h-12">
@@ -198,9 +240,9 @@ export function App(){
         </div>
       </header>
 
-      <main className="grid grid-cols-12 ">
+      <main className="grid grid-cols-12 w-full h-full">
       <div className="hidden md:block col-span-2 border pr-1 px-1 h-full">
-        <Sidebar />
+        <Sidebar selectedPage={selectedPage} />
       </div>
 
       {/* mobile top menu for sidebar */}
@@ -227,7 +269,7 @@ export function App(){
           >
             ✕ Close
           </button>
-          <Sidebar />
+          <Sidebar selectedPage={selectedPage} />
         </div>
       )}
 

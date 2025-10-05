@@ -1,0 +1,174 @@
+{
+  "path": "humanoid/proficient",
+  "name": "HumanBarbarian",
+  "size": 3,
+  "attributes": {
+    "STR": 12,
+    "AGI": 14,
+    "STA": 12,
+    "CON": 2,
+    "INT": 0,
+    "SPI": 0,
+    "DEX": 2
+  },
+  "movement": {
+    "basic": "1m",
+    "careful": "0.5m",
+    "crawl": "0.33m",
+    "run": 0,
+    "jump": 0,
+    "swim": "0.33m",
+    "fast swim": "0.5m",
+    "stand": 0
+  },
+  "STR": 12,
+  "AGI": 14,
+  "STA": 12,
+  "CON": 2,
+  "INT": 0,
+  "SPI": 0,
+  "DEX": 2,
+  "melee": 2,
+  "ranged": 1,
+  "detection": 1,
+  "spellcast": 0,
+  "convic1": 0,
+  "convic2": 0,
+  "devotion": 0,
+  "RESnat": 6,
+  "INSnat": 6,
+  "TENnat": 6,
+  "gearPen": 2,
+  "hasGauntlets": 0,
+  "hasHelm": 0,
+  "characterWeapons": {
+    "mãos3": {
+      "name": "mãos",
+      "handed": "small",
+      "penalty": 0,
+      "scale": 3,
+      "attacks": [
+        {
+          "type": "melee",
+          "impact": 0,
+          "heavyMod": 0,
+          "penMod": 0,
+          "range": "short",
+          "RES": 0,
+          "TEN": 0,
+          "PA": 2,
+          "deflection": 0,
+          "props": "agarrar, sacar"
+        },
+        {
+          "type": "melee",
+          "impact": 0,
+          "heavyMod": 0.5,
+          "penMod": 0.2,
+          "range": "short",
+          "RES": 0,
+          "TEN": 0,
+          "PA": 2,
+          "deflection": 0,
+          "props": "pesado I, sacar"
+        }
+      ]
+    },
+    "WarAxe3": {
+      "name": "WarAxe",
+      "handed": "one",
+      "penalty": 0,
+      "scale": 3,
+      "attacks": [
+        {
+          "type": "melee",
+          "impact": 15,
+          "heavyMod": 0.5,
+          "penMod": 1,
+          "range": "short",
+          "RES": 40,
+          "TEN": 50,
+          "PA": 4,
+          "deflection": 0,
+          "props": "pesado I"
+        },
+        {
+          "type": "melee",
+          "impact": 5,
+          "heavyMod": 0.5,
+          "penMod": 0.2,
+          "range": "short",
+          "RES": 20,
+          "TEN": 30,
+          "PA": 2,
+          "deflection": 0,
+          "props": "DEF, pesado I "
+        }
+      ]
+    },
+    "Wooden shield3": {
+      "name": "Wooden shield",
+      "handed": "one",
+      "penalty": 1,
+      "scale": 3,
+      "attacks": [
+        {
+          "type": "melee",
+          "impact": 10,
+          "heavyMod": 0.5,
+          "penMod": 0.2,
+          "range": "short",
+          "RES": 50,
+          "TEN": 30,
+          "PA": 3,
+          "deflection": 3,
+          "props": "DEF+3, pesado I"
+        }
+      ]
+    }
+  },
+  "armor": {
+    "name": "Chain Mail",
+    "RES": 50,
+    "TEN": 15,
+    "INS": 6,
+    "prot": 5,
+    "cover": 12,
+    "penalty": 1,
+    "type": "light"
+  },
+  "skills": {
+    "strike": 4,
+    "block": 4,
+    "evasion": 4,
+    "reflex": 2,
+    "precision": 2,
+    "grapple": 4,
+    "DP": -2,
+    "sneak": 3,
+    "prestidigitation": 1,
+    "balance": 5,
+    "strength": 2,
+    "health": 2,
+    "swim": 5,
+    "climb": 4,
+    "knowledge": 0,
+    "detect": 0,
+    "sense": 0,
+    "explore": 1,
+    "cunning": 1,
+    "will": 3,
+    "enchant": 0,
+    "stress": 3,
+    "devotion": 0,
+    "combustion": 0,
+    "eletromag": 0,
+    "radiation": 0,
+    "enthropy": 0,
+    "biomancy": 0,
+    "telepathy": 0,
+    "animancy": 0
+  },
+  "notes": "",
+  "packItems": ""
+}

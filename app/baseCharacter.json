@@ -1,4 +1,5 @@
 {
+  "path":"humanoid/common",
   "armor": {
     "name": "Skin",
     "RES": 0,
@@ -17,6 +18,7 @@
     "reflex": 0,
     "precision": 0,
     "grapple": 0,
+    "DP":-2,
 
     "sneak": 0,
     "prestidigitation": 0,
@@ -84,26 +86,28 @@
       "scale": 3,
       "attacks": [
         {
-            "impact": 0,
-            "heavyMod": 0,
-            "penMod": 0,
-            "range": "short",
-            "RES": 20,
-            "TEN": 20,
-            "PA": 2,
-            "deflection": 0,
-            "props": "agarrar, sacar"
+          "type": "melee",
+          "impact": 0,
+          "heavyMod": 0,
+          "penMod": 0,
+          "range": "short",
+          "RES": 20,
+          "TEN": 20,
+          "PA": 2,
+          "deflection":0,        
+          "props": "agarrar, sacar"
         },
         {
-            "impact": 4,
-            "heavyMod": 0.5,
-            "penMod": 0.2,
-            "range": "short",
-            "RES": 20,
-            "TEN": 20,
-            "PA": 2,
-            "deflection": 0,
-            "props": "pesado I, sacar"
+          "type": "melee",
+          "impact": 4,
+          "heavyMod": 0.5,
+          "penMod": 0.2,
+          "range": "short",
+          "RES": 20,
+          "TEN": 20,
+          "PA": 2,
+          "deflection":0,        
+          "props": "pesado I, sacar"
         }
       ]
     }

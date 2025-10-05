@@ -5,23 +5,25 @@
   "scale":3,
   "attacks":[
     {
+      "type": "melee",
       "impact": 0,
       "heavyMod": 0,
       "penMod": 0,
       "range": "short",
-      "RES": 20,
-      "TEN": 20,
+      "RES": 0,
+      "TEN": 0,
       "PA": 2,
       "deflection":0,        
       "props": "agarrar, sacar"
     },
     {
-      "impact": 4,
+      "type": "melee",
+      "impact": 0,
       "heavyMod": 0.5,
       "penMod": 0.2,
       "range": "short",
-      "RES": 20,
-      "TEN": 20,
+      "RES": 0,
+      "TEN": 0,
       "PA": 2,
       "deflection":0,        
       "props": "pesado I, sacar"

@@ -9,14 +9,44 @@
     "penalty":0,
     "type": "light"
   },
+  "Clothes": {
+    "name": "Clothes",
+    "RES": 20,
+    "TEN":3,
+    "INS":2,
+    "prot":0,
+    "cover":0,
+    "penalty":0,
+    "type": "light"
+  },
   "Gambeson":{
     "name": "Gambeson",
     "RES": 50,
-    "TEN":5,
+    "TEN":8,
     "INS":6,
-    "prot":5,
+    "prot":3,
     "cover":10,
     "penalty":0,
+    "type": "light"
+  },
+  "ChainShirt":{
+    "name": "Chain shirt",
+    "RES": 50,
+    "TEN":12,
+    "INS":5,
+    "prot":3,
+    "cover":10,
+    "penalty":0,
+    "type": "light"
+  },
+  "ChainMail":{
+    "name": "Chain Mail",
+    "RES": 50,
+    "TEN":15,
+    "INS":6,
+    "prot":5,
+    "cover":12,
+    "penalty":1,
     "type": "light"
   },
   "Brigandine":{

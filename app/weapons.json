@@ -6,23 +6,25 @@
     "scale":3,
     "attacks":[
       {
+        "type": "melee",
         "impact": 0,
         "heavyMod": 0,
         "penMod": 0,
         "range": "short",
-        "RES": 20,
-        "TEN": 20,
+        "RES": 0,
+        "TEN": 0,
         "PA": 2,
         "deflection":0,        
         "props": "agarrar, sacar"
       },
       {
-        "impact": 4,
+        "type": "melee",
+        "impact": 0,
         "heavyMod": 0.5,
         "penMod": 0.2,
         "range": "short",
-        "RES": 20,
-        "TEN": 20,
+        "RES": 0,
+        "TEN": 0,
         "PA": 2,
         "deflection":0,        
         "props": "pesado I, sacar"
@@ -36,7 +38,8 @@
     "scale":3,
     "attacks":[
       {
-        "impact": 6,
+        "type": "melee",
+        "impact": 8,
         "heavyMod": 0,
         "penMod": 2,
         "range": "short",
@@ -55,7 +58,8 @@
     "scale":3,
     "attacks":[
       {
-        "impact": 6,
+        "type": "melee",
+        "impact": 8,
         "heavyMod": 0.5,
         "penMod": 2,
         "range": "short",
@@ -67,14 +71,371 @@
       }
     ]
   },
+  "ShortSword":{
+    "name": "Short Sword",
+    "handed":"one", 
+    "penalty":0,
+    "scale":3,
+    "attacks":[
+      {
+        "type": "melee",
+        "impact": 8,
+        "heavyMod": 0,
+        "penMod": 2,
+        "range": "short",
+        "RES": 30,
+        "TEN": 50,
+        "PA": 3,
+        "deflection":0,
+        "props": "sacar, preciso "
+      },
+      {
+        "type": "melee",
+        "impact": 8,
+        "heavyMod": 0.5,
+        "penMod": 1,
+        "range": "short",
+        "RES": 30,
+        "TEN": 50,
+        "PA": 3,
+        "deflection":0,
+        "props": "DEF, pesado I, amplo, sacar "
+      }
+    ]
+  },
+  "Rapier":{
+    "name": "Rapier",
+    "handed":"one", 
+    "penalty":0,
+    "scale":3,
+    "attacks":[
+      {
+        "type": "melee",
+        "impact": 8,
+        "heavyMod": 0,
+        "penMod": 2,
+        "range": "long I",
+        "RES": 20,
+        "TEN": 40,
+        "PA": 3,
+        "deflection":0,
+        "props": "sacar, preciso "
+      }      
+    ]
+  },
+  "ShortSpear":{
+    "name": "Short Spear",
+    "handed":"one", 
+    "penalty":0,
+    "scale":3,
+    "attacks":[
+      {
+        "type": "melee",
+        "impact": 8,
+        "heavyMod": 0.5,
+        "penMod": 2,
+        "range": "long I",
+        "RES": 20,
+        "TEN": 50,
+        "PA": 4,
+        "deflection":0,
+        "props": "apoiado, preciso, pesado I "
+      },
+      {
+        "type": "melee",
+        "impact": 5,
+        "heavyMod": 0.5,
+        "penMod": 0.2,
+        "range": "short",
+        "RES": 20,
+        "TEN": 30,
+        "PA": 2,
+        "deflection":0,
+        "props": "DEF, pesado I "
+      }
+    ]
+  },
+  "Mace":{
+    "name": "Mace",
+    "handed":"one", 
+    "penalty":0,
+    "scale":3,
+    "attacks":[
+      {
+        "type": "melee",
+        "impact": 12,
+        "heavyMod": 1,
+        "penMod": 0.2,
+        "range": "long I",
+        "RES": 40,
+        "TEN": 50,
+        "PA": 3,
+        "deflection":0,
+        "props": "pesado II"
+      },
+      {
+        "type": "melee",
+        "impact": 5,
+        "heavyMod": 0.5,
+        "penMod": 0.2,
+        "range": "short",
+        "RES": 20,
+        "TEN": 30,
+        "PA": 2,
+        "deflection":0,
+        "props": "DEF, pesado I "
+      }      
+    ]
+  },
+  "WarAxe":{
+    "name": "WarAxe",
+    "handed":"one", 
+    "penalty":0,
+    "scale":3,
+    "attacks":[
+      {
+        "type": "melee",
+        "impact": 15,
+        "heavyMod": 0.5,
+        "penMod": 1,
+        "range": "short",
+        "RES": 40,
+        "TEN": 50,
+        "PA": 4,
+        "deflection":0,
+        "props": "pesado I"
+      },
+      {
+        "type": "melee",
+        "impact": 5,
+        "heavyMod": 0.5,
+        "penMod": 0.2,
+        "range": "short",
+        "RES": 20,
+        "TEN": 30,
+        "PA": 2,
+        "deflection":0,
+        "props": "DEF, pesado I "
+      }      
+    ]
+  },
+  "LongSword":{
+    "name": "Long Sword",
+    "handed":"one", 
+    "penalty":0,
+    "scale":3,
+    "attacks":[
+      {
+        "type": "melee",
+        "impact": 12,
+        "heavyMod": 0.5,
+        "penMod": 1,
+        "range": "long I",
+        "RES": 20,
+        "TEN": 50,
+        "PA": 3,
+        "deflection":0,
+        "props": "pesado I, DEF"
+      },
+      {
+        "type": "melee",
+        "impact": 8,
+        "heavyMod": 0,
+        "penMod": 2,
+        "range": "long I",
+        "RES": 20,
+        "TEN": 50,
+        "PA": 3,
+        "deflection":0,
+        "props": "preciso"
+      },
+      {
+        "type": "melee",
+        "impact": 8,
+        "heavyMod": 0.5,
+        "penMod": 2,
+        "range": "short",
+        "RES": 20,
+        "TEN": 50,
+        "PA": 4,
+        "deflection":0,
+        "props": "preciso, pesado I"
+      }    
+    ]
+  },
+  "GreatSword":{
+    "name": "Great Sword",
+    "handed":"one", 
+    "penalty":0,
+    "scale":3,
+    "attacks":[
+      {
+        "type": "melee",
+        "impact": 14,
+        "heavyMod": 1,
+        "penMod": 1,
+        "range": "long I",
+        "RES": 40,
+        "TEN": 50,
+        "PA": 4,
+        "deflection":0,
+        "props": "pesado II, DEF"
+      },
+      {
+        "type": "melee",
+        "impact": 8,
+        "heavyMod": 0.5,
+        "penMod": 2,
+        "range": "long I",
+        "RES": 25,
+        "TEN": 50,
+        "PA": 3,
+        "deflection":0,
+        "props": "preciso, apoiado, pesado I"
+      }
+    ]
+  },
+  "Pike":{
+    "name": "Pike",
+    "handed":"one", 
+    "penalty":0,
+    "scale":3,
+    "attacks":[
+      {
+        "type": "melee",
+        "impact": 8,
+        "heavyMod": 0.5,
+        "penMod": 2,
+        "range": "long II",
+        "RES": 20,
+        "TEN": 50,
+        "PA": 3,
+        "deflection":0,
+        "props": "preciso, apoiado"
+      }      
+    ]
+  },
+  "Halberd":{
+    "name": "Halberd",
+    "handed":"two", 
+    "penalty":0,
+    "scale":3,
+    "attacks":[
+      {
+        "type": "melee",
+        "impact": 18,
+        "heavyMod": 1,
+        "penMod": 1,
+        "range": "long I",
+        "RES": 60,
+        "TEN": 50,
+        "PA": 4,
+        "deflection":0,
+        "props": "pesado II"
+      },
+      {
+        "type": "melee",
+        "impact": 8,
+        "heavyMod": 0.5,
+        "penMod": 2,
+        "range": "long I",
+        "RES": 20,
+        "TEN": 50,
+        "PA": 3,
+        "deflection":0,
+        "props": "apoiado, preciso, pesado I "
+      },
+      {
+        "type": "melee",
+        "impact": 0,
+        "heavyMod":1 ,
+        "penMod": 1,
+        "range": "long I",
+        "RES": 30,
+        "TEN": 50,
+        "PA": 3,
+        "deflection":0,
+        "props": "gancho "
+      },
+      {
+        "type": "melee",
+        "impact": 5,
+        "heavyMod": 0.5,
+        "penMod": 0.2,
+        "range": "short",
+        "RES": 20,
+        "TEN": 30,
+        "PA": 2,
+        "deflection":0,
+        "props": "DEF, pesado I "
+      } 
+    ]
+  },
+  "Warhammer":{
+    "name": "Warhammer",
+    "handed":"two", 
+    "penalty":0,
+    "scale":3,
+    "attacks":[
+      {
+        "type": "melee",
+        "impact": 20,
+        "heavyMod": 1.5,
+        "penMod": 0.2,
+        "range": "long I",
+        "RES": 100,
+        "TEN": 100,
+        "PA": 4,
+        "deflection":0,
+        "props": "pesado III"
+      },
+      {
+        "type": "melee",
+        "impact": 8,
+        "heavyMod": 0.5,
+        "penMod": 2,
+        "range": "long I",
+        "RES": 20,
+        "TEN": 50,
+        "PA": 3,
+        "deflection":0,
+        "props": "apoiado, preciso, pesado I "
+      },
+      {
+        "type": "melee",
+        "impact": 0,
+        "heavyMod":1 ,
+        "penMod": 1,
+        "range": "long I",
+        "RES": 30,
+        "TEN": 50,
+        "PA": 3,
+        "deflection":0,
+        "props": "gancho "
+      },
+      {
+        "type": "melee",
+        "impact": 5,
+        "heavyMod": 0.5,
+        "penMod": 0.2,
+        "range": "short",
+        "RES": 20,
+        "TEN": 30,
+        "PA": 2,
+        "deflection":0,
+        "props": "DEF, pesado I "
+      } 
+    ]
+  },
   "Wooden shield":{
-    "name": "Escudo de madeira",
+    "name": "Wooden shield",
     "handed":"one", 
     "penalty":1,
     "scale":3,
     "attacks":[
       {
-        "impact": 6,
+        "type": "melee",
+        "impact": 8,
         "heavyMod": 0.5,
         "penMod": 0.2,
         "range": "short",
@@ -82,7 +443,68 @@
         "TEN": 30,
         "PA": 3,
         "deflection":3,
-        "props": "DEF, pesado I"
+        "props": "DEF+3, pesado I"
+      }
+    ]
+  },
+  "ShortBow":{
+    "name": "Short Bow",
+    "handed":"two", 
+    "penalty":0,
+    "scale":3,
+    "attacks":[
+      {
+        "type": "ranged",
+        "impact": 7,
+        "heavyMod":1,
+        "penMod": 3,
+        "range": "100m",
+        "RES": 10,
+        "TEN": 10,
+        "PA": 4,
+        "deflection":0,
+        "props": "preciso"
+      }
+      
+    ]
+  },
+  "LongBow":{
+    "name": "Long Bow",
+    "handed":"two", 
+    "penalty":0,
+    "scale":3,
+    "attacks":[
+      {
+        "type": "ranged",
+        "impact": 9,
+        "heavyMod":1,
+        "penMod": 3,
+        "range": "150m",
+        "RES": 10,
+        "TEN": 10,
+        "PA": 5,
+        "deflection":0,
+        "props": "preciso, FOR 13"
+      }
+    ]
+  },
+  "HeavyBow":{
+    "name": "Heavy Bow",
+    "handed":"two", 
+    "penalty":0,
+    "scale":3,
+    "attacks":[
+      {
+        "type": "ranged",
+        "impact": 8,
+        "heavyMod":2,
+        "penMod": 3,
+        "range": "200m",
+        "RES": 10,
+        "TEN": 10,
+        "PA": 5,
+        "deflection":0,
+        "props": "preciso, FOR 16"
       }
     ]
   }

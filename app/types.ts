@@ -77,40 +77,8 @@ export const penaltyTable = {
   ]
 }
 
-export const skillsList = {
-  "strike": 0,
-  "block": 0,
-  "evasion": 0,
-  "reflex": 0,
-  "precision": 0,
-  "grapple": 0,
 
-  "sneak": 0,
-  "prestidigitation": 0,
-  "balance": 0,
-  "strength": 0,
-  "health": 0,
-  "swim": 0,
-  "climb": 0,
-
-  "knowledge": 0,
-  "detect": 0,
-  "sense": 0,
-  "explore": 0,
-  "cunning": 0,
-  "will": 0,
-  "enchant": 0,
-  "stress": 0,
-  "devotion": 0,
-
-  "combustion": 0,
-  "eletromag": 0,
-  "radiation": 0,
-  "enthropy": 0,
-  "biomancy": 0,
-  "telepathy": 0,
-  "animancy": 0
-}
+export const skillsList = baseCharacter.skills
 
 
 export type ArmorType = typeof baseArmor
