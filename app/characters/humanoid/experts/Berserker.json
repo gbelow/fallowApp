@@ -1,14 +1,14 @@
 {
-  "path": "humanoid/proficient",
-  "name": "Human Warrior",
+  "path": "humanoid/experts",
+  "name": "Berserker",
   "size": 3,
   "attributes": {
-    "STR": 12,
-    "AGI": 12,
+    "STR": 15,
+    "AGI": 10,
     "STA": 14,
-    "CON": 2,
-    "INT": 1,
-    "SPI": 1,
+    "CON": 4,
+    "INT": 0,
+    "SPI": 2,
     "DEX": 2
   },
   "movement": {
@@ -21,23 +21,23 @@
     "fast swim": "0.5m",
     "stand": 0
   },
-  "STR": 12,
-  "AGI": 12,
+  "STR": 15,
+  "AGI": 10,
   "STA": 14,
-  "CON": 2,
-  "INT": 1,
-  "SPI": 1,
+  "CON": 4,
+  "INT": 0,
+  "SPI": 2,
   "DEX": 2,
   "melee": 2,
-  "ranged": 2,
+  "ranged": 1,
   "detection": 1,
   "spellcast": 0,
-  "convic1": 0,
-  "convic2": 0,
+  "convic1": 4,
+  "convic2": 3,
   "devotion": 0,
-  "RESnat": 6,
-  "INSnat": 6,
-  "TENnat": 6,
+  "RESnat": 7,
+  "INSnat": 7,
+  "TENnat": 7,
   "gearPen": 2,
   "hasGauntlets": 1,
   "hasHelm": 0,
@@ -74,43 +74,23 @@
         }
       ]
     },
-    "rondel3": {
-      "name": "rondel",
-      "handed": "small",
+    "GreatSword3": {
+      "name": "GreatSword",
+      "handed": "one",
       "penalty": 0,
       "scale": 3,
       "attacks": [
         {
           "type": "melee",
-          "impact": 8,
-          "heavyMod": 0.5,
-          "penMod": 2,
-          "range": "short",
-          "RES": 20,
-          "TEN": 40,
-          "PA": 3,
-          "deflection": 0,
-          "props": "DEF, pesado I, preciso "
-        }
-      ]
-    },
-    "Halberd3": {
-      "name": "Halberd",
-      "handed": "two",
-      "penalty": 0,
-      "scale": 3,
-      "attacks": [
-        {
-          "type": "melee",
-          "impact": 18,
+          "impact": 14,
           "heavyMod": 1,
           "penMod": 1,
           "range": "long I",
-          "RES": 60,
+          "RES": 40,
           "TEN": 50,
           "PA": 4,
           "deflection": 0,
-          "props": "pesado II"
+          "props": "heavy II, DEF, cleave"
         },
         {
           "type": "melee",
@@ -118,35 +98,11 @@
           "heavyMod": 0.5,
           "penMod": 2,
           "range": "long I",
-          "RES": 20,
+          "RES": 25,
           "TEN": 50,
           "PA": 3,
           "deflection": 0,
-          "props": "apoiado, preciso, pesado I "
-        },
-        {
-          "type": "melee",
-          "impact": 0,
-          "heavyMod": 1,
-          "penMod": 1,
-          "range": "long I",
-          "RES": 30,
-          "TEN": 50,
-          "PA": 3,
-          "deflection": 0,
-          "props": "gancho "
-        },
-        {
-          "type": "melee",
-          "impact": 5,
-          "heavyMod": 0.5,
-          "penMod": 0.2,
-          "range": "short",
-          "RES": 20,
-          "TEN": 30,
-          "PA": 2,
-          "deflection": 0,
-          "props": "DEF, pesado I "
+          "props": "precise, braced, heavy I"
         }
       ]
     }
@@ -165,26 +121,26 @@
     "strike": 5,
     "block": 4,
     "evasion": 4,
-    "reflex": 3,
-    "precision": 0,
-    "grapple": 2,
-    "DP": -2,
-    "sneak": 0,
+    "reflex": 2,
+    "precision": -2,
+    "grapple": 4,
+    "DP": 0,
+    "sneak": -2,
     "prestidigitation": -1,
-    "balance": 2,
-    "strength": 4,
-    "health": 2,
-    "swim": 3,
-    "climb": 0,
-    "knowledge": 2,
+    "balance": 0,
+    "strength": 7,
+    "health": 8,
+    "swim": 0,
+    "climb": -3,
+    "knowledge": 0,
     "detect": 0,
     "sense": 0,
     "explore": 1,
     "cunning": 1,
-    "will": 0,
+    "will": 3,
     "enchant": 0,
-    "stress": 0,
-    "devotion": 1,
+    "stress": 6,
+    "devotion": 2,
     "combustion": 0,
     "eletromag": 0,
     "radiation": 0,
@@ -193,6 +149,6 @@
     "telepathy": 0,
     "animancy": 0
   },
-  "notes": "",
+  "notes": "Reconstrução celular: 3PA+1STA - Regenera número de curas igual à saúde.\n\nContra ataque, giro da morte, levantada técnica, movimentação tática.",
   "packItems": ""
 }

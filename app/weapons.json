@@ -1,6 +1,6 @@
 {
-  "mãos": {
-    "name": "mãos",
+  "hands": {
+    "name": "hands",
     "handed":"small", 
     "penalty":0,
     "scale":3,
@@ -15,7 +15,7 @@
         "TEN": 0,
         "PA": 2,
         "deflection":0,        
-        "props": "agarrar, sacar"
+        "props": "grapple, draw"
       },
       {
         "type": "melee",
@@ -27,7 +27,7 @@
         "TEN": 0,
         "PA": 2,
         "deflection":0,        
-        "props": "pesado I, sacar"
+        "props": "heavy I, draw"
       }
     ]
   },
@@ -47,7 +47,7 @@
         "TEN": 20,
         "PA": 3,
         "deflection":0,        
-        "props": "DEF, sacar, preciso"
+        "props": "DEF, draw, precise"
       }
     ]
   },
@@ -67,12 +67,32 @@
         "TEN": 40,
         "PA": 3,
         "deflection":0,
-        "props": "DEF, pesado I, preciso "
+        "props": "DEF, heavy I, precise "
+      }
+    ]
+  },
+  "Club":{
+    "name": "Club",
+    "handed":"one", 
+    "penalty":0,
+    "scale":3,
+    "attacks":[
+      {
+        "type": "melee",
+        "impact": 8,
+        "heavyMod": 0.5,
+        "penMod": 0.2,
+        "range": "short",
+        "RES": 30,
+        "TEN": 50,
+        "PA": 3,
+        "deflection":0,
+        "props": "DEF, heavy I, cleave, draw "
       }
     ]
   },
   "ShortSword":{
-    "name": "Short Sword",
+    "name": "ShortSword",
     "handed":"one", 
     "penalty":0,
     "scale":3,
@@ -87,7 +107,7 @@
         "TEN": 50,
         "PA": 3,
         "deflection":0,
-        "props": "sacar, preciso "
+        "props": "draw, precise "
       },
       {
         "type": "melee",
@@ -99,7 +119,7 @@
         "TEN": 50,
         "PA": 3,
         "deflection":0,
-        "props": "DEF, pesado I, amplo, sacar "
+        "props": "DEF, heavy I, cleave, draw "
       }
     ]
   },
@@ -119,12 +139,12 @@
         "TEN": 40,
         "PA": 3,
         "deflection":0,
-        "props": "sacar, preciso "
+        "props": "draw, precise "
       }      
     ]
   },
   "ShortSpear":{
-    "name": "Short Spear",
+    "name": "ShortSpear",
     "handed":"one", 
     "penalty":0,
     "scale":3,
@@ -139,7 +159,7 @@
         "TEN": 50,
         "PA": 4,
         "deflection":0,
-        "props": "apoiado, preciso, pesado I "
+        "props": "braced, precise, heavy I "
       },
       {
         "type": "melee",
@@ -151,7 +171,7 @@
         "TEN": 30,
         "PA": 2,
         "deflection":0,
-        "props": "DEF, pesado I "
+        "props": "DEF, heavy I "
       }
     ]
   },
@@ -171,7 +191,7 @@
         "TEN": 50,
         "PA": 3,
         "deflection":0,
-        "props": "pesado II"
+        "props": "heavy II"
       },
       {
         "type": "melee",
@@ -183,7 +203,7 @@
         "TEN": 30,
         "PA": 2,
         "deflection":0,
-        "props": "DEF, pesado I "
+        "props": "DEF, heavy I "
       }      
     ]
   },
@@ -203,7 +223,7 @@
         "TEN": 50,
         "PA": 4,
         "deflection":0,
-        "props": "pesado I"
+        "props": "heavy I"
       },
       {
         "type": "melee",
@@ -215,12 +235,12 @@
         "TEN": 30,
         "PA": 2,
         "deflection":0,
-        "props": "DEF, pesado I "
+        "props": "DEF, heavy I "
       }      
     ]
   },
   "LongSword":{
-    "name": "Long Sword",
+    "name": "LongSword",
     "handed":"one", 
     "penalty":0,
     "scale":3,
@@ -235,7 +255,7 @@
         "TEN": 50,
         "PA": 3,
         "deflection":0,
-        "props": "pesado I, DEF"
+        "props": "heavy I, DEF"
       },
       {
         "type": "melee",
@@ -247,7 +267,7 @@
         "TEN": 50,
         "PA": 3,
         "deflection":0,
-        "props": "preciso"
+        "props": "precise"
       },
       {
         "type": "melee",
@@ -259,12 +279,12 @@
         "TEN": 50,
         "PA": 4,
         "deflection":0,
-        "props": "preciso, pesado I"
+        "props": "precise, heavy I, cleave"
       }    
     ]
   },
   "GreatSword":{
-    "name": "Great Sword",
+    "name": "GreatSword",
     "handed":"one", 
     "penalty":0,
     "scale":3,
@@ -279,7 +299,7 @@
         "TEN": 50,
         "PA": 4,
         "deflection":0,
-        "props": "pesado II, DEF"
+        "props": "heavy II, DEF, cleave"
       },
       {
         "type": "melee",
@@ -291,7 +311,7 @@
         "TEN": 50,
         "PA": 3,
         "deflection":0,
-        "props": "preciso, apoiado, pesado I"
+        "props": "precise, braced, heavy I"
       }
     ]
   },
@@ -311,7 +331,7 @@
         "TEN": 50,
         "PA": 3,
         "deflection":0,
-        "props": "preciso, apoiado"
+        "props": "precise, braced"
       }      
     ]
   },
@@ -331,7 +351,7 @@
         "TEN": 50,
         "PA": 4,
         "deflection":0,
-        "props": "pesado II"
+        "props": "heavy II"
       },
       {
         "type": "melee",
@@ -343,7 +363,7 @@
         "TEN": 50,
         "PA": 3,
         "deflection":0,
-        "props": "apoiado, preciso, pesado I "
+        "props": "braced, precise, heavy I "
       },
       {
         "type": "melee",
@@ -367,7 +387,7 @@
         "TEN": 30,
         "PA": 2,
         "deflection":0,
-        "props": "DEF, pesado I "
+        "props": "DEF, heavy I "
       } 
     ]
   },
@@ -387,7 +407,7 @@
         "TEN": 100,
         "PA": 4,
         "deflection":0,
-        "props": "pesado III"
+        "props": "heavy III"
       },
       {
         "type": "melee",
@@ -399,7 +419,7 @@
         "TEN": 50,
         "PA": 3,
         "deflection":0,
-        "props": "apoiado, preciso, pesado I "
+        "props": "braced, precise, heavy I "
       },
       {
         "type": "melee",
@@ -423,12 +443,12 @@
         "TEN": 30,
         "PA": 2,
         "deflection":0,
-        "props": "DEF, pesado I "
+        "props": "DEF, heavy I "
       } 
     ]
   },
-  "Wooden shield":{
-    "name": "Wooden shield",
+  "WoodenShield":{
+    "name": "WoodenShield",
     "handed":"one", 
     "penalty":1,
     "scale":3,
@@ -443,12 +463,12 @@
         "TEN": 30,
         "PA": 3,
         "deflection":3,
-        "props": "DEF+3, pesado I"
+        "props": "DEF+3, heavy I"
       }
     ]
   },
   "ShortBow":{
-    "name": "Short Bow",
+    "name": "ShortBow",
     "handed":"two", 
     "penalty":0,
     "scale":3,
@@ -463,13 +483,13 @@
         "TEN": 10,
         "PA": 4,
         "deflection":0,
-        "props": "preciso"
+        "props": "precise"
       }
       
     ]
   },
   "LongBow":{
-    "name": "Long Bow",
+    "name": "LongBow",
     "handed":"two", 
     "penalty":0,
     "scale":3,
@@ -484,12 +504,12 @@
         "TEN": 10,
         "PA": 5,
         "deflection":0,
-        "props": "preciso, FOR 13"
+        "props": "precise, STR 13"
       }
     ]
   },
   "HeavyBow":{
-    "name": "Heavy Bow",
+    "name": "HeavyBow",
     "handed":"two", 
     "penalty":0,
     "scale":3,
@@ -504,7 +524,47 @@
         "TEN": 10,
         "PA": 5,
         "deflection":0,
-        "props": "preciso, FOR 16"
+        "props": "precise, STR 16"
+      }
+    ]
+  },
+  "Jaws":{
+    "name": "Jaws",
+    "handed":"small", 
+    "penalty":0,
+    "scale":3,
+    "attacks":[
+      {
+        "type": "melee",
+        "impact": 6,
+        "heavyMod":0.5,
+        "penMod": 1,
+        "range": "short",
+        "RES": 10,
+        "TEN": 10,
+        "PA": 3,
+        "deflection":0,
+        "props": "grapple, heavy I"
+      }
+    ]
+  },
+  "Claws":{
+    "name": "Claws",
+    "handed":"small", 
+    "penalty":0,
+    "scale":3,
+    "attacks":[
+      {
+        "type": "melee",
+        "impact": 6,
+        "heavyMod":0,
+        "penMod": 1,
+        "range": "short",
+        "RES": 10,
+        "TEN": 10,
+        "PA": 2,
+        "deflection":0,
+        "props": "grapple"
       }
     ]
   }

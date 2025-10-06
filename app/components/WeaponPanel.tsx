@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { WeaponType } from "../types";
 import { makeFullRoll } from "./utils";
+import { dmgArr } from "../types";
 
 
 
@@ -65,7 +66,7 @@ export function WeaponPanel({characterWeapons, setCharacterWeapons, STR=10, stri
                       <tr key={el+index.toString()}>
                         <td>{atk.RES}</td>
                         <td>{atk.TEN}</td>
-                        <td>{atk.impact+(atk.heavyMod ? '+' + (atk.type == 'melee' ? Math.floor(atk.heavyMod*STR)  : atk.heavyMod) : '' ) + '/' +Math.floor(atk.impact*atk.penMod)+(atk.heavyMod ? '+'+(atk.type == 'melee' ? Math.floor(atk.heavyMod*atk.penMod*STR) : atk.heavyMod*atk.penMod) : '')}</td>
+                        <td>{atk.impact+(atk.heavyMod ? '+' + (atk.type == 'melee' ? Math.floor(atk.heavyMod*STR*dmgArr[el.scale-1])  : atk.heavyMod*dmgArr[el.scale-1]) : '' ) + '/' +Math.floor(atk.impact*atk.penMod)+(atk.heavyMod ? '+'+(atk.type == 'melee' ? Math.floor(atk.heavyMod*atk.penMod*STR*dmgArr[el.scale-1]) : atk.heavyMod*atk.penMod*dmgArr[el.scale-1]) : '')}</td>
                         <td>{atk.PA}</td>
                         <td>{atk.range}</td>
                         <td>{atk.deflection}</td>

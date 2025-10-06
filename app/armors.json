@@ -58,5 +58,45 @@
     "cover":12,
     "penalty":2,
     "type": "medium"
+  },
+  "HalfPlate":{
+    "name": "HalfPlate",
+    "RES": 50,
+    "TEN":25,
+    "INS":10,
+    "prot":15,
+    "cover":12,
+    "penalty":2,
+    "type": "heavy"
+  },
+  "FullPlate":{
+    "name": "FullPlate",
+    "RES": 50,
+    "TEN":25,
+    "INS":10,
+    "prot":15,
+    "cover":15,
+    "penalty":3,
+    "type": "heavy"
+  },
+  "ReinforcedPlate":{
+    "name": "ReinforcedPlate",
+    "RES": 60,
+    "TEN":30,
+    "INS":10,
+    "prot":20,
+    "cover":15,
+    "penalty":4,
+    "type": "heavy"
+  },
+  "Fur":{
+    "name": "Fur",
+    "RES": 20,
+    "TEN":5,
+    "INS":5,
+    "prot":2,
+    "cover":15,
+    "penalty":0,
+    "type": "light"
   }
 }

@@ -3,8 +3,6 @@ import baseCharacter from './baseCharacter.json'
 import baseArmor from './baseArmor.json'
 import baseWeapon from './baseWeapon.json'
 
-
-
 export const MHArr = [-2,-1,0,1,2,3,4]
 export const dmgArr = [0.5, 0.75, 1, 1.5, 2, 3, 4]
 

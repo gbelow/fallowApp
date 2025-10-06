@@ -1,0 +1,162 @@
+{
+  "path": "humanoid/proficient",
+  "name": "Telepath",
+  "size": 3,
+  "attributes": {
+    "STR": 10,
+    "AGI": 12,
+    "STA": 12,
+    "CON": 1,
+    "INT": 3,
+    "SPI": 0,
+    "DEX": 1
+  },
+  "movement": {
+    "basic": "1m",
+    "careful": "0.5m",
+    "crawl": "0.33m",
+    "run": 0,
+    "jump": 0,
+    "swim": "0.33m",
+    "fast swim": "0.5m",
+    "stand": 0
+  },
+  "STR": 10,
+  "AGI": 12,
+  "STA": 12,
+  "CON": 1,
+  "INT": 3,
+  "SPI": 0,
+  "DEX": 1,
+  "melee": 1,
+  "ranged": 1,
+  "detection": 2,
+  "spellcast": 3,
+  "convic1": 2,
+  "convic2": 2,
+  "devotion": 0,
+  "RESnat": 5,
+  "INSnat": 5,
+  "TENnat": 5,
+  "gearPen": 1,
+  "hasGauntlets": 0,
+  "hasHelm": 0,
+  "characterWeapons": {
+    "mãos": {
+      "name": "mãos",
+      "handed": "small",
+      "penalty": 0,
+      "scale": 3,
+      "attacks": [
+        {
+          "type": "melee",
+          "impact": 0,
+          "heavyMod": 0,
+          "penMod": 0,
+          "range": "short",
+          "RES": 20,
+          "TEN": 20,
+          "PA": 2,
+          "deflection": 0,
+          "props": "agarrar, sacar"
+        },
+        {
+          "type": "melee",
+          "impact": 4,
+          "heavyMod": 0.5,
+          "penMod": 0.2,
+          "range": "short",
+          "RES": 20,
+          "TEN": 20,
+          "PA": 2,
+          "deflection": 0,
+          "props": "pesado I, sacar"
+        }
+      ]
+    },
+    "rondel3": {
+      "name": "rondel",
+      "handed": "small",
+      "penalty": 0,
+      "scale": 3,
+      "attacks": [
+        {
+          "type": "melee",
+          "impact": 8,
+          "heavyMod": 0.5,
+          "penMod": 2,
+          "range": "short",
+          "RES": 20,
+          "TEN": 40,
+          "PA": 3,
+          "deflection": 0,
+          "props": "DEF, heavy I, precise "
+        }
+      ]
+    },
+    "WoodenShield3": {
+      "name": "WoodenShield",
+      "handed": "one",
+      "penalty": 1,
+      "scale": 3,
+      "attacks": [
+        {
+          "type": "melee",
+          "impact": 8,
+          "heavyMod": 0.5,
+          "penMod": 0.2,
+          "range": "short",
+          "RES": 50,
+          "TEN": 30,
+          "PA": 3,
+          "deflection": 3,
+          "props": "DEF+3, heavy I"
+        }
+      ]
+    }
+  },
+  "armor": {
+    "name": "Chain shirt",
+    "RES": 50,
+    "TEN": 12,
+    "INS": 5,
+    "prot": 3,
+    "cover": 10,
+    "penalty": 0,
+    "type": "light"
+  },
+  "skills": {
+    "strike": 1,
+    "block": 1,
+    "evasion": 1,
+    "reflex": 3,
+    "precision": 1,
+    "grapple": 1,
+    "DP": -2,
+    "sneak": 3,
+    "prestidigitation": 1,
+    "balance": 2,
+    "strength": 2,
+    "health": 2,
+    "swim": 1,
+    "climb": 1,
+    "knowledge": 6,
+    "detect": 0,
+    "sense": 0,
+    "explore": 2,
+    "cunning": 4,
+    "will": 3,
+    "enchant": 5,
+    "stress": 3,
+    "devotion": 0,
+    "combustion": 3,
+    "eletromag": 3,
+    "radiation": 3,
+    "enthropy": 3,
+    "biomancy": 3,
+    "telepathy": 6,
+    "animancy": 3
+  },
+  "notes": "\\spell{Assustar}{3 PA }{Telepatia 1}{}{5}{15m, alvo detectável}{Psíquico}{instantâneo}{ Um ataque espiritual que faz alguém ficar com medo se falhar ou raspar em um teste de vontade contra o Estressar.}\n\n\\spell{Calmaria}{3 PA }{Telepatia 1}{}{5}{15m, alvo detectável}{Psíquico}{instantâneo}{ Um ataque espiritual que remove o medo ou fúria se falhar ou raspar em um teste de vontade contra o Encantar.}\n\n\\spell{Ligação Telepática}{3 PA}{Telepatia 3}{}{5}{20m}{Efeito}{10 minutos}{Cria uma ligação telepática com uma criatura próxima se falharem ou rasparem em um teste de vontade ou se permitirem a ligação. O conjurador pode falar diretamente com a mente de seu alvo durante a duração do feitiço ou até que a distância máxima seja excedida, momento em que o feitiço se quebra. Cada ligação simultânea aumenta a dificuldade do teste de feitiçaria em 2.}\n\n\\spell{Sugestão}{3 PA }{Telepatia 2}{}{5}{15m alvo que consiga ouvir e entender a sugestão}{Psíquico}{}{Diz a uma criatura que consiga escutar e entender as palavras e que esteja confusa, enfurecida, seduzida ou amedrontada para fazer uma coisa, causando a compulsão de obedecer. Se falharem ou rasparem em um teste vontade contra Encantar, eles obedecerão. Essa compulsão não deve custar mais do que 6 PA em caso de erro, 4 PA em caso de raspar. }\n",
+  "packItems": ""
+}

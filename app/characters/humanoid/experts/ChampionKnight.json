@@ -1,15 +1,15 @@
 {
-  "path": "humanoid/proficient",
-  "name": "Human Warrior",
+  "path": "humanoid/experts",
+  "name": "ChampionKnight",
   "size": 3,
   "attributes": {
     "STR": 12,
     "AGI": 12,
     "STA": 14,
-    "CON": 2,
-    "INT": 1,
-    "SPI": 1,
-    "DEX": 2
+    "CON": 3,
+    "INT": 2,
+    "SPI": 0,
+    "DEX": 3
   },
   "movement": {
     "basic": "1m",
@@ -24,13 +24,13 @@
   "STR": 12,
   "AGI": 12,
   "STA": 14,
-  "CON": 2,
-  "INT": 1,
-  "SPI": 1,
-  "DEX": 2,
-  "melee": 2,
-  "ranged": 2,
-  "detection": 1,
+  "CON": 3,
+  "INT": 2,
+  "SPI": 0,
+  "DEX": 3,
+  "melee": 3,
+  "ranged": 1,
+  "detection": 2,
   "spellcast": 0,
   "convic1": 0,
   "convic2": 0,
@@ -38,9 +38,9 @@
   "RESnat": 6,
   "INSnat": 6,
   "TENnat": 6,
-  "gearPen": 2,
+  "gearPen": 3,
   "hasGauntlets": 1,
-  "hasHelm": 0,
+  "hasHelm": 1,
   "characterWeapons": {
     "mãos": {
       "name": "mãos",
@@ -74,26 +74,6 @@
         }
       ]
     },
-    "rondel3": {
-      "name": "rondel",
-      "handed": "small",
-      "penalty": 0,
-      "scale": 3,
-      "attacks": [
-        {
-          "type": "melee",
-          "impact": 8,
-          "heavyMod": 0.5,
-          "penMod": 2,
-          "range": "short",
-          "RES": 20,
-          "TEN": 40,
-          "PA": 3,
-          "deflection": 0,
-          "props": "DEF, pesado I, preciso "
-        }
-      ]
-    },
     "Halberd3": {
       "name": "Halberd",
       "handed": "two",
@@ -110,7 +90,7 @@
           "TEN": 50,
           "PA": 4,
           "deflection": 0,
-          "props": "pesado II"
+          "props": "heavy II"
         },
         {
           "type": "melee",
@@ -122,7 +102,7 @@
           "TEN": 50,
           "PA": 3,
           "deflection": 0,
-          "props": "apoiado, preciso, pesado I "
+          "props": "braced, precise, heavy I "
         },
         {
           "type": "melee",
@@ -146,45 +126,45 @@
           "TEN": 30,
           "PA": 2,
           "deflection": 0,
-          "props": "DEF, pesado I "
+          "props": "DEF, heavy I "
         }
       ]
     }
   },
   "armor": {
-    "name": "Brigandine",
+    "name": "FullPlate",
     "RES": 50,
-    "TEN": 20,
-    "INS": 8,
-    "prot": 12,
-    "cover": 12,
-    "penalty": 2,
-    "type": "medium"
+    "TEN": 25,
+    "INS": 10,
+    "prot": 15,
+    "cover": 15,
+    "penalty": 3,
+    "type": "heavy"
   },
   "skills": {
-    "strike": 5,
-    "block": 4,
-    "evasion": 4,
-    "reflex": 3,
-    "precision": 0,
-    "grapple": 2,
-    "DP": -2,
-    "sneak": 0,
-    "prestidigitation": -1,
-    "balance": 2,
+    "strike": 7,
+    "block": 7,
+    "evasion": 3,
+    "reflex": 0,
+    "precision": -2,
+    "grapple": 5,
+    "DP": -1,
+    "sneak": -1,
+    "prestidigitation": 0,
+    "balance": 4,
     "strength": 4,
-    "health": 2,
-    "swim": 3,
-    "climb": 0,
-    "knowledge": 2,
+    "health": 5,
+    "swim": -2,
+    "climb": -1,
+    "knowledge": 4,
     "detect": 0,
     "sense": 0,
-    "explore": 1,
-    "cunning": 1,
+    "explore": 2,
+    "cunning": 2,
     "will": 0,
     "enchant": 0,
     "stress": 0,
-    "devotion": 1,
+    "devotion": 0,
     "combustion": 0,
     "eletromag": 0,
     "radiation": 0,

@@ -212,9 +212,9 @@ export function CharacterCreator() {
         <div className='flex flex-row gap-2 justify-center'>
           <div>PA: {6}</div>
           <div>STA: {STA}</div>
-          <div>STA regen: {Math.floor(CON/3)}</div>
-          <div>Ferimentos leves: {Math.floor(CON/2)}</div>
-          <div>Ferimentos sérios: {Math.floor(CON/5)}</div>
+          <div>STA regen: {Math.floor(STA/4)}</div>
+          {/* <div>Ferimentos leves: {Math.floor(CON/2)}</div>
+          <div>Ferimentos sérios: {Math.floor(CON/5)}</div> */}
         </div>
         <div className='flex flex-row gap-2 justify-center'>
           <TextItem stat={movement.basic} setStat={(val)=> setMovement({...movement, basic:val})} title={'basic (1PA)'} />
@@ -273,11 +273,11 @@ export function CharacterCreator() {
           <SkillItem key={skey+'DP'} statName='DP' calculatedValue={-2-MH*2} title={'DP'}  skills={skills} setSkills={setSkills}/>
         </div>
         <div className='flex flex-row gap-2 justify-center'>
-          <SkillItem key={skey+'balance'} statName='balance' calculatedValue={AGI} title={'Equilíbrio'} skills={skills} setSkills={setSkills}/>
-          <SkillItem key={skey+'climb'} statName='climb' calculatedValue={AGI- 3*MH-3*hasGauntlets-gearPen} title={'Escalar*'} skills={skills} setSkills={setSkills}/>
-          <SkillItem key={skey+'swim'} statName='swim' calculatedValue={AGI-gearPen-3*hasHelm} title={'Nadar*'}  skills={skills} setSkills={setSkills}/>
+          <SkillItem key={skey+'balance'} statName='balance' calculatedValue={AGI-10} title={'Equilíbrio'} skills={skills} setSkills={setSkills}/>
+          <SkillItem key={skey+'climb'} statName='climb' calculatedValue={AGI-10 - 2*MH-3*hasGauntlets-gearPen} title={'Escalar*'} skills={skills} setSkills={setSkills}/>
+          <SkillItem key={skey+'swim'} statName='swim' calculatedValue={AGI-10-gearPen-3*hasHelm} title={'Nadar*'}  skills={skills} setSkills={setSkills}/>
           <SkillItem key={skey+'strength'} statName='strength' calculatedValue={STA + 5*MH} title={'Força'} skills={skills} setSkills={setSkills}/>
-          <SkillItem key={skey+'sneak'} statName='sneak' calculatedValue={AGI- 3*MH-gearPen} title={'Furtividade'} skills={skills} setSkills={setSkills}/>
+          <SkillItem key={skey+'sneak'} statName='sneak' calculatedValue={AGI-10- 3*MH-gearPen} title={'Furtividade'} skills={skills} setSkills={setSkills}/>
           <SkillItem key={skey+'prestidigitation'} statName='prestidigitation' calculatedValue={DEX-3*hasGauntlets} title={'Prestidigitação**'} skills={skills} setSkills={setSkills}/>
           <SkillItem key={skey+'health'} statName='health' calculatedValue={CON} title={'Saúde'}  skills={skills} setSkills={setSkills}/>
         </div>

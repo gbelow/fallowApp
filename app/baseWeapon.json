@@ -1,5 +1,5 @@
 {
-  "name": "mãos",
+  "name": "hands",
   "handed":"small", 
   "penalty":0,
   "scale":3,
@@ -12,7 +12,7 @@
       "range": "short",
       "RES": 0,
       "TEN": 0,
-      "PA": 2,
+      "PA": 3,
       "deflection":0,        
       "props": "agarrar, sacar"
     },
