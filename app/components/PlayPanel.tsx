@@ -3,7 +3,7 @@ import { useEffect, useState } from 'react'
 import bus from "../eventBus";
 import { ArmorPanel } from './ArmorPanel';
 import { WeaponPanel } from './WeaponPanel';
-import { ActiveCharType, CharacterType, WeaponType, charResources, penaltyTable, Afflictionstype, AfflictionItemType, MHArr, ArmorType,  } from '../types';
+import { ActiveCharType, CharacterType, WeaponType, charResources, penaltyTable, Afflictionstype, AfflictionItemType, ArmorType,  } from '../types';
 import { makeFullRoll, scaleArmor } from './utils';
 
 
@@ -140,7 +140,7 @@ export function PlayPanel({mode}:{mode: string}){
     }
   }
   
-  const useSurge = (type: string) => {
+  const actSurge = (type: string) => {
     if(currentCharacter && currentCharacter.resources.STA >= 3 && currentCharacter.resources.surgeToken){
       const amount = type == 'move'? 4: 6
       const cost = 3+Math.floor(getGearPen()/3)
@@ -311,8 +311,8 @@ export function PlayPanel({mode}:{mode: string}){
               <span>
                 Roll: {dice6}
               </span>
-              <input type='button' value='action surge' aria-label='action surge' className={'p-1 border hover:bg-gray-500 rounded '+(currentCharacter.resources.surgeToken ? 'bg-gray-500': '')} onClick={() => useSurge('') } />  
-              <input type='button' value='move surge' aria-label='action surge' className={'p-1 border hover:bg-gray-500 rounded '+(currentCharacter.resources.surgeToken ? 'bg-gray-500': '')} onClick={() => useSurge('move') } />  
+              <input type='button' value='action surge' aria-label='action surge' className={'p-1 border hover:bg-gray-500 rounded '+(currentCharacter.resources.surgeToken ? 'bg-gray-500': '')} onClick={() => actSurge('') } />  
+              <input type='button' value='move surge' aria-label='action surge' className={'p-1 border hover:bg-gray-500 rounded '+(currentCharacter.resources.surgeToken ? 'bg-gray-500': '')} onClick={() => actSurge('move') } />  
               <input type='button' value='rest' aria-label='action surge' className={'p-1 border hover:bg-gray-500 rounded '} onClick={ useRest } />  
               {/* <span className='flex flex-wrap w-16'>Ordem no turno {currentCharacter.resources.turn}</span> */}
             </div>                         

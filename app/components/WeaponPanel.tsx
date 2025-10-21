@@ -17,7 +17,7 @@ export function WeaponPanel({characterWeapons, setCharacterWeapons, STR=10, stri
   const [lastAtk, setLastAtk] = useState({atk:0, properties: '', weapon: ''})
 
   const pressAtk = (range: string, heavyMod:number, properties:string, weapon: string) => {
-    let roll = makeFullRoll()
+    const roll = makeFullRoll()
     let atk = 0
     if(heavyMod == 1) atk -= 2 
     if(heavyMod >= 1.5) atk -= 3 

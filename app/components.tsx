@@ -7,7 +7,7 @@ import { ArmorType, WeaponType, CharacterType } from './types';
 import { PlayPanel } from './components/PlayPanel';
 import { CharacterCreator } from './components/CharacterCreator';
 import { scaleWeapon } from './components/utils';
-import { createNewCharacter, deleteBaseCharacter, getBasicCharList, getCharacter, getCharacterList } from './actions';
+import { JsonObject, createNewCharacter, deleteBaseCharacter, getBasicCharList, getCharacter, getCharacterList } from './actions';
 import baseCharacter from './baseCharacter.json'
 
 
@@ -61,7 +61,7 @@ export function CharacterSelector({charList, selectedPage}: {charList: string[],
 
   const [open, setOpen] = useState<{ [key: string]: boolean }>({});
   const [openPlayer, setOpenPlayer] = useState(false)
-  const [charactersList, setCharactersList] = useState(undefined)
+  const [charactersList, setCharactersList] = useState<JsonObject | undefined>()
   const [isLoading, setIsLoading] = useState(true)
   
   

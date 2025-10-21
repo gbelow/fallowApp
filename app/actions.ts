@@ -6,8 +6,13 @@ import fs from "fs";
 import path from "path";
 
 
-function loadJsonFromFolder(baseDir: string): any {
-  const result: Record<string, any> = {};
+export type JsonValue = string | number | boolean | null | JsonObject | JsonValue[];
+export interface JsonObject {
+  [key: string]: JsonValue;
+}
+
+export function loadJsonFromFolder(baseDir: string): JsonObject {
+  const result: JsonObject = {};
 
   const entries = fs.readdirSync(baseDir, { withFileTypes: true });
 
@@ -20,7 +25,7 @@ function loadJsonFromFolder(baseDir: string): any {
     } else if (entry.isFile() && entry.name.endsWith(".json")) {
       // Remove .json extension
       const key = path.basename(entry.name, ".json");
-      const content = JSON.parse(fs.readFileSync(fullPath, "utf-8"));
+      const content = JSON.parse(fs.readFileSync(fullPath, "utf-8")) as JsonValue;
       result[key] = content;
     }
   }
