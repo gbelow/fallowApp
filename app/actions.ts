@@ -11,7 +11,7 @@ export interface JsonObject {
   [key: string]: JsonValue;
 }
 
-export function loadJsonFromFolder(baseDir: string): JsonObject {
+export async function loadJsonFromFolder(baseDir: string): Promise<JsonObject> {
   const result: JsonObject = {};
 
   const entries = fs.readdirSync(baseDir, { withFileTypes: true });
@@ -21,7 +21,7 @@ export function loadJsonFromFolder(baseDir: string): JsonObject {
 
     if (entry.isDirectory()) {
       // Recursively load subfolders
-      result[entry.name] = loadJsonFromFolder(fullPath);
+      result[entry.name] = await loadJsonFromFolder(fullPath);
     } else if (entry.isFile() && entry.name.endsWith(".json")) {
       // Remove .json extension
       const key = path.basename(entry.name, ".json");
@@ -32,6 +32,10 @@ export function loadJsonFromFolder(baseDir: string): JsonObject {
 
   return result;
 }
+
+// export async function loadJsonFromFolder(baseDir: string): Promise<JsonObject> {
+
+// }
 
 
 export async function getBasicCharList(){
