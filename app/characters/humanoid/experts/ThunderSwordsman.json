@@ -76,19 +76,18 @@
     }
   },
   "armor": {
-    "name": "Brigandine",
+    "name": "HalfPlate",
     "RES": 50,
-    "TEN": 20,
+    "TEN": 30,
     "INS": 8,
-    "prot": 12,
+    "prot": 15,
     "cover": 12,
     "penalty": 2,
-    "type": "medium"
+    "type": "heavy"
   },
   "skills": {
     "strike": 6,
-    "block": 6,
-    "evasion": 3,
+    "defend": 6,
     "reflex": 4,
     "precision": -1,
     "grapple": 3,
@@ -99,7 +98,7 @@
     "strength": 4,
     "health": 4,
     "swim": -2,
-    "climb": 0,
+    "climb": -5,
     "knowledge": 4,
     "detect": 0,
     "sense": 0,

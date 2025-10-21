@@ -13,8 +13,7 @@
   "attributes":{"STR": 10, "AGI": 10, "STA": 10, "CON":0, "INT": 0, "SPI": 0, "DEX":0},
   "skills": {
     "strike": 0,
-    "block": 0,
-    "evasion": 0,
+    "defend": 0,
     "reflex": 0,
     "precision": 0,
     "grapple": 0,

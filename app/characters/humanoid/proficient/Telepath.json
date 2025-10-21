@@ -118,7 +118,7 @@
   "armor": {
     "name": "Chain shirt",
     "RES": 50,
-    "TEN": 12,
+    "TEN": 15,
     "INS": 5,
     "prot": 3,
     "cover": 10,
@@ -127,8 +127,7 @@
   },
   "skills": {
     "strike": 1,
-    "block": 1,
-    "evasion": 1,
+    "defend": 1,
     "reflex": 3,
     "precision": 1,
     "grapple": 1,

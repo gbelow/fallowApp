@@ -11,7 +11,7 @@
   },
   "Clothes": {
     "name": "Clothes",
-    "RES": 20,
+    "RES": 0,
     "TEN":3,
     "INS":2,
     "prot":0,
@@ -21,18 +21,28 @@
   },
   "Gambeson":{
     "name": "Gambeson",
-    "RES": 50,
-    "TEN":8,
+    "RES": 0,
+    "TEN":10,
     "INS":6,
     "prot":3,
     "cover":10,
     "penalty":0,
     "type": "light"
   },
+  "PaddedArmor":{
+    "name": "PaddedArmor",
+    "RES": 0,
+    "TEN":12,
+    "INS":8,
+    "prot":5,
+    "cover":12,
+    "penalty":1,
+    "type": "light"
+  },
   "ChainShirt":{
     "name": "Chain shirt",
-    "RES": 50,
-    "TEN":12,
+    "RES": 0,
+    "TEN":15,
     "INS":5,
     "prot":3,
     "cover":10,
@@ -41,8 +51,8 @@
   },
   "ChainMail":{
     "name": "Chain Mail",
-    "RES": 50,
-    "TEN":15,
+    "RES": 0,
+    "TEN":20,
     "INS":6,
     "prot":5,
     "cover":12,
@@ -51,10 +61,10 @@
   },
   "Brigandine":{
     "name": "Brigandine",
-    "RES": 50,
-    "TEN":20,
+    "RES": 0,
+    "TEN":25,
     "INS":8,
-    "prot":12,
+    "prot":10,
     "cover":12,
     "penalty":2,
     "type": "medium"
@@ -62,8 +72,8 @@
   "HalfPlate":{
     "name": "HalfPlate",
     "RES": 50,
-    "TEN":25,
-    "INS":10,
+    "TEN":30,
+    "INS":8,
     "prot":15,
     "cover":12,
     "penalty":2,
@@ -72,7 +82,7 @@
   "FullPlate":{
     "name": "FullPlate",
     "RES": 50,
-    "TEN":25,
+    "TEN":30,
     "INS":10,
     "prot":15,
     "cover":15,
@@ -82,7 +92,7 @@
   "ReinforcedPlate":{
     "name": "ReinforcedPlate",
     "RES": 60,
-    "TEN":30,
+    "TEN":40,
     "INS":10,
     "prot":20,
     "cover":15,

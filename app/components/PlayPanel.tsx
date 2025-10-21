@@ -378,10 +378,11 @@ export function PlayPanel({mode}:{mode: string}){
             <div className='flex flex-row gap-2 justify-center'>
               <SimpleSkill name={'golpear'} value={currentCharacter.resources.skills['strike']} rollSkill={rollSkill}/>
               <SimpleSkill name={'precisão'} value={currentCharacter.resources.skills['precision']} rollSkill={rollSkill}/>
-              <SimpleSkill name={'evasão'} value={currentCharacter.resources.skills['evasion']} rollSkill={rollSkill}/>
+              <SimpleSkill name={'defend'} value={currentCharacter.resources.skills['defend']} rollSkill={rollSkill}/>
               <SimpleSkill name={'reflexo'} value={currentCharacter.resources.skills['reflex']} rollSkill={rollSkill}/>
-              <SimpleSkill name={'bloqueio'} value={currentCharacter.resources.skills['block']} rollSkill={rollSkill}/>
+              {/* <SimpleSkill name={'bloqueio'} value={currentCharacter.resources.skills['block']} rollSkill={rollSkill}/> */}
               <SimpleSkill name={'agarrar'} value={currentCharacter.resources.skills['grapple']} rollSkill={rollSkill}/>
+              <SimpleSkill name={'astúcia'} value={currentCharacter.resources.skills['cunning']} rollSkill={rollSkill}/>
               <SimpleSkill name={'DP'} value={currentCharacter.resources.skills['DP']}/>
             </div>
             <div className='flex flex-row gap-2 justify-center'>
@@ -396,7 +397,6 @@ export function PlayPanel({mode}:{mode: string}){
             <div className='flex flex-row gap-2 justify-center'>
               <SimpleSkill name={'conhecimeto'} value={currentCharacter.resources.skills['knowledge']} rollSkill={rollSkill}/>
               <SimpleSkill name={'explorar'} value={currentCharacter.resources.skills['explore']} rollSkill={rollSkill}/>
-              <SimpleSkill name={'astúcia'} value={currentCharacter.resources.skills['cunning']} rollSkill={rollSkill}/>
               <SimpleSkill name={'vontade'} value={currentCharacter.resources.skills['will']} rollSkill={rollSkill}/>
               <SimpleSkill name={'enchantar'} value={currentCharacter.resources.skills['enchant']} rollSkill={rollSkill}/>
               <SimpleSkill name={'estressar'} value={currentCharacter.resources.skills['stress']} rollSkill={rollSkill}/>

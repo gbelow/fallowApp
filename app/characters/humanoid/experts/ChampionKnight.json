@@ -134,7 +134,7 @@
   "armor": {
     "name": "FullPlate",
     "RES": 50,
-    "TEN": 25,
+    "TEN": 30,
     "INS": 10,
     "prot": 15,
     "cover": 15,
@@ -143,8 +143,7 @@
   },
   "skills": {
     "strike": 7,
-    "block": 7,
-    "evasion": 3,
+    "defend": 7,
     "reflex": 0,
     "precision": -2,
     "grapple": 5,
@@ -154,7 +153,7 @@
     "balance": 4,
     "strength": 4,
     "health": 5,
-    "swim": -2,
+    "swim": -4,
     "climb": -1,
     "knowledge": 4,
     "detect": 0,

@@ -87,8 +87,7 @@
   },
   "skills": {
     "strike": 3,
-    "block": 2,
-    "evasion": 3,
+    "defend": 2,
     "reflex": 3,
     "precision": 0,
     "grapple": 2,

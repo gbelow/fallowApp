@@ -266,17 +266,18 @@ export function CharacterCreator() {
         <div className='flex flex-row gap-2 justify-center'>
           <SkillItem key={skey+'strike'} statName='strike' calculatedValue={ melee - 2*MH} title={'Golpear'} skills={skills} setSkills={setSkills}/>
           <SkillItem key={skey+'precision'} statName='precision' calculatedValue={ ranged - 2*MH - 3*hasGauntlets} title={'Precisão**'} skills={skills} setSkills={setSkills}/>
-          <SkillItem key={skey+'evasion'} statName='evasion' calculatedValue={ melee - 2*MH } title={'Evasão'} skills={skills} setSkills={setSkills}/>
+          <SkillItem key={skey+'defend'} statName='defend' calculatedValue={ melee - 2*MH } title={'Defend'} skills={skills} setSkills={setSkills}/>
           <SkillItem key={skey+'reflex'} statName='reflex' calculatedValue={ detection+ranged - 2*MH- 3*hasHelm } title={'Reflexos'} skills={skills} setSkills={setSkills}/>
-          <SkillItem key={skey+'block'} statName='block' calculatedValue={ melee - 2*MH} title={'Bloquear'} skills={skills} setSkills={setSkills}/>
-          <SkillItem key={skey+'grapple'} statName='grapple' calculatedValue={melee + 5*MH} title={'Agarrar'}  skills={skills} setSkills={setSkills}/>
+          {/* <SkillItem key={skey+'block'} statName='block' calculatedValue={ melee - 2*MH} title={'Bloquear'} skills={skills} setSkills={setSkills}/> */}
+          <SkillItem key={skey+'grapple'} statName='grapple' calculatedValue={STR-10 + 4*MH} title={'Agarrar'}  skills={skills} setSkills={setSkills}/>
+          <SkillItem key={skey+'cunning'} statName='cunning' calculatedValue={detection-3*hasHelm} title={'Astúcia***'}  skills={skills} setSkills={setSkills}/>
           <SkillItem key={skey+'DP'} statName='DP' calculatedValue={-2-MH*2} title={'DP'}  skills={skills} setSkills={setSkills}/>
         </div>
         <div className='flex flex-row gap-2 justify-center'>
           <SkillItem key={skey+'balance'} statName='balance' calculatedValue={AGI-10} title={'Equilíbrio'} skills={skills} setSkills={setSkills}/>
           <SkillItem key={skey+'climb'} statName='climb' calculatedValue={AGI-10 - 2*MH-3*hasGauntlets-gearPen} title={'Escalar*'} skills={skills} setSkills={setSkills}/>
           <SkillItem key={skey+'swim'} statName='swim' calculatedValue={AGI-10-gearPen-3*hasHelm} title={'Nadar*'}  skills={skills} setSkills={setSkills}/>
-          <SkillItem key={skey+'strength'} statName='strength' calculatedValue={STA + 5*MH} title={'Força'} skills={skills} setSkills={setSkills}/>
+          <SkillItem key={skey+'strength'} statName='strength' calculatedValue={STR-10 + 4*MH} title={'Força'} skills={skills} setSkills={setSkills}/>
           <SkillItem key={skey+'sneak'} statName='sneak' calculatedValue={AGI-10- 3*MH-gearPen} title={'Furtividade'} skills={skills} setSkills={setSkills}/>
           <SkillItem key={skey+'prestidigitation'} statName='prestidigitation' calculatedValue={DEX-3*hasGauntlets} title={'Prestidigitação**'} skills={skills} setSkills={setSkills}/>
           <SkillItem key={skey+'health'} statName='health' calculatedValue={CON} title={'Saúde'}  skills={skills} setSkills={setSkills}/>
@@ -284,7 +285,6 @@ export function CharacterCreator() {
         <div className='flex flex-row gap-2 justify-center'>
           <SkillItem key={skey+'knowledge'} statName='knowledge' calculatedValue={2*INT} title={'Conhecimento'} skills={skills} setSkills={setSkills}/>
           <SkillItem key={skey+'explore'} statName='explore' calculatedValue={detection} title={'Explorar'} skills={skills} setSkills={setSkills}/>
-          <SkillItem key={skey+'cunning'} statName='cunning' calculatedValue={detection-3*hasHelm} title={'Astúcia***'}  skills={skills} setSkills={setSkills}/>
           <SkillItem key={skey+'will'} statName='will' calculatedValue={0} title={'Vontade'}  skills={skills} setSkills={setSkills}/>
           <SkillItem key={skey+'enchant'} statName='enchant' calculatedValue={0} title={'Encantar'}  skills={skills} setSkills={setSkills}/>
           <SkillItem key={skey+'stress'} statName='stress' calculatedValue={0} title={'Estressar'}  skills={skills} setSkills={setSkills}/>

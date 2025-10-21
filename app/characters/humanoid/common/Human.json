@@ -76,10 +76,10 @@
     }
   },
   "armor": {
-    "name": "Skin",
-    "RES": 0,
-    "TEN": 0,
-    "INS": 0,
+    "name": "Clothes",
+    "RES": 20,
+    "TEN": 3,
+    "INS": 2,
     "prot": 0,
     "cover": 0,
     "penalty": 0,
@@ -87,8 +87,7 @@
   },
   "skills": {
     "strike": 0,
-    "block": 0,
-    "evasion": 0,
+    "defend": 0,
     "reflex": 0,
     "precision": 0,
     "grapple": 0,

@@ -130,7 +130,7 @@
   "armor": {
     "name": "Chain Mail",
     "RES": 50,
-    "TEN": 15,
+    "TEN": 20,
     "INS": 6,
     "prot": 5,
     "cover": 12,
@@ -139,8 +139,7 @@
   },
   "skills": {
     "strike": 4,
-    "block": 4,
-    "evasion": 4,
+    "defend": 4,
     "reflex": 2,
     "precision": 2,
     "grapple": 4,

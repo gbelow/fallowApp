@@ -150,7 +150,7 @@
   "armor": {
     "name": "Gambeson",
     "RES": 50,
-    "TEN": 8,
+    "TEN": 10,
     "INS": 6,
     "prot": 3,
     "cover": 10,
@@ -159,8 +159,7 @@
   },
   "skills": {
     "strike": 3,
-    "block": 1,
-    "evasion": 3,
+    "defend": 1,
     "reflex": 4,
     "precision": 5,
     "grapple": 1,
@@ -169,7 +168,7 @@
     "prestidigitation": 2,
     "balance": 4,
     "strength": 2,
-    "health": 2,
+    "health": 1,
     "swim": 4,
     "climb": 4,
     "knowledge": 2,
