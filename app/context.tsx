@@ -6,7 +6,7 @@ export const skillsList = {
   block: 10,
   evasion: 10,
   reflex: 10,
-  precision: 10,
+  accuracy: 10,
   grapple: 10,
   sneak: 10,
   prestidigitation: 10,

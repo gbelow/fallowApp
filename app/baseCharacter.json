@@ -3,7 +3,7 @@
   "armor": {
     "name": "Skin",
     "RES": 0,
-    "TEN":0,
+    "TGH":0,
     "INS":0,
     "prot":0,
     "cover":0,
@@ -15,9 +15,9 @@
     "strike": 0,
     "defend": 0,
     "reflex": 0,
-    "precision": 0,
+    "accuracy": 0,
     "grapple": 0,
-    "DP":-2,
+    "SD":-2,
 
     "sneak": 0,
     "prestidigitation": 0,
@@ -33,7 +33,7 @@
     "explore": 0,
     "cunning": 0,
     "will": 0,
-    "enchant": 0,
+    "charm": 0,
     "stress": 0,
     "devotion": 0,
 
@@ -73,7 +73,7 @@
   "devotion": 0,
   "RESnat": 5,
   "INSnat": 5,
-  "TENnat": 5,
+  "TGHnat": 5,
   "gearPen": 0,
   "hasGauntlets": 0,
   "hasHelm": 0,
@@ -91,8 +91,8 @@
           "penMod": 0,
           "range": "short",
           "RES": 20,
-          "TEN": 20,
-          "PA": 2,
+          "TGH": 20,
+          "PA": 3,
           "deflection":0,        
           "props": "agarrar, sacar"
         },
@@ -103,8 +103,8 @@
           "penMod": 0.2,
           "range": "short",
           "RES": 20,
-          "TEN": 20,
-          "PA": 2,
+          "TGH": 20,
+          "PA": 3,
           "deflection":0,        
           "props": "pesado I, sacar"
         }

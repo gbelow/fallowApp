@@ -3,17 +3,16 @@ import baseCharacter from './baseCharacter.json'
 import baseArmor from './baseArmor.json'
 import baseWeapon from './baseWeapon.json'
 
-export const MHArr = [-2,-1,0,1,2,3,4]
+export const SMArr = [-2,-1,0,1,2,3,4]
 export const dmgArr = [0.5, 0.75, 1, 1.5, 2, 3, 4]
 
 
 export const penaltyTable = {
   mobility: [
     "strike",
-    "block",
-    "evasion",
+    "defend",
     "reflex",
-    "precision",
+    "accuracy",
     "sneak",
     "prestidigitation",
     "balance",
@@ -21,10 +20,9 @@ export const penaltyTable = {
   ],
   injury:[
     "strike",
-    "block",
-    "evasion",
+    "defend",
     "reflex",
-    "precision",
+    "accuracy",
     "grapple",
     "sneak",
     "prestidigitation",
@@ -35,10 +33,9 @@ export const penaltyTable = {
   ],
   vision:[
     "strike",
-    "block",
-    "evasion",
+    "defend",
     "reflex",
-    "precision",
+    "accuracy",
     "grapple",
     "sneak",
     "prestidigitation",
@@ -51,7 +48,7 @@ export const penaltyTable = {
   mental:[
     "strike",
     "reflex",
-    "precision",
+    "accuracy",
     "sneak",
     "prestidigitation",
     "balance",

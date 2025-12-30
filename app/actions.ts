@@ -33,9 +33,6 @@ export async function loadJsonFromFolder(baseDir: string): Promise<JsonObject> {
   return result;
 }
 
-// export async function loadJsonFromFolder(baseDir: string): Promise<JsonObject> {
-
-// }
 
 
 export async function getBasicCharList(){

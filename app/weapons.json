@@ -12,8 +12,8 @@
         "penMod": 0,
         "range": "short",
         "RES": 0,
-        "TEN": 0,
-        "PA": 2,
+        "TGH": 0,
+        "PA": 3,
         "deflection":0,        
         "props": "grapple, draw"
       },
@@ -24,8 +24,8 @@
         "penMod": 0.2,
         "range": "short",
         "RES": 0,
-        "TEN": 0,
-        "PA": 2,
+        "TGH": 0,
+        "PA": 3,
         "deflection":0,        
         "props": "heavy I, draw"
       }
@@ -44,7 +44,7 @@
         "penMod": 2,
         "range": "short",
         "RES": 20,
-        "TEN": 20,
+        "TGH": 20,
         "PA": 3,
         "deflection":0,        
         "props": "DEF, draw, precise"
@@ -64,7 +64,7 @@
         "penMod": 2,
         "range": "short",
         "RES": 20,
-        "TEN": 40,
+        "TGH": 40,
         "PA": 3,
         "deflection":0,
         "props": "DEF, heavy I, precise "
@@ -84,7 +84,7 @@
         "penMod": 0.2,
         "range": "short",
         "RES": 30,
-        "TEN": 50,
+        "TGH": 50,
         "PA": 3,
         "deflection":0,
         "props": "DEF, heavy I, cleave, draw "
@@ -104,7 +104,7 @@
         "penMod": 2,
         "range": "short",
         "RES": 30,
-        "TEN": 50,
+        "TGH": 50,
         "PA": 3,
         "deflection":0,
         "props": "draw, precise "
@@ -116,10 +116,10 @@
         "penMod": 1,
         "range": "short",
         "RES": 30,
-        "TEN": 50,
+        "TGH": 50,
         "PA": 3,
         "deflection":0,
-        "props": "DEF, heavy I, cleave, draw "
+        "props": "DEF, heavy I, draw "
       }
     ]
   },
@@ -136,7 +136,7 @@
         "penMod": 2,
         "range": "long I",
         "RES": 20,
-        "TEN": 40,
+        "TGH": 40,
         "PA": 3,
         "deflection":0,
         "props": "draw, precise "
@@ -156,7 +156,7 @@
         "penMod": 2,
         "range": "long I",
         "RES": 20,
-        "TEN": 50,
+        "TGH": 50,
         "PA": 4,
         "deflection":0,
         "props": "braced, precise, heavy I "
@@ -168,8 +168,8 @@
         "penMod": 0.2,
         "range": "short",
         "RES": 20,
-        "TEN": 30,
-        "PA": 2,
+        "TGH": 30,
+        "PA": 3,
         "deflection":0,
         "props": "DEF, heavy I "
       }
@@ -188,7 +188,7 @@
         "penMod": 0.2,
         "range": "long I",
         "RES": 40,
-        "TEN": 50,
+        "TGH": 50,
         "PA": 3,
         "deflection":0,
         "props": "heavy II"
@@ -200,8 +200,8 @@
         "penMod": 0.2,
         "range": "short",
         "RES": 20,
-        "TEN": 30,
-        "PA": 2,
+        "TGH": 30,
+        "PA": 3,
         "deflection":0,
         "props": "DEF, heavy I "
       }      
@@ -220,7 +220,7 @@
         "penMod": 1,
         "range": "short",
         "RES": 40,
-        "TEN": 50,
+        "TGH": 50,
         "PA": 4,
         "deflection":0,
         "props": "heavy I"
@@ -232,8 +232,8 @@
         "penMod": 0.2,
         "range": "short",
         "RES": 20,
-        "TEN": 30,
-        "PA": 2,
+        "TGH": 30,
+        "PA": 3,
         "deflection":0,
         "props": "DEF, heavy I "
       }      
@@ -241,7 +241,7 @@
   },
   "LongSword":{
     "name": "LongSword",
-    "handed":"one", 
+    "handed":"two", 
     "penalty":0,
     "scale":3,
     "attacks":[
@@ -252,7 +252,7 @@
         "penMod": 1,
         "range": "long I",
         "RES": 20,
-        "TEN": 50,
+        "TGH": 50,
         "PA": 3,
         "deflection":0,
         "props": "heavy I, DEF"
@@ -264,7 +264,7 @@
         "penMod": 2,
         "range": "long I",
         "RES": 20,
-        "TEN": 50,
+        "TGH": 50,
         "PA": 3,
         "deflection":0,
         "props": "precise"
@@ -276,7 +276,7 @@
         "penMod": 2,
         "range": "short",
         "RES": 20,
-        "TEN": 50,
+        "TGH": 50,
         "PA": 4,
         "deflection":0,
         "props": "precise, heavy I, cleave"
@@ -296,7 +296,7 @@
         "penMod": 1,
         "range": "long I",
         "RES": 30,
-        "TEN": 50,
+        "TGH": 50,
         "PA": 4,
         "deflection":0,
         "props": "heavy II, DEF, cleave"
@@ -308,7 +308,7 @@
         "penMod": 2,
         "range": "long I",
         "RES": 25,
-        "TEN": 50,
+        "TGH": 50,
         "PA": 3,
         "deflection":0,
         "props": "precise, braced, heavy I"
@@ -328,7 +328,7 @@
         "penMod": 2,
         "range": "long II",
         "RES": 20,
-        "TEN": 50,
+        "TGH": 50,
         "PA": 3,
         "deflection":0,
         "props": "precise, braced"
@@ -348,7 +348,7 @@
         "penMod": 1,
         "range": "long I",
         "RES": 60,
-        "TEN": 50,
+        "TGH": 50,
         "PA": 4,
         "deflection":0,
         "props": "heavy II"
@@ -360,7 +360,7 @@
         "penMod": 2,
         "range": "long I",
         "RES": 20,
-        "TEN": 50,
+        "TGH": 50,
         "PA": 3,
         "deflection":0,
         "props": "braced, precise, heavy I "
@@ -372,7 +372,7 @@
         "penMod": 1,
         "range": "long I",
         "RES": 30,
-        "TEN": 50,
+        "TGH": 50,
         "PA": 3,
         "deflection":0,
         "props": "gancho "
@@ -384,8 +384,8 @@
         "penMod": 0.2,
         "range": "short",
         "RES": 20,
-        "TEN": 30,
-        "PA": 2,
+        "TGH": 30,
+        "PA": 3,
         "deflection":0,
         "props": "DEF, heavy I "
       } 
@@ -404,7 +404,7 @@
         "penMod": 0.2,
         "range": "long I",
         "RES": 100,
-        "TEN": 100,
+        "TGH": 100,
         "PA": 4,
         "deflection":0,
         "props": "heavy III"
@@ -416,7 +416,7 @@
         "penMod": 2,
         "range": "long I",
         "RES": 20,
-        "TEN": 50,
+        "TGH": 50,
         "PA": 3,
         "deflection":0,
         "props": "braced, precise, heavy I "
@@ -428,7 +428,7 @@
         "penMod": 1,
         "range": "long I",
         "RES": 30,
-        "TEN": 50,
+        "TGH": 50,
         "PA": 3,
         "deflection":0,
         "props": "gancho "
@@ -440,8 +440,8 @@
         "penMod": 0.2,
         "range": "short",
         "RES": 20,
-        "TEN": 30,
-        "PA": 2,
+        "TGH": 30,
+        "PA": 3,
         "deflection":0,
         "props": "DEF, heavy I "
       } 
@@ -460,10 +460,10 @@
         "penMod": 0.2,
         "range": "short",
         "RES": 30,
-        "TEN": 25,
+        "TGH": 25,
         "PA": 3,
-        "deflection":3,
-        "props": "DEF+3, heavy I"
+        "deflection":1,
+        "props": "DEF, heavy I"
       }
     ]
   },
@@ -480,7 +480,7 @@
         "penMod": 3,
         "range": "100m",
         "RES": 10,
-        "TEN": 10,
+        "TGH": 10,
         "PA": 4,
         "deflection":0,
         "props": "precise"
@@ -501,7 +501,7 @@
         "penMod": 3,
         "range": "150m",
         "RES": 10,
-        "TEN": 10,
+        "TGH": 10,
         "PA": 5,
         "deflection":0,
         "props": "precise, STR 13"
@@ -521,7 +521,7 @@
         "penMod": 3,
         "range": "200m",
         "RES": 10,
-        "TEN": 10,
+        "TGH": 10,
         "PA": 5,
         "deflection":0,
         "props": "precise, STR 16"
@@ -541,7 +541,7 @@
         "penMod": 1,
         "range": "short",
         "RES": 10,
-        "TEN": 10,
+        "TGH": 10,
         "PA": 3,
         "deflection":0,
         "props": "grapple, heavy I"
@@ -561,8 +561,8 @@
         "penMod": 1,
         "range": "short",
         "RES": 10,
-        "TEN": 10,
-        "PA": 2,
+        "TGH": 10,
+        "PA": 3,
         "deflection":0,
         "props": "grapple"
       }

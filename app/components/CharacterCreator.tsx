@@ -5,7 +5,7 @@ import bus from "../eventBus";
 import baseArmor from '../baseArmor.json'
 import baseWeapon from '../baseWeapon.json'
 import { createNewCharacter, deleteCharacter, saveCharacter } from '../actions';
-import { MHArr, dmgArr, skillsList, CharacterType, ArmorType, WeaponType, SkillsListKeys, SkillsList, movementList } from '../types';
+import { SMArr, dmgArr, skillsList, CharacterType, ArmorType, WeaponType, SkillsListKeys, SkillsList, movementList } from '../types';
 import { scaleArmor } from './utils';
 import { WeaponPanel } from './WeaponPanel';
 import { ArmorPanel } from './ArmorPanel';
@@ -16,8 +16,8 @@ export function CharacterCreator() {
   const [showConfirm, setShowConfirm] = useState(false);
   
   const [size, setSize ] = useState(3)
-  const MH = MHArr[size-1]
-  const MD = dmgArr[size-1]
+  const SM = SMArr[size-1]
+  const DM = dmgArr[size-1]
 
   const [path, setPath] = useState('')
 
@@ -38,9 +38,9 @@ export function CharacterCreator() {
   const [convic2, setConvic2 ] = useState(0)
   const [devotion, setDevotion ] = useState(0)
 
-  const [RESnat, setRESnat ] = useState(Math.floor(STR*MD/2))
-  const [INSnat, setINSnat ] = useState(Math.floor(STR*MD/2))
-  const [TENnat, setTENnat ] = useState(Math.floor(STR*MD/2))
+  const [RESnat, setRESnat ] = useState(Math.floor(STR*DM/2))
+  const [INSnat, setINSnat ] = useState(Math.floor(STR*DM/2))
+  const [TGHnat, setTGHnat ] = useState(Math.floor(STR*DM/2))
   const [gearPen, setGearPen ] = useState(0)
   const [hasGauntlets, setHasGauntlets ] = useState(0)
   const [hasHelm, setHasHelm ] = useState(0)
@@ -77,7 +77,7 @@ export function CharacterCreator() {
       devotion,
       RESnat,
       INSnat,
-      TENnat,
+      TGHnat,
       gearPen,
       hasGauntlets,
       hasHelm,
@@ -131,7 +131,7 @@ export function CharacterCreator() {
     setDevotion(payload.character.devotion)
 
     setRESnat(payload.character.RESnat)
-    setTENnat(payload.character.TENnat)
+    setTGHnat(payload.character.TGHnat)
     setINSnat(payload.character.INSnat)
 
     setGearPen(payload.character.gearPen)
@@ -180,9 +180,9 @@ export function CharacterCreator() {
   }, [characterWeapons]);
 
   useEffect(() => {
-    setRESnat(Math.floor(STR*MD/2))
-    setTENnat(Math.floor(STR*MD/2))
-    setINSnat(Math.floor(STR*MD/2))
+    setTGHnat(Math.floor(STR*DM/2))
+    setINSnat(Math.floor(STR*DM/2))
+    setRESnat(Math.floor(STR*DM/2))
     setScaledArmor(scaleArmor(armor, size))
     setGearPen(armor.penalty+Object.values(characterWeapons).reduce((acc, el)=> acc + el.penalty , 0))
   }, [size, armor, characterWeapons, STR])
@@ -199,12 +199,12 @@ export function CharacterCreator() {
   // size, race, abilities, armor penalties, injuries, movements, AP, STA, STA regen
   return (
     <div className='grid grid-col-1 md:grid-cols-12 w-full px-1'>
-      <div className='md:col-span-7 flex flex-col gap-2 text-sm gap-2'>
+      <div className='md:col-span-7 flex flex-col gap-2 text-sm gap-2 px-1'>
         <div>
           <button className='border p-2 rounded' onClick={resetAll}>Reset</button>
         </div>
           <div className='flex flex-row justify-center gap-2'>
-            <label htmlFor="name" className='font-bold'>Nome: </label>
+            <label htmlFor="name" className='font-bold'>Name: </label>
             <input id='name' className='border rounded p-1 w-64' type='text' value={name} onChange={(e)=> setName(e.target.value)} />
             <input id='del' className='border rounded bg-red-700 w-12 p-1' type='button' value={'delete'} onClick={()=> setShowConfirm(true)} />
             <input id='log' className='border rounded w-12 p-1' type='button' value={'save'} onClick={handleLogCharacterClick} />
@@ -221,7 +221,7 @@ export function CharacterCreator() {
           <TextItem stat={movement.careful} setStat={(val)=> setMovement({...movement, careful:val})} title={'care (1PA)'} />
           <TextItem stat={movement.crawl} setStat={(val)=> setMovement({...movement, crawl:val})} title={'crawl (1PA)'} />
           {/* <TextItem stat={movement.run} setStat={(val)=> setMovement({...movement, run:val})} title={'run (2PA )'} /> */}
-          <Movementinput stat={movement.run} calculatedValue={Math.floor((AGI-gearPen)/2)} setStat={(val)=> setMovement({...movement, run:val})} title={'run (2PA )'} />
+          <Movementinput stat={movement.run} calculatedValue={Math.floor((AGI-gearPen)/3)} setStat={(val)=> setMovement({...movement, run:val})} title={'run (2PA )'} />
         </div>
         <div className='flex flex-row gap-2 justify-center'>
           <TextItem stat={movement.swim} setStat={(val)=> setMovement({...movement, swim:val})} title={'swim (1PA)'} />
@@ -241,15 +241,15 @@ export function CharacterCreator() {
         <div className='flex flex-row gap-2 justify-center'>
           <StatDial stat={size} natStat={size} setStat={setSize} title={'Size'} />
           <StatDial stat={RESnat} natStat={RESnat} setStat={setRESnat} title={'RES'} />
-          <StatDial stat={TENnat} natStat={TENnat} setStat={setTENnat} title={'TEN'} />
+          <StatDial stat={TGHnat} natStat={TGHnat} setStat={setTGHnat} title={'TGH'} />
           <StatDial stat={INSnat} natStat={INSnat} setStat={setINSnat} title={'INS'} />
           <StatDial stat={gearPen} natStat={gearPen} setStat={setGearPen} title={'Gear pen'} />
           <div className='flex flex-col'>
-            <label>manop</label>
+            <label>Gauntlet</label>
             <input type='checkbox' aria-label={'gaunt'} name={'gaunt'} checked={!!hasGauntlets} onChange={(e) => setHasGauntlets(e.target.checked ? 1 : 0)} />
           </div>
           <div className='flex flex-col'>
-            <label>capacete</label>
+            <label>Full Helm</label>
             <input type='checkbox' aria-label={'helm'} name={'helm'} checked={!!hasHelm} onChange={(e) => setHasHelm(e.target.checked ? 1 : 0)} />
           </div>
 
@@ -259,45 +259,45 @@ export function CharacterCreator() {
           <StatDial stat={ranged} natStat={ranged} setStat={setRanged} title={'Distância'} />
           <StatDial stat={detection} natStat={detection} setStat={setDetection} title={'Detecção'} />
           <StatDial stat={spellcast} natStat={spellcast} setStat={setSpellcast} title={'Feitiçaria'} />
-          <StatDial stat={convic1} natStat={convic1} setStat={setConvic1} title={'Convicção1'} />
-          <StatDial stat={convic2} natStat={convic2} setStat={setConvic2} title={'Convicção2'} />
+          <StatDial stat={convic1} natStat={convic1} setStat={setConvic1} title={'Conviction1'} />
+          <StatDial stat={convic2} natStat={convic2} setStat={setConvic2} title={'Conviction2'} />
         </div>
 
         <div className='flex flex-row gap-2 justify-center'>
-          <SkillItem key={skey+'strike'} statName='strike' calculatedValue={ melee - 2*MH} title={'Golpear'} skills={skills} setSkills={setSkills}/>
-          <SkillItem key={skey+'precision'} statName='precision' calculatedValue={ ranged - 2*MH - 3*hasGauntlets} title={'Precisão**'} skills={skills} setSkills={setSkills}/>
-          <SkillItem key={skey+'defend'} statName='defend' calculatedValue={ melee - 2*MH } title={'Defend'} skills={skills} setSkills={setSkills}/>
-          <SkillItem key={skey+'reflex'} statName='reflex' calculatedValue={ detection+ranged - 2*MH- 3*hasHelm } title={'Reflexos'} skills={skills} setSkills={setSkills}/>
-          {/* <SkillItem key={skey+'block'} statName='block' calculatedValue={ melee - 2*MH} title={'Bloquear'} skills={skills} setSkills={setSkills}/> */}
-          <SkillItem key={skey+'grapple'} statName='grapple' calculatedValue={STR-10 + 4*MH} title={'Agarrar'}  skills={skills} setSkills={setSkills}/>
-          <SkillItem key={skey+'cunning'} statName='cunning' calculatedValue={detection-3*hasHelm} title={'Astúcia***'}  skills={skills} setSkills={setSkills}/>
-          <SkillItem key={skey+'DP'} statName='DP' calculatedValue={-2-MH*2} title={'DP'}  skills={skills} setSkills={setSkills}/>
+          <SkillItem key={skey+'strike'} statName='strike' calculatedValue={ melee } title={'Strike'} skills={skills} setSkills={setSkills}/>
+          <SkillItem key={skey+'accuracy'} statName='accuracy' calculatedValue={ ranged  - 3*hasGauntlets} title={'accuracy**'} skills={skills} setSkills={setSkills}/>
+          <SkillItem key={skey+'defend'} statName='defend' calculatedValue={ melee  } title={'Defend'} skills={skills} setSkills={setSkills}/>
+          <SkillItem key={skey+'reflex'} statName='reflex' calculatedValue={ detection+ranged - 3*hasHelm - SM } title={'Reflex'} skills={skills} setSkills={setSkills}/>
+          {/* <SkillItem key={skey+'block'} statName='block' calculatedValue={ melee - 2*SM} title={'Bloquear'} skills={skills} setSkills={setSkills}/> */}
+          <SkillItem key={skey+'grapple'} statName='grapple' calculatedValue={STR-10 + 5*SM} title={'Grapple'}  skills={skills} setSkills={setSkills}/>
+          <SkillItem key={skey+'cunning'} statName='cunning' calculatedValue={detection-3*hasHelm} title={'Cunning***'}  skills={skills} setSkills={setSkills}/>
+          <SkillItem key={skey+'SD'} statName='SD' calculatedValue={-2-SM*1} title={'SD'}  skills={skills} setSkills={setSkills}/>
         </div>
         <div className='flex flex-row gap-2 justify-center'>
-          <SkillItem key={skey+'balance'} statName='balance' calculatedValue={AGI-10} title={'Equilíbrio'} skills={skills} setSkills={setSkills}/>
-          <SkillItem key={skey+'climb'} statName='climb' calculatedValue={AGI-10 - 2*MH-3*hasGauntlets-gearPen} title={'Escalar*'} skills={skills} setSkills={setSkills}/>
-          <SkillItem key={skey+'swim'} statName='swim' calculatedValue={AGI-10-gearPen-3*hasHelm} title={'Nadar*'}  skills={skills} setSkills={setSkills}/>
-          <SkillItem key={skey+'strength'} statName='strength' calculatedValue={STR-10 + 4*MH} title={'Força'} skills={skills} setSkills={setSkills}/>
-          <SkillItem key={skey+'sneak'} statName='sneak' calculatedValue={AGI-10- 3*MH-gearPen} title={'Furtividade'} skills={skills} setSkills={setSkills}/>
-          <SkillItem key={skey+'prestidigitation'} statName='prestidigitation' calculatedValue={DEX-3*hasGauntlets} title={'Prestidigitação**'} skills={skills} setSkills={setSkills}/>
-          <SkillItem key={skey+'health'} statName='health' calculatedValue={CON} title={'Saúde'}  skills={skills} setSkills={setSkills}/>
+          <SkillItem key={skey+'balance'} statName='balance' calculatedValue={AGI-10} title={'Balance'} skills={skills} setSkills={setSkills}/>
+          <SkillItem key={skey+'climb'} statName='climb' calculatedValue={AGI-10 - 2*SM-3*hasGauntlets-gearPen} title={'Climb*'} skills={skills} setSkills={setSkills}/>
+          <SkillItem key={skey+'swim'} statName='swim' calculatedValue={AGI-10-gearPen-3*hasHelm} title={'Swim*'}  skills={skills} setSkills={setSkills}/>
+          <SkillItem key={skey+'strength'} statName='strength' calculatedValue={STR-10 + 5*SM} title={'Strength'} skills={skills} setSkills={setSkills}/>
+          <SkillItem key={skey+'sneak'} statName='sneak' calculatedValue={AGI-10- 3*SM-gearPen} title={'Sneak'} skills={skills} setSkills={setSkills}/>
+          <SkillItem key={skey+'prestidigitation'} statName='prestidigitation' calculatedValue={DEX-3*hasGauntlets} title={'Prestidigitation**'} skills={skills} setSkills={setSkills}/>
+          <SkillItem key={skey+'health'} statName='health' calculatedValue={CON} title={'Health'}  skills={skills} setSkills={setSkills}/>
         </div>
         <div className='flex flex-row gap-2 justify-center'>
-          <SkillItem key={skey+'knowledge'} statName='knowledge' calculatedValue={2*INT} title={'Conhecimento'} skills={skills} setSkills={setSkills}/>
-          <SkillItem key={skey+'explore'} statName='explore' calculatedValue={detection} title={'Explorar'} skills={skills} setSkills={setSkills}/>
-          <SkillItem key={skey+'will'} statName='will' calculatedValue={0} title={'Vontade'}  skills={skills} setSkills={setSkills}/>
-          <SkillItem key={skey+'enchant'} statName='enchant' calculatedValue={0} title={'Encantar'}  skills={skills} setSkills={setSkills}/>
-          <SkillItem key={skey+'stress'} statName='stress' calculatedValue={0} title={'Estressar'}  skills={skills} setSkills={setSkills}/>
-          <SkillItem key={skey+'devotion'} statName='devotion' calculatedValue={SPI} title={'Devoção'}  skills={skills} setSkills={setSkills}/>
+          <SkillItem key={skey+'knowledge'} statName='knowledge' calculatedValue={2*INT} title={'Knowledge'} skills={skills} setSkills={setSkills}/>
+          <SkillItem key={skey+'explore'} statName='explore' calculatedValue={detection} title={'Explore'} skills={skills} setSkills={setSkills}/>
+          <SkillItem key={skey+'will'} statName='will' calculatedValue={0} title={'Will'}  skills={skills} setSkills={setSkills}/>
+          <SkillItem key={skey+'charm'} statName='charm' calculatedValue={0} title={'Charm'}  skills={skills} setSkills={setSkills}/>
+          <SkillItem key={skey+'stress'} statName='stress' calculatedValue={0} title={'Stress'}  skills={skills} setSkills={setSkills}/>
+          <SkillItem key={skey+'devotion'} statName='devotion' calculatedValue={SPI} title={'Devotion'}  skills={skills} setSkills={setSkills}/>
         </div>
         <div className='flex flex-row gap-2 justify-center'>
-          <SkillItem key={skey+'combustion'} statName='combustion' calculatedValue={+ spellcast} title={'Combustão'} skills={skills} setSkills={setSkills}/>
+          <SkillItem key={skey+'combustion'} statName='combustion' calculatedValue={+ spellcast} title={'Combustion'} skills={skills} setSkills={setSkills}/>
           <SkillItem key={skey+'eletromag'} statName='eletromag' calculatedValue={+ spellcast} title={'Eletromag'} skills={skills} setSkills={setSkills}/>
-          <SkillItem key={skey+'radiation'} statName='radiation' calculatedValue={+ spellcast} title={'Radiação'} skills={skills} setSkills={setSkills}/>
-          <SkillItem key={skey+'enthropy'} statName='enthropy' calculatedValue={+ spellcast} title={'Entropia'} skills={skills} setSkills={setSkills}/>
-          <SkillItem key={skey+'biomancy'} statName='biomancy' calculatedValue={+ spellcast} title={'Biomancia'} skills={skills} setSkills={setSkills}/>
-          <SkillItem key={skey+'telepathy'} statName='telepathy' calculatedValue={+ spellcast} title={'Telepatia'} skills={skills} setSkills={setSkills}/>
-          <SkillItem key={skey+'animancy'} statName='animancy' calculatedValue={+ spellcast} title={'Animancia'} skills={skills} setSkills={setSkills}/>
+          <SkillItem key={skey+'radiation'} statName='radiation' calculatedValue={+ spellcast} title={'Radiation'} skills={skills} setSkills={setSkills}/>
+          <SkillItem key={skey+'enthropy'} statName='enthropy' calculatedValue={+ spellcast} title={'Enthropy'} skills={skills} setSkills={setSkills}/>
+          <SkillItem key={skey+'biomancy'} statName='biomancy' calculatedValue={+ spellcast} title={'Biomancy'} skills={skills} setSkills={setSkills}/>
+          <SkillItem key={skey+'telepathy'} statName='telepathy' calculatedValue={+ spellcast} title={'Telepathy'} skills={skills} setSkills={setSkills}/>
+          <SkillItem key={skey+'animancy'} statName='animancy' calculatedValue={+ spellcast} title={'Animancy'} skills={skills} setSkills={setSkills}/>
         </div>
 
         <textarea aria-label='notes' className='border rounded p-1 min-h-32' onChange={val => setNotes(val.target.value)} value={notes} />
@@ -305,8 +305,8 @@ export function CharacterCreator() {
         <button type='button' className='border rounded p-2' onClick={handleSaveCharacterClick}>Save</button>
       </div>
       <div className='flex flex-col text-center md:col-span-5  items-center mx-2 gap-2'>
-        <ArmorPanel RESnat={RESnat} INSnat={INSnat} TENnat={TENnat} scaledArmor={scaledArmor} />
-        <WeaponPanel characterWeapons={characterWeapons} setCharacterWeapons={setCharacterWeapons} STR={STR} strike={skills.strike} precision={skills.precision} />
+        <ArmorPanel RESnat={RESnat} INSnat={INSnat} TGHnat={TGHnat} scaledArmor={scaledArmor} />
+        <WeaponPanel characterWeapons={characterWeapons} setCharacterWeapons={setCharacterWeapons} STR={STR} strike={skills.strike} accuracy={skills.accuracy} />
         <span>Items</span>
         <textarea aria-label='pack' className='border rounded p-1 min-h-32 w-full' onChange={val => setPackItems(val.target.value)} value={packItems} />
       </div>

@@ -37,43 +37,11 @@
   "devotion": 0,
   "RESnat": 5,
   "INSnat": 5,
-  "TENnat": 5,
+  "TGHnat": 5,
   "gearPen": 0,
   "hasGauntlets": 0,
   "hasHelm": 0,
   "characterWeapons": {
-    "mãos3": {
-      "name": "mãos",
-      "handed": "small",
-      "penalty": 0,
-      "scale": 3,
-      "attacks": [
-        {
-          "type": "melee",
-          "impact": 0,
-          "heavyMod": 0,
-          "penMod": 0,
-          "range": "short",
-          "RES": 0,
-          "TEN": 0,
-          "PA": 2,
-          "deflection": 0,
-          "props": "agarrar, sacar"
-        },
-        {
-          "type": "melee",
-          "impact": 0,
-          "heavyMod": 0.5,
-          "penMod": 0.2,
-          "range": "short",
-          "RES": 0,
-          "TEN": 0,
-          "PA": 2,
-          "deflection": 0,
-          "props": "pesado I, sacar"
-        }
-      ]
-    },
     "dagger3": {
       "name": "dagger",
       "handed": "small",
@@ -87,7 +55,7 @@
           "penMod": 2,
           "range": "short",
           "RES": 20,
-          "TEN": 20,
+          "TGH": 20,
           "PA": 3,
           "deflection": 0,
           "props": "DEF, sacar, preciso"
@@ -107,7 +75,7 @@
           "penMod": 2,
           "range": "short",
           "RES": 30,
-          "TEN": 50,
+          "TGH": 50,
           "PA": 3,
           "deflection": 0,
           "props": "sacar, preciso "
@@ -119,7 +87,7 @@
           "penMod": 1,
           "range": "short",
           "RES": 30,
-          "TEN": 50,
+          "TGH": 50,
           "PA": 3,
           "deflection": 0,
           "props": "DEF, pesado I, amplo, sacar "
@@ -139,10 +107,42 @@
           "penMod": 3,
           "range": "100m",
           "RES": 10,
-          "TEN": 10,
+          "TGH": 10,
           "PA": 4,
           "deflection": 0,
           "props": "preciso"
+        }
+      ]
+    },
+    "hands3": {
+      "name": "hands",
+      "handed": "small",
+      "penalty": 0,
+      "scale": 3,
+      "attacks": [
+        {
+          "type": "melee",
+          "impact": 0,
+          "heavyMod": 0,
+          "penMod": 0,
+          "range": "short",
+          "RES": 0,
+          "TGH": 0,
+          "PA": 3,
+          "deflection": 0,
+          "props": "grapple, draw"
+        },
+        {
+          "type": "melee",
+          "impact": 0,
+          "heavyMod": 0.5,
+          "penMod": 0.2,
+          "range": "short",
+          "RES": 0,
+          "TGH": 0,
+          "PA": 3,
+          "deflection": 0,
+          "props": "heavy I, draw"
         }
       ]
     }
@@ -150,7 +150,7 @@
   "armor": {
     "name": "Gambeson",
     "RES": 50,
-    "TEN": 10,
+    "TGH": 10,
     "INS": 6,
     "prot": 3,
     "cover": 10,
@@ -161,9 +161,9 @@
     "strike": 3,
     "defend": 1,
     "reflex": 4,
-    "precision": 5,
+    "accuracy": 5,
     "grapple": 1,
-    "DP": -2,
+    "SD": -2,
     "sneak": 4,
     "prestidigitation": 2,
     "balance": 4,
@@ -177,7 +177,7 @@
     "explore": 2,
     "cunning": 3,
     "will": 0,
-    "enchant": 0,
+    "charm": 0,
     "stress": 0,
     "devotion": 0,
     "combustion": 0,

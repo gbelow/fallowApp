@@ -37,13 +37,57 @@
   "devotion": 0,
   "RESnat": 6,
   "INSnat": 6,
-  "TENnat": 6,
+  "TGHnat": 6,
   "gearPen": 2,
   "hasGauntlets": 1,
   "hasHelm": 0,
   "characterWeapons": {
-    "mãos": {
-      "name": "mãos",
+    "LongSword": {
+      "name": "LongSword",
+      "handed": "two",
+      "penalty": 0,
+      "scale": 3,
+      "attacks": [
+        {
+          "type": "melee",
+          "impact": 12,
+          "heavyMod": 0.5,
+          "penMod": 1,
+          "range": "long I",
+          "RES": 20,
+          "TGH": 50,
+          "PA": 3,
+          "deflection": 0,
+          "props": "heavy I, DEF"
+        },
+        {
+          "type": "melee",
+          "impact": 8,
+          "heavyMod": 0,
+          "penMod": 2,
+          "range": "long I",
+          "RES": 20,
+          "TGH": 50,
+          "PA": 3,
+          "deflection": 0,
+          "props": "precise"
+        },
+        {
+          "type": "melee",
+          "impact": 8,
+          "heavyMod": 0.5,
+          "penMod": 2,
+          "range": "short",
+          "RES": 20,
+          "TGH": 50,
+          "PA": 4,
+          "deflection": 0,
+          "props": "precise, heavy I, cleave"
+        }
+      ]
+    },
+    "hands3": {
+      "name": "hands",
       "handed": "small",
       "penalty": 0,
       "scale": 3,
@@ -54,23 +98,23 @@
           "heavyMod": 0,
           "penMod": 0,
           "range": "short",
-          "RES": 20,
-          "TEN": 20,
-          "PA": 2,
+          "RES": 0,
+          "TGH": 0,
+          "PA": 3,
           "deflection": 0,
-          "props": "agarrar, sacar"
+          "props": "grapple, draw"
         },
         {
           "type": "melee",
-          "impact": 4,
+          "impact": 0,
           "heavyMod": 0.5,
           "penMod": 0.2,
           "range": "short",
-          "RES": 20,
-          "TEN": 20,
-          "PA": 2,
+          "RES": 0,
+          "TGH": 0,
+          "PA": 3,
           "deflection": 0,
-          "props": "pesado I, sacar"
+          "props": "heavy I, draw"
         }
       ]
     }
@@ -78,7 +122,7 @@
   "armor": {
     "name": "HalfPlate",
     "RES": 50,
-    "TEN": 30,
+    "TGH": 30,
     "INS": 8,
     "prot": 15,
     "cover": 12,
@@ -89,9 +133,9 @@
     "strike": 6,
     "defend": 6,
     "reflex": 4,
-    "precision": -1,
+    "accuracy": -1,
     "grapple": 3,
-    "DP": -1,
+    "SD": -1,
     "sneak": -2,
     "prestidigitation": 0,
     "balance": 2,
@@ -105,7 +149,7 @@
     "explore": 2,
     "cunning": 4,
     "will": 3,
-    "enchant": 0,
+    "charm": 0,
     "stress": 0,
     "devotion": 1,
     "combustion": 0,

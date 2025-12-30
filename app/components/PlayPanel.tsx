@@ -58,10 +58,6 @@ export function PlayPanel({mode}:{mode: string}){
     setCurrentCharacter((prev) => (prev ? {...prev, resources: {...prev?.resources, [rssName]: value }} : undefined))
   }
 
-  // const calcInjPen = (inj) => {
-  //   return Math.floor(inj.light.filter(el => el != 0).length/2) + inj.mid.filter(el => el != 0).length + 2*inj.dead.filter(el => el != 0).length
-      
-  // }
   
   const updateInjury = (val:number|string, ind:number, type: 'light' | 'mid' | 'dead') => {
     const injs = currentCharacter?.resources.injuries[type]
@@ -142,7 +138,7 @@ export function PlayPanel({mode}:{mode: string}){
   
   const actSurge = (type: string) => {
     if(currentCharacter && currentCharacter.resources.STA >= 3 && currentCharacter.resources.surgeToken){
-      const amount = type == 'move'? 4: 6
+      const amount = type == 'move'? 6: 6
       const cost = 3+Math.floor(getGearPen()/3)
       const updatedChar = {...currentCharacter, resources: {...currentCharacter.resources, surgeToken: false, STA: currentCharacter.resources.STA-3, PA:currentCharacter.resources.PA+amount  }}
       setCurrentCharacter(updatedChar)
@@ -299,7 +295,7 @@ export function PlayPanel({mode}:{mode: string}){
       {
         currentCharacter ?
         <div className='grid grid-cols-1 md:grid-cols-12 py-1'>
-          <div className='flex flex-col items-center justify-center md:col-span-7 flex flex-col gap-2 text-sm py-1'>
+          <div className='flex flex-col items-center justify-center md:col-span-7 flex flex-col gap-2 text-sm py-1 md:mr-2'>
             <div className='flex gap-2 text-xs h-8'>
               <input type='button' value='startTurn' aria-label='startTurn' className='p-1 border hover:bg-gray-500 rounded' onClick={startTurn } />  
               <span className='text-lg'>{currentCharacter.resources.fightName}</span>
@@ -324,19 +320,19 @@ export function PlayPanel({mode}:{mode: string}){
               <SimpleResource value={currentCharacter.resources.survival.exhaustion} name={'exhaust'} setRss={(val) => updateSurvival(parseInt(val+''), 'exhaustion')}/>
             </div>
             <div className='flex flex-row gap-1 flex-wrap w-84 md:w-full justify-center items-center'>
-              <span>Leves</span>
+              <span>Light</span>
               {
                 currentCharacter.resources.injuries.light.map((inj, ind) => <Injury key={ind} cures={inj} type='light' setRss={(val) => updateInjury(val, ind, 'light')} />)
               }
             </div>
             <div className='flex flex-row gap-1 justify-center'>
-              <span>Sérios</span>
+              <span>Serious</span>
               {
                 currentCharacter.resources.injuries.mid.map((inj, ind) => <Injury key={ind} cures={inj} type='mid' setRss={(val) => updateInjury(val, ind, 'mid')} />)
               }
             </div>
             <div className='flex flex-row gap-1 justify-center'>
-              <span>Mortais</span>
+              <span>Deadly</span>
               {
                 currentCharacter.resources.injuries.dead.map((inj, ind) => <Injury key={ind} cures={inj} type='dead' setRss={(val) => updateInjury(val, ind, 'dead')} />)
               }
@@ -344,16 +340,16 @@ export function PlayPanel({mode}:{mode: string}){
 
             </div>
             <div className='flex flex-row gap-2 justify-center'>
-              <SimpleMove value={currentCharacter.movement.basic}  name={'básico (1PA)'} />
-              <SimpleMove value={currentCharacter.movement.careful}  name={'cuida (1PA)'} />
-              <SimpleMove value={currentCharacter.movement.crawl}  name={'rastej (1PA)'} />
-              <SimpleMove value={currentCharacter.movement.run+Math.floor((currentCharacter.AGI-getGearPen())/2)}  name={'run (2PA )'} />
+              <SimpleMove value={currentCharacter.movement.basic}  name={'basic (1PA)'} />
+              <SimpleMove value={currentCharacter.movement.careful}  name={'care (1PA)'} />
+              <SimpleMove value={currentCharacter.movement.crawl}  name={'crawl (1PA)'} />
+              <SimpleMove value={currentCharacter.movement.run+Math.floor((currentCharacter.AGI-getGearPen())/3)}  name={'run (2PA )'} />
             </div>
             <div className='flex flex-row gap-2 justify-center'>
-              <SimpleMove value={currentCharacter.movement.swim}  name={'nadar (1PA)'} />
-              <SimpleMove value={currentCharacter.movement['fast swim']}  name={'nadar (1PA+1STA)'} />
-              <SimpleMove value={currentCharacter.movement.jump+Math.floor((currentCharacter.AGI-getGearPen())/4)}  name={'saltar (1PA+1STA)'} />
-              <SimpleMove value={currentCharacter.movement.stand+5-Math.floor((currentCharacter.AGI-getGearPen())/5)}  name={'levantar'} />
+              <SimpleMove value={currentCharacter.movement.swim}  name={'swim (1PA)'} />
+              <SimpleMove value={currentCharacter.movement['fast swim']}  name={'swim (1PA+1STA)'} />
+              <SimpleMove value={currentCharacter.movement.jump+Math.floor((currentCharacter.AGI-getGearPen())/4)}  name={'jump (1PA+1STA)'} />
+              <SimpleMove value={currentCharacter.movement.stand+5-Math.floor((currentCharacter.AGI-getGearPen())/5)}  name={'stand up'} />
             </div>
             {/* <div className='flex flex-row gap-2 justify-center'>
               <SimpleSkill name={'Mobilidade'} value={currentCharacter.resources.penalties.mobility}/>
@@ -372,53 +368,53 @@ export function PlayPanel({mode}:{mode: string}){
               <SimpleSkill name={'DEX'} value={currentCharacter.attributes.DEX}/>
             </div>
             <div className='flex flex-row'>
-              <h2 className='text-md'>Última rolagem:</h2>
+              <h2 className='text-md'>Last roll:</h2>
               <span className='px-4'>{rolledSkill.name} : {rolledSkill.value}</span>
             </div>
             <div className='flex flex-row gap-2 justify-center'>
-              <SimpleSkill name={'golpear'} value={currentCharacter.resources.skills['strike']} rollSkill={rollSkill}/>
-              <SimpleSkill name={'precisão'} value={currentCharacter.resources.skills['precision']} rollSkill={rollSkill}/>
+              <SimpleSkill name={'strike'} value={currentCharacter.resources.skills['strike']} rollSkill={rollSkill}/>
+              <SimpleSkill name={'accuracy'} value={currentCharacter.resources.skills['accuracy']} rollSkill={rollSkill}/>
               <SimpleSkill name={'defend'} value={currentCharacter.resources.skills['defend']} rollSkill={rollSkill}/>
-              <SimpleSkill name={'reflexo'} value={currentCharacter.resources.skills['reflex']} rollSkill={rollSkill}/>
+              <SimpleSkill name={'reflex'} value={currentCharacter.resources.skills['reflex']} rollSkill={rollSkill}/>
               {/* <SimpleSkill name={'bloqueio'} value={currentCharacter.resources.skills['block']} rollSkill={rollSkill}/> */}
-              <SimpleSkill name={'agarrar'} value={currentCharacter.resources.skills['grapple']} rollSkill={rollSkill}/>
-              <SimpleSkill name={'astúcia'} value={currentCharacter.resources.skills['cunning']} rollSkill={rollSkill}/>
-              <SimpleSkill name={'DP'} value={currentCharacter.resources.skills['DP']}/>
+              <SimpleSkill name={'grapple'} value={currentCharacter.resources.skills['grapple']} rollSkill={rollSkill}/>
+              <SimpleSkill name={'cunning'} value={currentCharacter.resources.skills['cunning']} rollSkill={rollSkill}/>
+              <SimpleSkill name={'SD'} value={currentCharacter.resources.skills['SD']}/>
             </div>
             <div className='flex flex-row gap-2 justify-center'>
-              <SimpleSkill name={'equilíbrio'} value={currentCharacter.resources.skills['balance']} rollSkill={rollSkill}/>
-              <SimpleSkill name={'escalar'} value={currentCharacter.resources.skills['climb']} rollSkill={rollSkill}/>
-              <SimpleSkill name={'força'} value={currentCharacter.resources.skills['strength']} rollSkill={rollSkill}/>
-              <SimpleSkill name={'furtividade'} value={currentCharacter.resources.skills['sneak']} rollSkill={rollSkill}/>
-              <SimpleSkill name={'prestidigitação'} value={currentCharacter.resources.skills['prestidigitation']} rollSkill={rollSkill}/>
-              <SimpleSkill name={'saúde'} value={currentCharacter.resources.skills['health']} rollSkill={rollSkill}/>
-              <SimpleSkill name={'nadar'} value={currentCharacter.resources.skills['swim']} rollSkill={rollSkill}/>
+              <SimpleSkill name={'balance'} value={currentCharacter.resources.skills['balance']} rollSkill={rollSkill}/>
+              <SimpleSkill name={'climb'} value={currentCharacter.resources.skills['climb']} rollSkill={rollSkill}/>
+              <SimpleSkill name={'strength'} value={currentCharacter.resources.skills['strength']} rollSkill={rollSkill}/>
+              <SimpleSkill name={'sneak'} value={currentCharacter.resources.skills['sneak']} rollSkill={rollSkill}/>
+              <SimpleSkill name={'prestidigitation'} value={currentCharacter.resources.skills['prestidigitation']} rollSkill={rollSkill}/>
+              <SimpleSkill name={'health'} value={currentCharacter.resources.skills['health']} rollSkill={rollSkill}/>
+              <SimpleSkill name={'swim'} value={currentCharacter.resources.skills['swim']} rollSkill={rollSkill}/>
             </div>
             <div className='flex flex-row gap-2 justify-center'>
-              <SimpleSkill name={'conhecimeto'} value={currentCharacter.resources.skills['knowledge']} rollSkill={rollSkill}/>
-              <SimpleSkill name={'explorar'} value={currentCharacter.resources.skills['explore']} rollSkill={rollSkill}/>
-              <SimpleSkill name={'vontade'} value={currentCharacter.resources.skills['will']} rollSkill={rollSkill}/>
-              <SimpleSkill name={'enchantar'} value={currentCharacter.resources.skills['enchant']} rollSkill={rollSkill}/>
-              <SimpleSkill name={'estressar'} value={currentCharacter.resources.skills['stress']} rollSkill={rollSkill}/>
-              <SimpleSkill name={'devoção'} value={currentCharacter.resources.skills['devotion']} rollSkill={rollSkill}/>
+              <SimpleSkill name={'knowledge'} value={currentCharacter.resources.skills['knowledge']} rollSkill={rollSkill}/>
+              <SimpleSkill name={'explore'} value={currentCharacter.resources.skills['explore']} rollSkill={rollSkill}/>
+              <SimpleSkill name={'will'} value={currentCharacter.resources.skills['will']} rollSkill={rollSkill}/>
+              <SimpleSkill name={'charm'} value={currentCharacter.resources.skills['charm']} rollSkill={rollSkill}/>
+              <SimpleSkill name={'stress'} value={currentCharacter.resources.skills['stress']} rollSkill={rollSkill}/>
+              <SimpleSkill name={'devotion'} value={currentCharacter.resources.skills['devotion']} rollSkill={rollSkill}/>
             </div>
             <div className='flex flex-row gap-2 justify-center'>
-              <SimpleSkill name={'combustão'} value={currentCharacter.resources.skills['combustion']} rollSkill={rollSkill}/>
+              <SimpleSkill name={'combustion'} value={currentCharacter.resources.skills['combustion']} rollSkill={rollSkill}/>
               <SimpleSkill name={'eletromag'} value={currentCharacter.resources.skills['eletromag']} rollSkill={rollSkill}/>
-              <SimpleSkill name={'radiação'} value={currentCharacter.resources.skills['radiation']} rollSkill={rollSkill}/>
-              <SimpleSkill name={'entropia'} value={currentCharacter.resources.skills['enthropy']} rollSkill={rollSkill}/>
-              <SimpleSkill name={'biomancia'} value={currentCharacter.resources.skills['biomancy']} rollSkill={rollSkill}/>
-              <SimpleSkill name={'telepatia'} value={currentCharacter.resources.skills['telepathy']} rollSkill={rollSkill}/>
-              <SimpleSkill name={'animancia'} value={currentCharacter.resources.skills['animancy']} rollSkill={rollSkill}/>
+              <SimpleSkill name={'radiation'} value={currentCharacter.resources.skills['radiation']} rollSkill={rollSkill}/>
+              <SimpleSkill name={'enthropy'} value={currentCharacter.resources.skills['enthropy']} rollSkill={rollSkill}/>
+              <SimpleSkill name={'biomancy'} value={currentCharacter.resources.skills['biomancy']} rollSkill={rollSkill}/>
+              <SimpleSkill name={'telepathy'} value={currentCharacter.resources.skills['telepathy']} rollSkill={rollSkill}/>
+              <SimpleSkill name={'animancy'} value={currentCharacter.resources.skills['animancy']} rollSkill={rollSkill}/>
             </div>
             <textarea aria-label='notes' className='border rounded p-1 min-h-32 w-84 md:w-full justify-center ' value={currentCharacter.notes} readOnly/>
           </div>
           <div className='flex flex-col md:col-span-5 gap-2 text-sm items-center'>
             <AfflictionsPannel afflictions={currentCharacter.resources.afflictions} setAfflictions={setAfflictions} />
-            <ArmorPanel RESnat={currentCharacter.RESnat} INSnat={currentCharacter.INSnat} TENnat={currentCharacter.TENnat} scaledArmor={scaleArmor(currentCharacter.resources.equippedArmor, currentCharacter.size)} />
+            <ArmorPanel RESnat={currentCharacter.RESnat} INSnat={currentCharacter.INSnat} TGHnat={currentCharacter.TGHnat} scaledArmor={scaleArmor(currentCharacter.resources.equippedArmor, currentCharacter.size)} />
             <div className='flex flex-row gap-2 text-center justify-center'>
               <SimpleSkill name={'RES nat'} value={currentCharacter.RESnat}/>
-              <SimpleSkill name={'TEN nat'} value={currentCharacter.TENnat}/>
+              <SimpleSkill name={'TGH nat'} value={currentCharacter.TGHnat}/>
               <SimpleSkill name={'INS nat'} value={currentCharacter.INSnat}/>
             </div>
             <WeaponPanel 
@@ -426,7 +422,7 @@ export function PlayPanel({mode}:{mode: string}){
               setCharacterWeapons={(val)=> updateResource('equippedWeapons', val)} 
               STR={currentCharacter.attributes.STR} 
               strike={currentCharacter.resources.skills.strike}
-              precision={currentCharacter.resources.skills.precision}
+              accuracy={currentCharacter.resources.skills.accuracy}
             />
             <span>Itens</span>
             <textarea aria-label='pack' className='border rounded p-1 min-h-32 w-full' value={currentCharacter?.packItems ?? ''}  readOnly />

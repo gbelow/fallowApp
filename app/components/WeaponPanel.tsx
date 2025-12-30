@@ -7,11 +7,11 @@ import { dmgArr } from "../types";
 
 
 
-export function WeaponPanel({characterWeapons, setCharacterWeapons, STR=10, strike=0, precision=0 }:
+export function WeaponPanel({characterWeapons, setCharacterWeapons, STR=10, strike=0, accuracy=0 }:
   {
     characterWeapons: {[key:string]: WeaponType}, 
     setCharacterWeapons?: React.Dispatch<React.SetStateAction<{[key:string]: WeaponType}>>, 
-    STR:number, strike: number, precision:number 
+    STR:number, strike: number, accuracy:number 
   }){
 
   const [lastAtk, setLastAtk] = useState({atk:0, properties: '', weapon: ''})
@@ -21,7 +21,7 @@ export function WeaponPanel({characterWeapons, setCharacterWeapons, STR=10, stri
     let atk = 0
     if(heavyMod == 1) atk -= 2 
     if(heavyMod >= 1.5) atk -= 3 
-    if(range=='ranged') atk += roll + precision
+    if(range=='ranged') atk += roll + accuracy
     if(range=='melee') atk += roll + strike
     setLastAtk({atk, properties, weapon})
   }
@@ -35,12 +35,12 @@ export function WeaponPanel({characterWeapons, setCharacterWeapons, STR=10, stri
           return(
             <div key={key} className='flex flex-col justify-center border rounded p-1'>
               <div className='flex flex-row gap-3' >
-                <span>Arma: {key} </span>
-                <span>tipo: {el.handed} </span>
+                <span>Weapon: {key} </span>
+                <span>type: {el.handed} </span>
                 {
                   setCharacterWeapons ?
                   <>
-                    <span>Tamanho: {el.scale}</span>
+                    <span>Size: {el.scale}</span>
                     <input type='button' value='unequip' onClick={() => { const {[key]: _ , ...rest } = characterWeapons; setCharacterWeapons(rest)}} className='border rounded p-1' />                    
                   </> :
                   null
@@ -50,12 +50,12 @@ export function WeaponPanel({characterWeapons, setCharacterWeapons, STR=10, stri
                 <thead>
                   <tr>
                     <td>RES</td>
-                    <td>TEN</td>
+                    <td>TGH</td>
                     <td>impact/PEN</td>
                     <td>PA</td>
                     <td>reach</td>
                     <td>DEF</td>
-                    <td>propriedades</td>
+                    <td>properties</td>
                     <td>atk</td>
                     <td>heav atk</td>
                   </tr>
@@ -65,7 +65,7 @@ export function WeaponPanel({characterWeapons, setCharacterWeapons, STR=10, stri
                     el.attacks.map((atk, index) => 
                       <tr key={el+index.toString()}>
                         <td>{atk.RES}</td>
-                        <td>{atk.TEN}</td>
+                        <td>{atk.TGH}</td>
                         <td>{atk.impact+(atk.heavyMod ? '+' + (atk.type == 'melee' ? Math.floor(atk.heavyMod*STR*dmgArr[el.scale-1])  : atk.heavyMod*dmgArr[el.scale-1]) : '' ) + '/' +Math.floor(atk.impact*atk.penMod)+(atk.heavyMod ? '+'+(atk.type == 'melee' ? Math.floor(atk.heavyMod*atk.penMod*STR*dmgArr[el.scale-1]) : atk.heavyMod*atk.penMod*dmgArr[el.scale-1]) : '')}</td>
                         <td>{atk.PA}</td>
                         <td>{atk.range}</td>

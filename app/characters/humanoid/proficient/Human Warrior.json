@@ -37,43 +37,11 @@
   "devotion": 0,
   "RESnat": 6,
   "INSnat": 6,
-  "TENnat": 6,
+  "TGHnat": 6,
   "gearPen": 2,
   "hasGauntlets": 1,
   "hasHelm": 0,
   "characterWeapons": {
-    "mãos": {
-      "name": "mãos",
-      "handed": "small",
-      "penalty": 0,
-      "scale": 3,
-      "attacks": [
-        {
-          "type": "melee",
-          "impact": 0,
-          "heavyMod": 0,
-          "penMod": 0,
-          "range": "short",
-          "RES": 20,
-          "TEN": 20,
-          "PA": 2,
-          "deflection": 0,
-          "props": "agarrar, sacar"
-        },
-        {
-          "type": "melee",
-          "impact": 4,
-          "heavyMod": 0.5,
-          "penMod": 0.2,
-          "range": "short",
-          "RES": 20,
-          "TEN": 20,
-          "PA": 2,
-          "deflection": 0,
-          "props": "pesado I, sacar"
-        }
-      ]
-    },
     "rondel3": {
       "name": "rondel",
       "handed": "small",
@@ -87,7 +55,7 @@
           "penMod": 2,
           "range": "short",
           "RES": 20,
-          "TEN": 40,
+          "TGH": 40,
           "PA": 3,
           "deflection": 0,
           "props": "DEF, pesado I, preciso "
@@ -107,7 +75,7 @@
           "penMod": 1,
           "range": "long I",
           "RES": 60,
-          "TEN": 50,
+          "TGH": 50,
           "PA": 4,
           "deflection": 0,
           "props": "pesado II"
@@ -119,7 +87,7 @@
           "penMod": 2,
           "range": "long I",
           "RES": 20,
-          "TEN": 50,
+          "TGH": 50,
           "PA": 3,
           "deflection": 0,
           "props": "apoiado, preciso, pesado I "
@@ -131,7 +99,7 @@
           "penMod": 1,
           "range": "long I",
           "RES": 30,
-          "TEN": 50,
+          "TGH": 50,
           "PA": 3,
           "deflection": 0,
           "props": "gancho "
@@ -143,10 +111,42 @@
           "penMod": 0.2,
           "range": "short",
           "RES": 20,
-          "TEN": 30,
-          "PA": 2,
+          "TGH": 30,
+          "PA": 3,
           "deflection": 0,
           "props": "DEF, pesado I "
+        }
+      ]
+    },
+    "hands3": {
+      "name": "hands",
+      "handed": "small",
+      "penalty": 0,
+      "scale": 3,
+      "attacks": [
+        {
+          "type": "melee",
+          "impact": 0,
+          "heavyMod": 0,
+          "penMod": 0,
+          "range": "short",
+          "RES": 0,
+          "TGH": 0,
+          "PA": 3,
+          "deflection": 0,
+          "props": "grapple, draw"
+        },
+        {
+          "type": "melee",
+          "impact": 0,
+          "heavyMod": 0.5,
+          "penMod": 0.2,
+          "range": "short",
+          "RES": 0,
+          "TGH": 0,
+          "PA": 3,
+          "deflection": 0,
+          "props": "heavy I, draw"
         }
       ]
     }
@@ -154,7 +154,7 @@
   "armor": {
     "name": "Brigandine",
     "RES": 50,
-    "TEN": 25,
+    "TGH": 25,
     "INS": 8,
     "prot": 10,
     "cover": 12,
@@ -165,9 +165,9 @@
     "strike": 5,
     "defend": 4,
     "reflex": 3,
-    "precision": 0,
+    "accuracy": -1,
     "grapple": 2,
-    "DP": -2,
+    "SD": -2,
     "sneak": 0,
     "prestidigitation": -1,
     "balance": 4,
@@ -181,7 +181,7 @@
     "explore": 1,
     "cunning": 1,
     "will": 0,
-    "enchant": 0,
+    "charm": 0,
     "stress": 0,
     "devotion": 1,
     "combustion": 0,
