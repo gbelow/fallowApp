@@ -210,23 +210,23 @@ export function CharacterCreator() {
             <input id='log' className='border rounded w-12 p-1' type='button' value={'save'} onClick={handleLogCharacterClick} />
           </div>
         <div className='flex flex-row gap-2 justify-center'>
-          <div>PA: {6}</div>
+          <div>AP: {6}</div>
           <div>STA: {STA}</div>
           <div>STA regen: {Math.floor(STA/4)}</div>
           {/* <div>Ferimentos leves: {Math.floor(CON/2)}</div>
           <div>Ferimentos sérios: {Math.floor(CON/5)}</div> */}
         </div>
         <div className='flex flex-row gap-2 justify-center'>
-          <TextItem stat={movement.basic} setStat={(val)=> setMovement({...movement, basic:val})} title={'basic (1PA)'} />
-          <TextItem stat={movement.careful} setStat={(val)=> setMovement({...movement, careful:val})} title={'care (1PA)'} />
-          <TextItem stat={movement.crawl} setStat={(val)=> setMovement({...movement, crawl:val})} title={'crawl (1PA)'} />
-          {/* <TextItem stat={movement.run} setStat={(val)=> setMovement({...movement, run:val})} title={'run (2PA )'} /> */}
-          <Movementinput stat={movement.run} calculatedValue={Math.floor((AGI-gearPen)/3)} setStat={(val)=> setMovement({...movement, run:val})} title={'run (2PA )'} />
+          <TextItem stat={movement.basic} setStat={(val)=> setMovement({...movement, basic:val})} title={'basic (1AP)'} />
+          <TextItem stat={movement.careful} setStat={(val)=> setMovement({...movement, careful:val})} title={'care (1AP)'} />
+          <TextItem stat={movement.crawl} setStat={(val)=> setMovement({...movement, crawl:val})} title={'crawl (1AP)'} />
+          {/* <TextItem stat={movement.run} setStat={(val)=> setMovement({...movement, run:val})} title={'run (2AP )'} /> */}
+          <Movementinput stat={movement.run} calculatedValue={Math.floor((AGI-gearPen)/3)} setStat={(val)=> setMovement({...movement, run:val})} title={'run (2AP )'} />
         </div>
         <div className='flex flex-row gap-2 justify-center'>
-          <TextItem stat={movement.swim} setStat={(val)=> setMovement({...movement, swim:val})} title={'swim (1PA)'} />
-          <TextItem stat={movement['fast swim']} setStat={(val)=> setMovement({...movement, "fast swim":val})} title={'fast swim (1PA+1STA)'} />
-          <Movementinput stat={movement.jump} calculatedValue={Math.floor((AGI-gearPen)/4)} setStat={(val)=> setMovement({...movement, jump:val})} title={'jump (1PA+1STA)'} />
+          <TextItem stat={movement.swim} setStat={(val)=> setMovement({...movement, swim:val})} title={'swim (1AP)'} />
+          <TextItem stat={movement['fast swim']} setStat={(val)=> setMovement({...movement, "fast swim":val})} title={'fast swim (1AP+1STA)'} />
+          <Movementinput stat={movement.jump} calculatedValue={Math.floor((AGI-gearPen)/4)} setStat={(val)=> setMovement({...movement, jump:val})} title={'jump (1AP+1STA)'} />
           <Movementinput stat={movement.stand} calculatedValue={5-Math.floor((AGI-gearPen)/5)} setStat={(val)=> setMovement({...movement, stand:val})} title={'stand up'} />
         </div>
         <div className='flex flex-row gap-2 justify-center'>

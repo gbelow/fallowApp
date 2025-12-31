@@ -52,7 +52,7 @@ export function WeaponPanel({characterWeapons, setCharacterWeapons, STR=10, stri
                     <td>RES</td>
                     <td>TGH</td>
                     <td>impact/PEN</td>
-                    <td>PA</td>
+                    <td>AP</td>
                     <td>reach</td>
                     <td>DEF</td>
                     <td>properties</td>
@@ -67,7 +67,7 @@ export function WeaponPanel({characterWeapons, setCharacterWeapons, STR=10, stri
                         <td>{atk.RES}</td>
                         <td>{atk.TGH}</td>
                         <td>{atk.impact+(atk.heavyMod ? '+' + (atk.type == 'melee' ? Math.floor(atk.heavyMod*STR*dmgArr[el.scale-1])  : atk.heavyMod*dmgArr[el.scale-1]) : '' ) + '/' +Math.floor(atk.impact*atk.penMod)+(atk.heavyMod ? '+'+(atk.type == 'melee' ? Math.floor(atk.heavyMod*atk.penMod*STR*dmgArr[el.scale-1]) : atk.heavyMod*atk.penMod*dmgArr[el.scale-1]) : '')}</td>
-                        <td>{atk.PA}</td>
+                        <td>{atk.AP}</td>
                         <td>{atk.range}</td>
                         <td>{atk.deflection}</td>
                         <td>{atk.props}</td>

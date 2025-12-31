@@ -56,7 +56,7 @@
           "range": "long I",
           "RES": 60,
           "TGH": 50,
-          "PA": 4,
+          "AP": 4,
           "deflection": 0,
           "props": "heavy II"
         },
@@ -68,7 +68,7 @@
           "range": "long I",
           "RES": 20,
           "TGH": 50,
-          "PA": 3,
+          "AP": 3,
           "deflection": 0,
           "props": "braced, precise, heavy I "
         },
@@ -80,7 +80,7 @@
           "range": "long I",
           "RES": 30,
           "TGH": 50,
-          "PA": 3,
+          "AP": 3,
           "deflection": 0,
           "props": "gancho "
         },
@@ -92,7 +92,7 @@
           "range": "short",
           "RES": 20,
           "TGH": 30,
-          "PA": 3,
+          "AP": 3,
           "deflection": 0,
           "props": "DEF, heavy I "
         }
@@ -112,7 +112,7 @@
           "range": "short",
           "RES": 0,
           "TGH": 0,
-          "PA": 3,
+          "AP": 3,
           "deflection": 0,
           "props": "grapple, draw"
         },
@@ -124,7 +124,7 @@
           "range": "short",
           "RES": 0,
           "TGH": 0,
-          "PA": 3,
+          "AP": 3,
           "deflection": 0,
           "props": "heavy I, draw"
         }

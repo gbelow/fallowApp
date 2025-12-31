@@ -128,7 +128,7 @@ export type Afflictionstype = typeof afflictions
 
 
 export const charResources = {
-  fightName: '', PA:6, STA:0, 
+  fightName: '', AP:6, STA:0, 
   survival:{hunger:0, thirst:0, exhaustion:0},
   injuries:{light:[0], mid:[0], dead:[0]}, 
   penalties:{mobility:0, injury:0, health:0, mental:0, vision: 0}, 

@@ -140,7 +140,7 @@ export function PlayPanel({mode}:{mode: string}){
     if(currentCharacter && currentCharacter.resources.STA >= 3 && currentCharacter.resources.surgeToken){
       const amount = type == 'move'? 6: 6
       const cost = 3+Math.floor(getGearPen()/3)
-      const updatedChar = {...currentCharacter, resources: {...currentCharacter.resources, surgeToken: false, STA: currentCharacter.resources.STA-3, PA:currentCharacter.resources.PA+amount  }}
+      const updatedChar = {...currentCharacter, resources: {...currentCharacter.resources, surgeToken: false, STA: currentCharacter.resources.STA-3, AP:currentCharacter.resources.AP+amount  }}
       setCurrentCharacter(updatedChar)
       setCharacters({...characters, [currentCharacter.resources.fightName]: updatedChar })
     }
@@ -149,18 +149,18 @@ export function PlayPanel({mode}:{mode: string}){
   const useRest = () => {
     if(currentCharacter){
       const newSTA = Math.min(currentCharacter.resources.STA+Math.floor(currentCharacter.STA/4), currentCharacter.STA )
-      const updatedChar = {...currentCharacter, resources: {...currentCharacter.resources, STA: newSTA, PA:currentCharacter.resources.PA-4  }}
+      const updatedChar = {...currentCharacter, resources: {...currentCharacter.resources, STA: newSTA, AP:currentCharacter.resources.AP-4  }}
       setCurrentCharacter(updatedChar)
       setCharacters({...characters, [currentCharacter.resources.fightName]: updatedChar })
     }
   }
   
   const nextRound = () => {
-      const newChars = Object.entries(characters).reduce((acc, [fname, el]) => ({...acc, [fname]:{...el, resources:{...el.resources, surgeToken: true, isPlaying: false, PA:  Math.min(el.resources.PA+6, 6)} }}), {})
+      const newChars = Object.entries(characters).reduce((acc, [fname, el]) => ({...acc, [fname]:{...el, resources:{...el.resources, surgeToken: true, isPlaying: false, AP:  Math.min(el.resources.AP+6, 6)} }}), {})
       setRoundCounter(prev => prev+1)
       setCharacters(newChars)
       if(currentCharacter){
-        setCurrentCharacter({...currentCharacter, resources: {...currentCharacter.resources, surgeToken: true, isPlaying: false, PA: Math.min(currentCharacter.resources.PA+6, 6)}})
+        setCurrentCharacter({...currentCharacter, resources: {...currentCharacter.resources, surgeToken: true, isPlaying: false, AP: Math.min(currentCharacter.resources.AP+6, 6)}})
       }
     // }
   }
@@ -313,7 +313,7 @@ export function PlayPanel({mode}:{mode: string}){
               {/* <span className='flex flex-wrap w-16'>Ordem no turno {currentCharacter.resources.turn}</span> */}
             </div>                         
             <div className='flex flex-row gap-2 justify-center '>
-              <SimpleResource value={currentCharacter.resources.PA} name={'PA'} setRss={(val) => updateResource('PA', val)}/>
+              <SimpleResource value={currentCharacter.resources.AP} name={'AP'} setRss={(val) => updateResource('AP', val)}/>
               <SimpleResource value={currentCharacter.resources.STA} name={'STA'} setRss={(val) => updateResource('STA', currentCharacter.STA > parseInt(val+'') ? val : currentCharacter.STA )}/>
               <SimpleResource value={currentCharacter.resources.survival.hunger} name={'hunger'} setRss={(val) => updateSurvival(parseInt(val+''), 'hunger')}/>
               <SimpleResource value={currentCharacter.resources.survival.thirst} name={'thirst'} setRss={(val) => updateSurvival(parseInt(val+''), 'thirst') }/>
@@ -340,15 +340,15 @@ export function PlayPanel({mode}:{mode: string}){
 
             </div>
             <div className='flex flex-row gap-2 justify-center'>
-              <SimpleMove value={currentCharacter.movement.basic}  name={'basic (1PA)'} />
-              <SimpleMove value={currentCharacter.movement.careful}  name={'care (1PA)'} />
-              <SimpleMove value={currentCharacter.movement.crawl}  name={'crawl (1PA)'} />
-              <SimpleMove value={currentCharacter.movement.run+Math.floor((currentCharacter.AGI-getGearPen())/3)}  name={'run (2PA )'} />
+              <SimpleMove value={currentCharacter.movement.basic}  name={'basic (1AP)'} />
+              <SimpleMove value={currentCharacter.movement.careful}  name={'care (1AP)'} />
+              <SimpleMove value={currentCharacter.movement.crawl}  name={'crawl (1AP)'} />
+              <SimpleMove value={currentCharacter.movement.run+Math.floor((currentCharacter.AGI-getGearPen())/3)}  name={'run (2AP )'} />
             </div>
             <div className='flex flex-row gap-2 justify-center'>
-              <SimpleMove value={currentCharacter.movement.swim}  name={'swim (1PA)'} />
-              <SimpleMove value={currentCharacter.movement['fast swim']}  name={'swim (1PA+1STA)'} />
-              <SimpleMove value={currentCharacter.movement.jump+Math.floor((currentCharacter.AGI-getGearPen())/4)}  name={'jump (1PA+1STA)'} />
+              <SimpleMove value={currentCharacter.movement.swim}  name={'swim (1AP)'} />
+              <SimpleMove value={currentCharacter.movement['fast swim']}  name={'swim (1AP+1STA)'} />
+              <SimpleMove value={currentCharacter.movement.jump+Math.floor((currentCharacter.AGI-getGearPen())/4)}  name={'jump (1AP+1STA)'} />
               <SimpleMove value={currentCharacter.movement.stand+5-Math.floor((currentCharacter.AGI-getGearPen())/5)}  name={'stand up'} />
             </div>
             {/* <div className='flex flex-row gap-2 justify-center'>

@@ -12,7 +12,7 @@
       "range": "short",
       "RES": 0,
       "TGH": 0,
-      "PA": 3,
+      "AP": 3,
       "deflection":0,        
       "props": "agarrar, sacar"
     },
@@ -24,7 +24,7 @@
       "range": "short",
       "RES": 0,
       "TGH": 0,
-      "PA": 3,
+      "AP": 3,
       "deflection":0,        
       "props": "pesado I, sacar"
     }

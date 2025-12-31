@@ -56,7 +56,7 @@
           "range": "short",
           "RES": 20,
           "TGH": 40,
-          "PA": 3,
+          "AP": 3,
           "deflection": 0,
           "props": "DEF, heavy I, precise "
         }
@@ -76,7 +76,7 @@
           "range": "short",
           "RES": 50,
           "TGH": 30,
-          "PA": 3,
+          "AP": 3,
           "deflection": 1,
           "props": "DEF, heavy I"
         }
@@ -96,7 +96,7 @@
           "range": "short",
           "RES": 0,
           "TGH": 0,
-          "PA": 3,
+          "AP": 3,
           "deflection": 0,
           "props": "grapple, draw"
         },
@@ -108,7 +108,7 @@
           "range": "short",
           "RES": 0,
           "TGH": 0,
-          "PA": 3,
+          "AP": 3,
           "deflection": 0,
           "props": "heavy I, draw"
         }
@@ -156,6 +156,6 @@
     "telepathy": 6,
     "animancy": 3
   },
-  "notes": "\\spell{Assustar}{3 PA }{Telepatia 1}{}{5}{15m, alvo detectável}{Psíquico}{instantâneo}{ Um ataque espiritual que faz alguém ficar com medo se falhar ou raspar em um teste de vontade contra o Estressar.}\n\n\\spell{Calmaria}{3 PA }{Telepatia 1}{}{5}{15m, alvo detectável}{Psíquico}{instantâneo}{ Um ataque espiritual que remove o medo ou fúria se falhar ou raspar em um teste de vontade contra o Encantar.}\n\n\\spell{Ligação Telepática}{3 PA}{Telepatia 3}{}{5}{20m}{Efeito}{10 minutos}{Cria uma ligação telepática com uma criatura próxima se falharem ou rasparem em um teste de vontade ou se permitirem a ligação. O conjurador pode falar diretamente com a mente de seu alvo durante a duração do feitiço ou até que a distância máxima seja excedida, momento em que o feitiço se quebra. Cada ligação simultânea aumenta a dificuldade do teste de feitiçaria em 2.}\n\n\\spell{Sugestão}{3 PA }{Telepatia 2}{}{5}{15m alvo que consiga ouvir e entender a sugestão}{Psíquico}{}{Diz a uma criatura que consiga escutar e entender as palavras e que esteja confusa, enfurecida, seduzida ou amedrontada para fazer uma coisa, causando a compulsão de obedecer. Se falharem ou rasparem em um teste vontade contra Encantar, eles obedecerão. Essa compulsão não deve custar mais do que 6 PA em caso de erro, 4 PA em caso de raspar. }\n",
+  "notes": "\\spell{Assustar}{3 AP }{Telepatia 1}{}{5}{15m, alvo detectável}{Psíquico}{instantâneo}{ Um ataque espiritual que faz alguém ficar com medo se falhar ou raspar em um teste de vontade contra o Estressar.}\n\n\\spell{Calmaria}{3 AP }{Telepatia 1}{}{5}{15m, alvo detectável}{Psíquico}{instantâneo}{ Um ataque espiritual que remove o medo ou fúria se falhar ou raspar em um teste de vontade contra o Encantar.}\n\n\\spell{Ligação Telepática}{3 AP}{Telepatia 3}{}{5}{20m}{Efeito}{10 minutos}{Cria uma ligação telepática com uma criatura próxima se falharem ou rasparem em um teste de vontade ou se permitirem a ligação. O conjurador pode falar diretamente com a mente de seu alvo durante a duração do feitiço ou até que a distância máxima seja excedida, momento em que o feitiço se quebra. Cada ligação simultânea aumenta a dificuldade do teste de feitiçaria em 2.}\n\n\\spell{Sugestão}{3 AP }{Telepatia 2}{}{5}{15m alvo que consiga ouvir e entender a sugestão}{Psíquico}{}{Diz a uma criatura que consiga escutar e entender as palavras e que esteja confusa, enfurecida, seduzida ou amedrontada para fazer uma coisa, causando a compulsão de obedecer. Se falharem ou rasparem em um teste vontade contra Encantar, eles obedecerão. Essa compulsão não deve custar mais do que 6 AP em caso de erro, 4 AP em caso de raspar. }\n",
   "packItems": ""
 }
