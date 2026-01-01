@@ -1,0 +1,169 @@
+import { Character } from './types'
+
+export function createDefaultCharacter(path: string): Character {
+  return {
+    id: crypto.randomUUID(),
+
+    path,
+    name: '',
+    size: 3,
+
+    armor: {
+      name: 'Skin',
+      RES: 0,
+      TGH: 0,
+      INS: 0,
+      prot: 0,
+      cover: 0,
+      penalty: 0,
+      type: 'light'
+    },
+
+    attributes: {
+      STR: 10,
+      AGI: 10,
+      STA: 10,      
+    },
+
+    talents:{
+      CON: 0,
+      INT: 0,
+      SPI: 0,
+      DEX: 0
+    },
+
+    skills: {
+      "strike": 0,
+      "defend": 0,
+      "reflex": 0,
+      "accuracy": 0,
+      "grapple": 0,
+      "SD":-2,
+  
+      "sneak": 0,
+      "prestidigitation": 0,
+      "balance": 0,
+      "strength": 0,
+      "health": 0,
+      "swim": 0,
+      "climb": 0,
+  
+      "knowledge": 0,
+      "detect": 0,
+      "sense": 0,
+      "explore": 0,
+      "cunning": 0,
+      "will": 0,
+      "charm": 0,
+      "stress": 0,
+      "devotion": 0,
+  
+      "combustion": 0,
+      "eletromag": 0,
+      "radiation": 0,
+      "enthropy": 0,
+      "biomancy": 0,
+      "telepathy": 0,
+      "animancy": 0
+    },
+
+    movement: {
+      basic: '1m',
+      careful: '0.5m',
+      crawl: '0.33m',
+      run: 0,
+      jump: 0,
+      swim: '0.33m',
+      'fast swim': '0.5m',
+      stand: 0
+    },
+
+    proficiencies: {
+      melee: 0,
+      ranged: 0,
+      detection: 0,
+      spellcast: 0,
+      convic1: 0,
+      convic2: 0,
+      devotion: 0
+    },
+
+    naturalResistances: {
+      RES: 5,
+      INS: 5,
+      TGH: 5
+    },
+
+    gearPen: 0,
+    hasGauntlets: 0,
+    hasHelm: 0,
+
+    characterWeapons: {
+      hands: {
+        name: 'hands',
+        handed: 'small',
+        penalty: 0,
+        scale: 3,
+        attacks: [
+          {
+            type: 'melee',
+            impact: 0,
+            heavyMod: 0,
+            penMod: 0,
+            range: 'short',
+            RES: 20,
+            TGH: 20,
+            AP: 3,
+            deflection: 0,
+            props: 'grapple, draw'
+          },
+          {
+            type: 'melee',
+            impact: 4,
+            heavyMod: 0.5,
+            penMod: 0.2,
+            range: 'short',
+            RES: 20,
+            TGH: 20,
+            AP: 3,
+            deflection: 0,
+            props: 'heavy I, draw'
+          }
+        ]
+      }
+    },
+
+    notes: '',
+    packItems: '',
+
+    // afflictions: {
+    //   prone: {isActive: false, mobility: 3, controlable: true},
+    //   grappled: {isActive: false, mobility: 3, controlable: true},
+    //   immobile: {isActive: false, mobility: 3, controlable: true},
+    //   limp: {isActive: false, mobility: 3, controlable: true},
+    
+    //   dazzled: {isActive: false, vision: 2, controlable: true},
+    //   blind: {isActive: false, vision: 8, controlable: true},
+    
+    //   fear: {isActive: false, mental: 1, controlable: true},
+    //   rage: {isActive: false, mental: 1, controlable: true},
+    //   confused: {isActive: false, mental: 3, controlable: true},
+    //   seduced: {isActive: false, controlable: true},
+    //   distracted: {isActive: false, controlable: true},
+    //   dominated: {isActive: false, controlable: true},
+      
+    //   weakened: {isActive: false, health: 2, controlable: true},
+    //   malnourished: {isActive: false, health: 2, controlable: true},
+    //   thirsty: {isActive: false, health: 2, controlable: true},
+    //   dehydrated: {isActive: false, health: 2, controlable: true},
+    //   tired: {isActive: false, mental: 1, controlable: true},
+    //   exhausted: {isActive: false, mental: 2, controlable: true},
+    //   sick: {isActive: false, health: 2, controlable: true},
+    // },
+    // resources: {AP: 6, STA: 6},
+    // survival:{hunger:0, thirst:0, exhaustion:0},
+    // injuries:{light:[0], serious:[0], deadly:[0]}, 
+  }
+}
+
+

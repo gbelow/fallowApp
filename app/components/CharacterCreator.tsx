@@ -1,6 +1,6 @@
 'use client'
 
-import { useEffect, useMemo, useRef, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import bus from "../eventBus";
 import baseArmor from '../baseArmor.json'
 import baseWeapon from '../baseWeapon.json'
@@ -9,6 +9,7 @@ import { SMArr, dmgArr, skillsList, CharacterType, ArmorType, WeaponType, Skills
 import { scaleArmor } from './utils';
 import { WeaponPanel } from './WeaponPanel';
 import { ArmorPanel } from './ArmorPanel';
+import baseCharacter from '../baseCharacter.json'
 
 export function CharacterCreator() {
 
@@ -21,14 +22,8 @@ export function CharacterCreator() {
 
   const [path, setPath] = useState('')
 
-  const [skey, setSkey] = useState(0)
-  const [STR, setSTR ] = useState(10)
-  const [AGI, setAGI ] = useState(10)
-  const [STA, setSTA ] = useState(10)
-  const [CON, setCON ] = useState(0)
-  const [INT, setINT ] = useState(0)
-  const [SPI, setSPI ] = useState(0)
-  const [DEX, setDEX ] = useState(0)
+  const [skey, setSkey] = useState(0)  
+  const [attributes, setAttributes] = useState(baseCharacter.attributes)
 
   const [melee, setMelee ] = useState(0)
   const [ranged, setRanged ] = useState(0)
@@ -38,9 +33,9 @@ export function CharacterCreator() {
   const [convic2, setConvic2 ] = useState(0)
   const [devotion, setDevotion ] = useState(0)
 
-  const [RESnat, setRESnat ] = useState(Math.floor(STR*DM/2))
-  const [INSnat, setINSnat ] = useState(Math.floor(STR*DM/2))
-  const [TGHnat, setTGHnat ] = useState(Math.floor(STR*DM/2))
+  const [RESnat, setRESnat ] = useState(Math.floor(attributes.STR*DM/2))
+  const [INSnat, setINSnat ] = useState(Math.floor(attributes.STR*DM/2))
+  const [TGHnat, setTGHnat ] = useState(Math.floor(attributes.STR*DM/2))
   const [gearPen, setGearPen ] = useState(0)
   const [hasGauntlets, setHasGauntlets ] = useState(0)
   const [hasHelm, setHasHelm ] = useState(0)
@@ -59,15 +54,8 @@ export function CharacterCreator() {
       path,
       name,
       size, 
-      attributes:{STR, AGI, STA, CON, INT, SPI, DEX},
+      attributes,
       movement,
-      STR,
-      AGI,
-      STA,
-      CON,
-      INT,
-      SPI,
-      DEX,
       melee,
       ranged,
       detection,
@@ -114,25 +102,19 @@ export function CharacterCreator() {
     setPath(payload.character.path)
     setName(payload.character.name)
     setSize(payload.character.size)
-    setSTR(payload.character.STR)
-    setAGI(payload.character.AGI)
-    setSTA(payload.character.STA)
-    setDEX(payload.character.DEX)
-    setSPI(payload.character.SPI)
-    setCON(payload.character.CON)
-    setINT(payload.character.INT)
+    setAttributes(payload.character.attributes)
 
-    setMelee(payload.character.melee)
-    setRanged(payload.character.ranged)
-    setDetection(payload.character.detection)
-    setSpellcast(payload.character.spellcast)
-    setConvic1(payload.character.convic1)
-    setConvic2(payload.character.convic2)
-    setDevotion(payload.character.devotion)
+    setMelee(payload.character.proficiencies.melee)
+    setRanged(payload.character.proficiencies.ranged)
+    setDetection(payload.character.proficiencies.detection)
+    setSpellcast(payload.character.proficiencies.spellcast)
+    setConvic1(payload.character.proficiencies.convic1)
+    setConvic2(payload.character.proficiencies.convic2)
+    setDevotion(payload.character.proficiencies.devotion)
 
-    setRESnat(payload.character.RESnat)
-    setTGHnat(payload.character.TGHnat)
-    setINSnat(payload.character.INSnat)
+    setRESnat(payload.character.naturalResistances.RES)
+    setTGHnat(payload.character.naturalResistances.TGH)
+    setINSnat(payload.character.naturalResistances.INS)
 
     setGearPen(payload.character.gearPen)
     setHasGauntlets(payload.character.hasGauntlets)
@@ -149,13 +131,7 @@ export function CharacterCreator() {
   const resetAll = () => {
     resetSkills()
     
-    setAGI(10)
-    setSTR(10)
-    setSTA(10)
-    setCON(0)
-    setINT(0)
-    setSPI(0)
-    setDEX(0)   
+    setAttributes(baseCharacter.attributes)
 
     setSkey(prev => prev+1)
   }
@@ -180,12 +156,12 @@ export function CharacterCreator() {
   }, [characterWeapons]);
 
   useEffect(() => {
-    setTGHnat(Math.floor(STR*DM/2))
-    setINSnat(Math.floor(STR*DM/2))
-    setRESnat(Math.floor(STR*DM/2))
+    setTGHnat(Math.floor(attributes.STR*DM/2))
+    setINSnat(Math.floor(attributes.STR*DM/2))
+    setRESnat(Math.floor(attributes.STR*DM/2))
     setScaledArmor(scaleArmor(armor, size))
     setGearPen(armor.penalty+Object.values(characterWeapons).reduce((acc, el)=> acc + el.penalty , 0))
-  }, [size, armor, characterWeapons, STR])
+  }, [size, armor, characterWeapons, attributes.STR, DM])
 
   useEffect(()=>{
     bus.on("select-character", loadCharacter);
@@ -211,8 +187,8 @@ export function CharacterCreator() {
           </div>
         <div className='flex flex-row gap-2 justify-center'>
           <div>AP: {6}</div>
-          <div>STA: {STA}</div>
-          <div>STA regen: {Math.floor(STA/4)}</div>
+          <div>STA: {attributes.STA}</div>
+          <div>STA regen: {Math.floor(attributes.STA/4)}</div>
           {/* <div>Ferimentos leves: {Math.floor(CON/2)}</div>
           <div>Ferimentos sérios: {Math.floor(CON/5)}</div> */}
         </div>
@@ -221,22 +197,22 @@ export function CharacterCreator() {
           <TextItem stat={movement.careful} setStat={(val)=> setMovement({...movement, careful:val})} title={'care (1AP)'} />
           <TextItem stat={movement.crawl} setStat={(val)=> setMovement({...movement, crawl:val})} title={'crawl (1AP)'} />
           {/* <TextItem stat={movement.run} setStat={(val)=> setMovement({...movement, run:val})} title={'run (2AP )'} /> */}
-          <Movementinput stat={movement.run} calculatedValue={Math.floor((AGI-gearPen)/3)} setStat={(val)=> setMovement({...movement, run:val})} title={'run (2AP )'} />
+          <Movementinput stat={movement.run} calculatedValue={Math.floor((attributes.AGI-gearPen)/3)} setStat={(val)=> setMovement({...movement, run:val})} title={'run (2AP )'} />
         </div>
         <div className='flex flex-row gap-2 justify-center'>
           <TextItem stat={movement.swim} setStat={(val)=> setMovement({...movement, swim:val})} title={'swim (1AP)'} />
           <TextItem stat={movement['fast swim']} setStat={(val)=> setMovement({...movement, "fast swim":val})} title={'fast swim (1AP+1STA)'} />
-          <Movementinput stat={movement.jump} calculatedValue={Math.floor((AGI-gearPen)/4)} setStat={(val)=> setMovement({...movement, jump:val})} title={'jump (1AP+1STA)'} />
-          <Movementinput stat={movement.stand} calculatedValue={5-Math.floor((AGI-gearPen)/5)} setStat={(val)=> setMovement({...movement, stand:val})} title={'stand up'} />
+          <Movementinput stat={movement.jump} calculatedValue={Math.floor((attributes.AGI-gearPen)/4)} setStat={(val)=> setMovement({...movement, jump:val})} title={'jump (1AP+1STA)'} />
+          <Movementinput stat={movement.stand} calculatedValue={5-Math.floor((attributes.AGI-gearPen)/5)} setStat={(val)=> setMovement({...movement, stand:val})} title={'stand up'} />
         </div>
         <div className='flex flex-row gap-2 justify-center'>
-          <StatDial stat={STR} natStat={STR} setStat={setSTR} title={'FOR'} />
-          <StatDial stat={AGI} natStat={AGI} setStat={setAGI} title={'AGI'} />
-          <StatDial stat={STA} natStat={STA} setStat={setSTA} title={'STA'} />
-          <StatDial stat={CON} natStat={CON} setStat={setCON} title={'CON'} />
-          <StatDial stat={INT} natStat={INT} setStat={setINT} title={'INT'} />
-          <StatDial stat={SPI} natStat={SPI} setStat={setSPI} title={'SPI'} />
-          <StatDial stat={DEX} natStat={DEX} setStat={setDEX} title={'DEX'} />
+          <StatDial stat={attributes.STR} natStat={attributes.STR} setStat={(val)=> setAttributes({...attributes, STR:val})} title={'FOR'} />
+          <StatDial stat={attributes.AGI} natStat={attributes.AGI} setStat={(val)=>   setAttributes({...attributes, AGI:val})} title={'AGI'} />
+          <StatDial stat={attributes.STA} natStat={attributes.STA} setStat={(val)=> setAttributes({...attributes, STA:val})} title={'STA'} />
+          <StatDial stat={attributes.CON} natStat={attributes.CON} setStat={(val)=> setAttributes({...attributes, CON:val})} title={'CON'} />
+          <StatDial stat={attributes.INT} natStat={attributes.INT} setStat={(val)=> setAttributes({...attributes, INT:val})} title={'INT'} />
+          <StatDial stat={attributes.SPI} natStat={attributes.SPI} setStat={(val)=> setAttributes({...attributes, SPI:val})} title={'SPI'} />
+          <StatDial stat={attributes.DEX} natStat={attributes.DEX} setStat={(val)=> setAttributes({...attributes, DEX:val})} title={'DEX'} />
         </div>
         <div className='flex flex-row gap-2 justify-center'>
           <StatDial stat={size} natStat={size} setStat={setSize} title={'Size'} />
@@ -269,26 +245,26 @@ export function CharacterCreator() {
           <SkillItem key={skey+'defend'} statName='defend' calculatedValue={ melee  } title={'Defend'} skills={skills} setSkills={setSkills}/>
           <SkillItem key={skey+'reflex'} statName='reflex' calculatedValue={ detection+ranged - 3*hasHelm - SM } title={'Reflex'} skills={skills} setSkills={setSkills}/>
           {/* <SkillItem key={skey+'block'} statName='block' calculatedValue={ melee - 2*SM} title={'Bloquear'} skills={skills} setSkills={setSkills}/> */}
-          <SkillItem key={skey+'grapple'} statName='grapple' calculatedValue={STR-10 + 5*SM} title={'Grapple'}  skills={skills} setSkills={setSkills}/>
+          <SkillItem key={skey+'grapple'} statName='grapple' calculatedValue={attributes.STR-10 + 5*SM} title={'Grapple'}  skills={skills} setSkills={setSkills}/>
           <SkillItem key={skey+'cunning'} statName='cunning' calculatedValue={detection-3*hasHelm} title={'Cunning***'}  skills={skills} setSkills={setSkills}/>
           <SkillItem key={skey+'SD'} statName='SD' calculatedValue={-2-SM*1} title={'SD'}  skills={skills} setSkills={setSkills}/>
         </div>
         <div className='flex flex-row gap-2 justify-center'>
-          <SkillItem key={skey+'balance'} statName='balance' calculatedValue={AGI-10} title={'Balance'} skills={skills} setSkills={setSkills}/>
-          <SkillItem key={skey+'climb'} statName='climb' calculatedValue={AGI-10 - 2*SM-3*hasGauntlets-gearPen} title={'Climb*'} skills={skills} setSkills={setSkills}/>
-          <SkillItem key={skey+'swim'} statName='swim' calculatedValue={AGI-10-gearPen-3*hasHelm} title={'Swim*'}  skills={skills} setSkills={setSkills}/>
-          <SkillItem key={skey+'strength'} statName='strength' calculatedValue={STR-10 + 5*SM} title={'Strength'} skills={skills} setSkills={setSkills}/>
-          <SkillItem key={skey+'sneak'} statName='sneak' calculatedValue={AGI-10- 3*SM-gearPen} title={'Sneak'} skills={skills} setSkills={setSkills}/>
-          <SkillItem key={skey+'prestidigitation'} statName='prestidigitation' calculatedValue={DEX-3*hasGauntlets} title={'Prestidigitation**'} skills={skills} setSkills={setSkills}/>
-          <SkillItem key={skey+'health'} statName='health' calculatedValue={CON} title={'Health'}  skills={skills} setSkills={setSkills}/>
+          <SkillItem key={skey+'balance'} statName='balance' calculatedValue={attributes.AGI-10} title={'Balance'} skills={skills} setSkills={setSkills}/>
+          <SkillItem key={skey+'climb'} statName='climb' calculatedValue={attributes.AGI-10 - 2*SM-3*hasGauntlets-gearPen} title={'Climb*'} skills={skills} setSkills={setSkills}/>
+          <SkillItem key={skey+'swim'} statName='swim' calculatedValue={attributes.AGI-10-gearPen-3*hasHelm} title={'Swim*'}  skills={skills} setSkills={setSkills}/>
+          <SkillItem key={skey+'strength'} statName='strength' calculatedValue={attributes.STR-10 + 5*SM} title={'Strength'} skills={skills} setSkills={setSkills}/>
+          <SkillItem key={skey+'sneak'} statName='sneak' calculatedValue={attributes.AGI-10- 3*SM-gearPen} title={'Sneak'} skills={skills} setSkills={setSkills}/>
+          <SkillItem key={skey+'prestidigitation'} statName='prestidigitation' calculatedValue={attributes.DEX-3*hasGauntlets} title={'Prestidigitation**'} skills={skills} setSkills={setSkills}/>
+          <SkillItem key={skey+'health'} statName='health' calculatedValue={attributes.CON} title={'Health'}  skills={skills} setSkills={setSkills}/>
         </div>
         <div className='flex flex-row gap-2 justify-center'>
-          <SkillItem key={skey+'knowledge'} statName='knowledge' calculatedValue={2*INT} title={'Knowledge'} skills={skills} setSkills={setSkills}/>
+          <SkillItem key={skey+'knowledge'} statName='knowledge' calculatedValue={2*attributes.INT} title={'Knowledge'} skills={skills} setSkills={setSkills}/>
           <SkillItem key={skey+'explore'} statName='explore' calculatedValue={detection} title={'Explore'} skills={skills} setSkills={setSkills}/>
           <SkillItem key={skey+'will'} statName='will' calculatedValue={0} title={'Will'}  skills={skills} setSkills={setSkills}/>
           <SkillItem key={skey+'charm'} statName='charm' calculatedValue={0} title={'Charm'}  skills={skills} setSkills={setSkills}/>
           <SkillItem key={skey+'stress'} statName='stress' calculatedValue={0} title={'Stress'}  skills={skills} setSkills={setSkills}/>
-          <SkillItem key={skey+'devotion'} statName='devotion' calculatedValue={SPI} title={'Devotion'}  skills={skills} setSkills={setSkills}/>
+          <SkillItem key={skey+'devotion'} statName='devotion' calculatedValue={attributes.SPI} title={'Devotion'}  skills={skills} setSkills={setSkills}/>
         </div>
         <div className='flex flex-row gap-2 justify-center'>
           <SkillItem key={skey+'combustion'} statName='combustion' calculatedValue={+ spellcast} title={'Combustion'} skills={skills} setSkills={setSkills}/>
@@ -306,7 +282,7 @@ export function CharacterCreator() {
       </div>
       <div className='flex flex-col text-center md:col-span-5  items-center mx-2 gap-2'>
         <ArmorPanel RESnat={RESnat} INSnat={INSnat} TGHnat={TGHnat} scaledArmor={scaledArmor} />
-        <WeaponPanel characterWeapons={characterWeapons} setCharacterWeapons={setCharacterWeapons} STR={STR} strike={skills.strike} accuracy={skills.accuracy} />
+        <WeaponPanel characterWeapons={characterWeapons} setCharacterWeapons={setCharacterWeapons} STR={attributes.STR} strike={skills.strike} accuracy={skills.accuracy} />
         <span>Items</span>
         <textarea aria-label='pack' className='border rounded p-1 min-h-32 w-full' onChange={val => setPackItems(val.target.value)} value={packItems} />
       </div>
