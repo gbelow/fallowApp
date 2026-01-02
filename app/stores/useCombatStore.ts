@@ -7,6 +7,7 @@ type CharacterStore = {
   characters: Record<string, Character>
   activeCharacterId: string | null
   round: number
+  inTurnCharacter: string
   
   addCharacter: (character: Character) => void
   setActiveCharacter: (id: string) => void
@@ -23,6 +24,7 @@ export const useCharacterStore = create<CharacterStore>((set) => ({
   characters: {},
   activeCharacterId: null,
   round: 0,
+  inTurnCharacter: '',
 
   addCharacter: (character) =>
     set((s) => {

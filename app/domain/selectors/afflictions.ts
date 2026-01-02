@@ -14,6 +14,11 @@ export function getAfflictionPenalty(
   const injuryPenalty = getInjuryPenalty(character)
 
   for (const afflictionName of character.afflictions) {
+    // Type guard: ensure afflictionName is a valid key
+    if (!(afflictionName in afflictionDefinitions)) {
+      // Skip invalid affliction names (defensive programming)
+      continue
+    }
     const afflictionDef = afflictionDefinitions[afflictionName]
     if (!afflictionDef || !afflictionDef.isActive) {
       continue

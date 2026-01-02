@@ -10,13 +10,45 @@ export function getGearPenalties(c: Character){
   return pen 
 }
 
-export function scaleArmor(armor: Armor, scale: number){
-  const arm = {...armor, RES: Math.floor(armor.RES*dmgArr[scale-1]), TGH: Math.floor(armor.TGH*dmgArr[scale-1]), INS: Math.floor(armor.INS*dmgArr[scale-1]), prot:Math.floor( armor.prot*dmgArr[scale-1]), cover: armor.cover-SMArr[scale-1]}  
+export function scaleArmor(armor: Armor, scale: number): Armor {
+  // Validate scale is within bounds (1-7, where scale-1 maps to array indices 0-6)
+  const clampedScale = Math.max(1, Math.min(7, scale))
+  const scaleIndex = clampedScale - 1
+  
+  if (scaleIndex < 0 || scaleIndex >= dmgArr.length || scaleIndex >= SMArr.length) {
+    throw new Error(`Invalid scale value: ${scale}. Scale must be between 1 and ${dmgArr.length}.`)
+  }
+
+  const arm = {
+    ...armor,
+    RES: Math.floor(armor.RES * dmgArr[scaleIndex]),
+    TGH: Math.floor(armor.TGH * dmgArr[scaleIndex]),
+    INS: Math.floor(armor.INS * dmgArr[scaleIndex]),
+    prot: Math.floor(armor.prot * dmgArr[scaleIndex]),
+    cover: armor.cover - SMArr[scaleIndex]
+  }
   return arm
 }
 
-export function scaleWeapon(weapon: Weapon, scale: number){
-  const weap = {...weapon, scale, attacks: weapon.attacks.map(el => ({...el, impact: Math.floor(el.impact*dmgArr[scale-1]), RES: Math.floor(el.RES*dmgArr[scale-1]), TGH: Math.floor(el.TGH*dmgArr[scale-1])}))}
+export function scaleWeapon(weapon: Weapon, scale: number): Weapon {
+  // Validate scale is within bounds (1-7, where scale-1 maps to array indices 0-6)
+  const clampedScale = Math.max(1, Math.min(7, scale))
+  const scaleIndex = clampedScale - 1
+  
+  if (scaleIndex < 0 || scaleIndex >= dmgArr.length) {
+    throw new Error(`Invalid scale value: ${scale}. Scale must be between 1 and ${dmgArr.length}.`)
+  }
+
+  const weap = {
+    ...weapon,
+    scale: clampedScale,
+    attacks: weapon.attacks.map(el => ({
+      ...el,
+      impact: Math.floor(el.impact * dmgArr[scaleIndex]),
+      RES: Math.floor(el.RES * dmgArr[scaleIndex]),
+      TGH: Math.floor(el.TGH * dmgArr[scaleIndex])
+    }))
+  }
   return weap
 }
 

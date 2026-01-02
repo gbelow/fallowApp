@@ -137,16 +137,18 @@ export function createNewCharacter(path: string): Character {
   })
 }
 
-export function createCharacterResources(char: Character){
+export function createCharacterResources(char: Character) {
+  if (!char.attributes || typeof char.attributes.STA !== 'number') {
+    throw new Error('Character must have valid attributes with STA value')
+  }
 
   const rss = {
     afflictions: [],
-    resources: {AP: 6, STA: char.attributes.STA},
-    survival:{hunger:0, thirst:0, exhaustion:0},
-    injuries:{light:[0], serious:[0], deadly:[0]},
+    resources: { AP: 6, STA: char.attributes.STA },
+    survival: { hunger: 0, thirst: 0, exhaustion: 0 },
+    injuries: { light: [0], serious: [0], deadly: [0] },
     hasActionSurge: true,
   }
   return rss
-
 }
 
