@@ -20,6 +20,7 @@ export const useCharacterStore = create<CharacterStore>((set) => ({
   loadCharacter: (character) => {
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const {afflictions, injuries, hasActionSurge, fightName, survival, resources, ...char } = character
+    console.log(character)
     set(() => ({
         character: char
       }

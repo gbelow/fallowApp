@@ -53,7 +53,7 @@ export const SkillPenaltyTable = {
     "combustion",
     "eletromag",
     "radiation",
-    "enthropy",
+    "entropy",
     "biomancy",
     "telepathy",
     "animancy",

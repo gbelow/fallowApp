@@ -5,10 +5,12 @@ import { ArmorPanel } from './ArmorPanel';
 import { WeaponPanel } from './WeaponPanel';
 import { ActiveCharType, CharacterType, WeaponType, charResources, penaltyTable, Afflictionstype, AfflictionItemType, ArmorType,  } from '../types';
 import { makeFullRoll, scaleArmor } from './utils';
+import { useNavigationStore } from '../stores/useNavigationStore';
 
 
-export function PlayPanel({mode}:{mode: string}){
+export function PlayPanel(){
 
+  const {selectedGameTab} = useNavigationStore()
   const [characters, setCharacters] = useState<{[key:string]:ActiveCharType}>({})
 
   const [currentCharacter, setCurrentCharacter] = useState<ActiveCharType>()
@@ -84,8 +86,8 @@ export function PlayPanel({mode}:{mode: string}){
         ...char, 
         resources: {
           ...charResources, 
-          fightName: mode == 'run' ? newName : char.name, 
-          STA: char.STA, 
+          fightName: selectedGameTab == 'play' ? newName : char.name, 
+          STA: char.attributes.STA, 
           survival:{hunger:0, thirst:0, exhaustion:0},
           equippedWeapons:char.characterWeapons, 
           equippedArmor:char.armor, 
@@ -96,7 +98,7 @@ export function PlayPanel({mode}:{mode: string}){
           }
         }
       }
-      mode == 'run' && setCharacters({...characters, [newName]: newChar })
+      selectedGameTab == 'play' && setCharacters({...characters, [newName]: newChar })
       setCurrentCharacter(newChar)
     };
 
@@ -118,11 +120,11 @@ export function PlayPanel({mode}:{mode: string}){
       bus.off("equip-weapon", handleEquipWeaponClick);
       bus.off("equip-armor", handleEquipArmorClick);
     };
-  }, [characters, currentCharacter, mode]);
+  }, [characters, currentCharacter, selectedGameTab]);
 
   const startTurn = () => {
     if(currentCharacter){
-      if(mode == 'run'){
+      if(selectedGameTab == 'play'){
         const charKeys = Object.keys(characters)
         const newChars = {...characters}
         charKeys.forEach(el => newChars[el].resources.isPlaying = false)
@@ -264,7 +266,7 @@ export function PlayPanel({mode}:{mode: string}){
   return(
     <div className='flex flex-col justify-center '>
       {
-        mode == 'run' ?
+        selectedGameTab == 'play' ?
           <div className='flex flex-col'>
             <div className='flex flex-row gap-2 w-full' >
               <span>
@@ -402,7 +404,7 @@ export function PlayPanel({mode}:{mode: string}){
               <SimpleSkill name={'combustion'} value={currentCharacter.resources.skills['combustion']} rollSkill={rollSkill}/>
               <SimpleSkill name={'eletromag'} value={currentCharacter.resources.skills['eletromag']} rollSkill={rollSkill}/>
               <SimpleSkill name={'radiation'} value={currentCharacter.resources.skills['radiation']} rollSkill={rollSkill}/>
-              <SimpleSkill name={'enthropy'} value={currentCharacter.resources.skills['enthropy']} rollSkill={rollSkill}/>
+              <SimpleSkill name={'entropy'} value={currentCharacter.resources.skills['entropy']} rollSkill={rollSkill}/>
               <SimpleSkill name={'biomancy'} value={currentCharacter.resources.skills['biomancy']} rollSkill={rollSkill}/>
               <SimpleSkill name={'telepathy'} value={currentCharacter.resources.skills['telepathy']} rollSkill={rollSkill}/>
               <SimpleSkill name={'animancy'} value={currentCharacter.resources.skills['animancy']} rollSkill={rollSkill}/>

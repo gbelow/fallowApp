@@ -40,7 +40,7 @@ export type Skills = {
   "combustion": number,
   "eletromag": number,
   "radiation": number,
-  "enthropy": number,
+  "entropy": number,
   "biomancy": number,
   "telepathy": number,
   "animancy": number

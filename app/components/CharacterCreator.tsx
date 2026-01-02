@@ -274,7 +274,7 @@ export function CharacterCreator() {
           <SkillItem key={skey+'combustion'} statName='combustion' calculatedValue={+ spellcast} title={'Combustion'} skills={skills} setSkills={setSkills}/>
           <SkillItem key={skey+'eletromag'} statName='eletromag' calculatedValue={+ spellcast} title={'Eletromag'} skills={skills} setSkills={setSkills}/>
           <SkillItem key={skey+'radiation'} statName='radiation' calculatedValue={+ spellcast} title={'Radiation'} skills={skills} setSkills={setSkills}/>
-          <SkillItem key={skey+'enthropy'} statName='enthropy' calculatedValue={+ spellcast} title={'Enthropy'} skills={skills} setSkills={setSkills}/>
+          <SkillItem key={skey+'entropy'} statName='entropy' calculatedValue={+ spellcast} title={'Entropy'} skills={skills} setSkills={setSkills}/>
           <SkillItem key={skey+'biomancy'} statName='biomancy' calculatedValue={+ spellcast} title={'Biomancy'} skills={skills} setSkills={setSkills}/>
           <SkillItem key={skey+'telepathy'} statName='telepathy' calculatedValue={+ spellcast} title={'Telepathy'} skills={skills} setSkills={setSkills}/>
           <SkillItem key={skey+'animancy'} statName='animancy' calculatedValue={+ spellcast} title={'Animancy'} skills={skills} setSkills={setSkills}/>

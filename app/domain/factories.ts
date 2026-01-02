@@ -1,6 +1,6 @@
 import { Character } from './types'
 
-export function createNewCharacter(path: string): Character {
+export function makeNewCharacter(path: string): Character {
   return ({
     path,
     name: '',
@@ -59,7 +59,7 @@ export function createNewCharacter(path: string): Character {
       "combustion": 0,
       "eletromag": 0,
       "radiation": 0,
-      "enthropy": 0,
+      "entropy": 0,
       "biomancy": 0,
       "telepathy": 0,
       "animancy": 0
@@ -137,7 +137,7 @@ export function createNewCharacter(path: string): Character {
   })
 }
 
-export function createCharacterResources(char: Character) {
+export function makeCharacterResources(char: Character) {
   if (!char.attributes || typeof char.attributes.STA !== 'number') {
     throw new Error('Character must have valid attributes with STA value')
   }

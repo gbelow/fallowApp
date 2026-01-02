@@ -1,7 +1,7 @@
 "use server"
 
+import { Character } from './domain/types';
 import redis from './redis'
-import { CharacterType } from './types';
 import fs from "fs";
 import path from "path";
 
@@ -44,7 +44,7 @@ export async function getBasicCharList(){
 export async function createNewCharacter(
   folderPath: string,
   fileName: string,
-  data: CharacterType
+  data: Character
 ) {
   const targetDir = path.join('app/characters', folderPath);
 
@@ -76,36 +76,52 @@ export async function deleteBaseCharacter(
 }
 
 
-export async  function saveCharacter(character: CharacterType){
-  const list: string[] = await redis.get('charList') ?? []
-  await redis.set('charList', [...list, character.name ]);
-
-  await redis.set(character.name, character);
-  // const resp = await redis.get(character.name);
-
-}
-
-export async  function deleteCharacter(name: string){
-  const list: string[] = await redis.get('charList') ?? []
-  await redis.set('charList',list.filter(el => el != name));
-
-  await redis.del(name);
-
-}
-
-export async function getCharacter(name: string){
-  const character: CharacterType | null = await redis.get(name)
-  if(character){
-    return character
+export async function saveCharacter(character: Character) {
+  try {
+    const list: string[] = (await redis.get('charList')) ?? [];
+    await redis.set('charList', [...list, character.name]);
+    await redis.set(character.name, character);
+  } catch (err) {
+    console.error('Error saving character to Redis:', err);
+    // Optionally, you could throw or return an error state here
   }
-  return null
+}
+
+export async function deleteCharacter(name: string) {
+  try {
+    const list: string[] = (await redis.get('charList')) ?? [];
+    await redis.set('charList', list.filter(el => el !== name));
+    await redis.del(name);
+  } catch (err) {
+    console.error('Error deleting character from Redis:', err);
+    // Optionally, you could throw or return an error state here
+  }
+}
+
+export async function getCharacter(name: string) {
+  try {
+    const character: Character | null = await redis.get(name);
+    if (character) {
+      return character;
+    }
+    return null;
+  } catch (err) {
+    console.error('Error getting character from Redis:', err);
+    return null;
+  }
 }
 
 
 export async function getCharacterList(){
-  const list : string[] | null = await redis.get('charList')
-  if(list != null){
-    return list
+  try{
+    const list : string[] | null = await redis.get('charList')
+    if(list != null){
+      return list
+    }
+    return []
+
+  }catch(err){
+    console.error('Error getting character list from Redis:', err);
+    return []
   }
-  return []
 }

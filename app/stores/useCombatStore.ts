@@ -1,9 +1,9 @@
 // stores/useCharacterStore.ts
 import { create } from 'zustand'
 import { Character } from '../domain/types'
-import { createCharacterResources } from '../domain/factories'
+import { makeCharacterResources } from '../domain/factories'
 
-type CharacterStore = {
+type PlayCharacterStore = {
   characters: Record<string, Character>
   activeCharacterId: string | null
   round: number
@@ -20,7 +20,7 @@ type CharacterStore = {
   removeCharacter: (id: string) => void
 }
 
-export const useCharacterStore = create<CharacterStore>((set) => ({ 
+export const useCharacterStore = create<PlayCharacterStore>((set) => ({ 
   characters: {},
   activeCharacterId: null,
   round: 0,
@@ -75,6 +75,6 @@ function makeFightName(char: Character, characters: Record<string, Character>){
 }
 
 function addCharacterResources(char: Character): Character {
-  const resources = createCharacterResources(char)
+  const resources = makeCharacterResources(char)
   return { ...char, ...resources }
 }

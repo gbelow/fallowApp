@@ -61,7 +61,7 @@ export const penaltyTable = {
     "combustion",
     "eletromag",
     "radiation",
-    "enthropy",
+    "entropy",
     "biomancy",
     "telepathy",
     "animancy",

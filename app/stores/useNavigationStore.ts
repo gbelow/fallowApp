@@ -1,14 +1,14 @@
 import { create } from "zustand"
 
 
-type NavMode = 'create' | 'run' 
+type GameTabs = 'edit' | 'play' 
 
 interface NavState {
-  mode: NavMode
-  setMode: (mode: NavMode) => void
+  selectedGameTab: GameTabs
+  setSelectedGameTab: (mode: GameTabs) => void
 }
 
 export const useNavigationStore = create<NavState>((set) => ({
-  mode: 'create',
-  setMode: (mode) => set({ mode })
+  selectedGameTab: 'edit',
+  setSelectedGameTab: (selectedGameTab) => set({ selectedGameTab })
 }))

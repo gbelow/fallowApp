@@ -3,12 +3,15 @@ import { useEffect, useState } from 'react'
 import bus from "./eventBus";
 import armors from './armors.json'
 import weapons from './weapons.json'
-import { ArmorType, WeaponType, CharacterType } from './types';
+import { ArmorType, WeaponType } from './types';
 import { PlayPanel } from './components/PlayPanel';
 import { CharacterCreator } from './components/CharacterCreator';
 import { scaleWeapon } from './components/utils';
 import { JsonObject, createNewCharacter, deleteBaseCharacter, getBasicCharList, getCharacter, getCharacterList } from './actions';
-import baseCharacter from './baseCharacter.json'
+import { useNavigationStore } from './stores/useNavigationStore';
+import { makeNewCharacter } from './domain/factories';
+import { Character } from './domain/types';
+import { useCharacterStore } from './stores/useCharacterStore';
 
 
 export function ArmorSelector(){
@@ -57,21 +60,24 @@ export function WeaponSelector(){
 
 
 
-export function CharacterSelector({charList, selectedPage}: {charList: string[], selectedPage: string}){
+export function CharacterSelector({charList, initialCharactersList}: {charList: string[], initialCharactersList: JsonObject}){
 
   const [open, setOpen] = useState<{ [key: string]: boolean }>({});
-  const [openPlayer, setOpenPlayer] = useState(false)
-  const [charactersList, setCharactersList] = useState<JsonObject | undefined>()
-  const [isLoading, setIsLoading] = useState(true)
+  const [openCampaignChars, setOpenCampaignChars] = useState(false)
+  const [charactersList, setCharactersList] = useState<JsonObject>(initialCharactersList)
+  const [isLoading, setIsLoading] = useState(false)
+  const {selectedGameTab} = useNavigationStore()
+  const  characterStore = useCharacterStore()
   
   
-  const handleSelectCharacterClick = (character: CharacterType) => {
+  const handleSelectCharacterClick = (character: Character) => {
     bus.emit("select-character", { character });
+    characterStore.loadCharacter(character)
   };
 
-  const handleSelectPlayerClick = async (character: string) => {
-    const char: CharacterType | null = await getCharacter(character)
-    char &&  handleSelectCharacterClick(char)
+  const handleSelectPlayerClick  = async (characterId: string) => {
+    const char: Character | null = await getCharacter(characterId)
+    if(char) handleSelectCharacterClick(char)
   };
 
   const toggle = (key: string) => {
@@ -98,7 +104,7 @@ export function CharacterSelector({charList, selectedPage}: {charList: string[],
   }, [])
 
   const createCharacter = (path:string) => {
-    createNewCharacter(path, '', {...baseCharacter, path})
+    createNewCharacter(path, '', makeNewCharacter(path))
     setIsLoading(true)
   }
 
@@ -126,7 +132,7 @@ export function CharacterSelector({charList, selectedPage}: {charList: string[],
                     {/* Second level */}
                     <button
                       onClick={() => {
-                        const char = chars as CharacterType
+                        const char = chars as Character
                         if(char.name && char.attributes.AGI ){
                           handleSelectCharacterClick(char)
                         }else{
@@ -145,7 +151,7 @@ export function CharacterSelector({charList, selectedPage}: {charList: string[],
                     {open[`${topKey}-${midKey}`] && (
                       <div className="ml-4 mt-1 space-y-1">
                         {Object.entries(chars).sort((a,b) => a[0] > b[0] ? 1 : -1).map(([charKey, charVal]) => {
-                          const val = charVal as CharacterType
+                          const val = charVal as Character
                           return(
                             <div
                               key={charKey}
@@ -154,7 +160,7 @@ export function CharacterSelector({charList, selectedPage}: {charList: string[],
                               <input type={'button'} key={charKey} className='text-center w-full hover:bg-gray-500 p-1 ' value={charKey} aria-label={charKey} onClick={() => handleSelectCharacterClick(val)}/>
                               {/* {charKey} */}
                               {
-                                selectedPage == 'Character' ?
+                                selectedGameTab == 'edit' ?
                                 <button className="w-6 text-left font-semibold p-1 bg-red-500 rounded" onClick={() => handleDeleteCharacter(topKey+'/'+midKey, charKey)}>
                                   -
                                 </button>
@@ -174,9 +180,9 @@ export function CharacterSelector({charList, selectedPage}: {charList: string[],
       ))}
       {
         <div>
-          <input type={'button'} key={'oplay'} className='w-full font-bold bg-gray-800 rounded hover:bg-gray-500 p-1 text-left' value={'PCs'} aria-label={'oplay'} onClick={() => setOpenPlayer(!openPlayer)}/>
+          <input type={'button'} key={'oplay'} className='w-full font-bold bg-gray-800 rounded hover:bg-gray-500 p-1 text-left' value={'PCs'} aria-label={'oplay'} onClick={() => setOpenCampaignChars(!openCampaignChars)}/>
           {
-            openPlayer && charList.sort().map(el => 
+            openCampaignChars && charList.sort().map(el => 
               <div
                 key={el}
                 className="p-1 bg-gray-600 rounded cursor-pointer hover:bg-gray-500 ml-2"
@@ -191,11 +197,12 @@ export function CharacterSelector({charList, selectedPage}: {charList: string[],
   );
 }
 
-export function Sidebar({selectedPage}:{selectedPage: string}){
+export function Sidebar({initialCharList, initialCharactersList}: {initialCharList: string[], initialCharactersList: JsonObject}){
 
   const [selectedSidebar, setSelectedSidebar] = useState('') 
-  const [charList, setCharList] = useState<string[]>([])
+  const [charList, setCharList] = useState<string[]>(initialCharList)
 
+  // Keep client-side refetching for when characters are saved/updated
   useEffect(() => {
     getCharacterList().then(resp => {
       setCharList(resp)
@@ -215,7 +222,7 @@ export function Sidebar({selectedPage}:{selectedPage: string}){
         selectedSidebar == 'Weapon' ?
         <WeaponSelector /> :
         selectedSidebar == 'Character' ?
-        <CharacterSelector charList={charList} selectedPage={selectedPage}/>
+        <CharacterSelector charList={charList} initialCharactersList={initialCharactersList}/>
         : null
       }
     </>
@@ -223,9 +230,9 @@ export function Sidebar({selectedPage}:{selectedPage: string}){
 }
 
 
-export function App(){
+export function App({initialCharactersList, initialCharList}: {initialCharactersList: JsonObject, initialCharList: string[]}){
 
-  const [selectedPage, setSelectedPage] = useState('Character') 
+  const {selectedGameTab, setSelectedGameTab} = useNavigationStore()
 
   const [open, setOpen] = useState(false)
 
@@ -234,20 +241,21 @@ export function App(){
       <header className="py-4 h-12">
         <div className='flex flex-row justify-start items-start text-start gap-2'>
           {/* <input className={'p-1 w-full hover:bg-gray-500 '+ (selectedPage == 'Select' ? 'bg-white text-black' : '')} type={'button'} aria-label={'head_select'} value={'Select'} onClick={() => setSelectedPage('Select')}/> */}
-          <input className={'py-1 rounded px-2 hover:bg-gray-500 '+ (selectedPage == 'Character' ? 'bg-white text-black' : '')} type={'button'} aria-label={'head_char'} value={'Character'} onClick={() => setSelectedPage('Character')}/>
-          <input className={'py-1 rounded px-2 hover:bg-gray-500 '+ (selectedPage == 'Play' ? 'bg-white text-black' : '')} type={'button'} aria-label={'head_play'} value={'Play'} onClick={() => setSelectedPage('Play')}/>
-          <input className={'py-1 rounded px-2 hover:bg-gray-500 hidden md:block '+ (selectedPage == 'Run' ? 'bg-white text-black' : '')} type={'button'} aria-label={'head_play'} value={'Run'} onClick={() => setSelectedPage('Run')}/>
+          <input className={'py-1 rounded px-2 hover:bg-gray-500 '+ (selectedGameTab == 'edit' ? 'bg-white text-black' : '')} type={'button'} aria-label={'head_char'} value={'Character'} onClick={() => setSelectedGameTab('edit')}/>
+          {/* <input className={'py-1 rounded px-2 hover:bg-gray-500 '+ (selectedPage == 'Play' ? 'bg-white text-black' : '')} type={'button'} aria-label={'head_play'} value={'Play'} onClick={() => setSelectedPage('Play')}/> */}
+          <input className={'py-1 rounded px-2 hover:bg-gray-500 hidden md:block '+ (selectedGameTab == 'play' ? 'bg-white text-black' : '')} type={'button'} aria-label={'head_play'} value={'Run'} onClick={() => setSelectedGameTab('play')}/>
         </div>
       </header>
 
       <main className="grid grid-cols-12 w-full h-full">
       <div className="hidden md:block col-span-2 border pr-1 px-1 h-full">
-        <Sidebar selectedPage={selectedPage} />
+        <Sidebar initialCharList={initialCharList} initialCharactersList={initialCharactersList} />
       </div>
 
       {/* mobile top menu for sidebar */}
       <div className="md:hidden flex items-center justify-between text-white p-2 h-8">
         <button
+          type='button'
           onClick={() => setOpen((prev) => !prev)}
           className="focus:outline-none"
         >
@@ -269,19 +277,17 @@ export function App(){
           >
             ✕ Close
           </button>
-          <Sidebar selectedPage={selectedPage} />
+          <Sidebar initialCharList={initialCharList} initialCharactersList={initialCharactersList} />
         </div>
       )}
 
 
       <div className="col-span-12 md:col-span-10 mr-2 md:ml-2 text-sm md:text-md justify-center text-center">
         {
-          selectedPage == 'Character' ?
+          selectedGameTab == 'edit' ?
             <CharacterCreator /> :
-            selectedPage == 'Play' ?
-            <PlayPanel mode={'player'}/> :
-            selectedPage == 'Run' ?
-            <PlayPanel mode={'run'}/> :
+            selectedGameTab == 'play' ?
+            <PlayPanel/> :
             null
         }
       </div>
