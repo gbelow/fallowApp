@@ -163,7 +163,6 @@ export type Container = {
 }
 
 export type Character = {
-  id: string
 
   path: string
   name: string
@@ -179,18 +178,18 @@ export type Character = {
   gearPen: number
   hasGauntlets: number
   hasHelm: number
-  containers: 
+  containers: Record<string, Container>
 
   armor: Armor
   weapons: Record<string, Weapon>
 
   notes: string
-  packItems: string
 
   // runtime-capable (empty for base)
   injuries?: Injuries
-  afflictions?: Afflictions
+  afflictions?: (keyof Afflictions)[]
   resources?: {AP: number, STA: number}
   survival?: SurvivalStats,
   fightName?: string
+  hasActionSurge?: boolean
 }

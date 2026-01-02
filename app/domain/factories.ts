@@ -1,9 +1,7 @@
 import { Character } from './types'
 
-export function createDefaultCharacter(path: string): Character {
-  return {
-    id: crypto.randomUUID(),
-
+export function createNewCharacter(path: string): Character {
+  return ({
     path,
     name: '',
     size: 3,
@@ -98,7 +96,7 @@ export function createDefaultCharacter(path: string): Character {
     hasGauntlets: 0,
     hasHelm: 0,
 
-    characterWeapons: {
+    weapons: {
       hands: {
         name: 'hands',
         handed: 'small',
@@ -134,36 +132,21 @@ export function createDefaultCharacter(path: string): Character {
     },
 
     notes: '',
-    packItems: '',
+    containers:{},
 
-    // afflictions: {
-    //   prone: {isActive: false, mobility: 3, controlable: true},
-    //   grappled: {isActive: false, mobility: 3, controlable: true},
-    //   immobile: {isActive: false, mobility: 3, controlable: true},
-    //   limp: {isActive: false, mobility: 3, controlable: true},
-    
-    //   dazzled: {isActive: false, vision: 2, controlable: true},
-    //   blind: {isActive: false, vision: 8, controlable: true},
-    
-    //   fear: {isActive: false, mental: 1, controlable: true},
-    //   rage: {isActive: false, mental: 1, controlable: true},
-    //   confused: {isActive: false, mental: 3, controlable: true},
-    //   seduced: {isActive: false, controlable: true},
-    //   distracted: {isActive: false, controlable: true},
-    //   dominated: {isActive: false, controlable: true},
-      
-    //   weakened: {isActive: false, health: 2, controlable: true},
-    //   malnourished: {isActive: false, health: 2, controlable: true},
-    //   thirsty: {isActive: false, health: 2, controlable: true},
-    //   dehydrated: {isActive: false, health: 2, controlable: true},
-    //   tired: {isActive: false, mental: 1, controlable: true},
-    //   exhausted: {isActive: false, mental: 2, controlable: true},
-    //   sick: {isActive: false, health: 2, controlable: true},
-    // },
-    // resources: {AP: 6, STA: 6},
-    // survival:{hunger:0, thirst:0, exhaustion:0},
-    // injuries:{light:[0], serious:[0], deadly:[0]}, 
-  }
+  })
 }
 
+export function createCharacterResources(char: Character){
+
+  const rss = {
+    afflictions: [],
+    resources: {AP: 6, STA: char.attributes.STA},
+    survival:{hunger:0, thirst:0, exhaustion:0},
+    injuries:{light:[0], serious:[0], deadly:[0]},
+    hasActionSurge: true,
+  }
+  return rss
+
+}
 

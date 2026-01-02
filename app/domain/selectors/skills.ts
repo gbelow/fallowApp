@@ -2,6 +2,8 @@ import { Character } from '../types'
 import { getSM, getGauntletPenalty, getHelmPenalty, skill } from './helpers'
 import { getMelee, getRanged, getDetection, getSpellcast } from './proficiencies'
 import { getAfflictionPenalty } from './afflictions'
+import { getGearPenalties } from './gear'
+import { getAGI } from './attributes'
 
 export function getStrike(c: Character) {
   return getMelee(c) + skill(c, 'strike') - getAfflictionPenalty(c, 'strike')
@@ -61,7 +63,7 @@ export function getSD(c: Character) {
 
 export function getBalance(c: Character) {
   return (
-    c.attributes.AGI -
+    getAGI(c) -
     10 +
     skill(c, 'balance') -
     getAfflictionPenalty(c, 'balance')
@@ -71,22 +73,22 @@ export function getBalance(c: Character) {
 export function getClimb(c: Character) {
   const SM = getSM(c)
   return (
-    c.attributes.AGI -
+    getAGI(c) -
     10 +
     skill(c, 'climb') -
     2 * SM -
     3 * getGauntletPenalty(c) -
-    c.gearPen -
+    getGearPenalties(c) -
     getAfflictionPenalty(c, 'climb')
   )
 }
 
 export function getSwim(c: Character) {
   return (
-    c.attributes.AGI -
+    getAGI(c) -
     10 +
     skill(c, 'swim') -
-    c.gearPen -
+    getGearPenalties(c) -
     3 * c.hasHelm -
     getAfflictionPenalty(c, 'swim')
   )
@@ -106,11 +108,11 @@ export function getStrength(c: Character) {
 export function getSneak(c: Character) {
   const SM = getSM(c)
   return (
-    c.attributes.AGI -
+    getAGI(c) -
     10 +
     skill(c, 'sneak') -
     3 * SM -
-    c.gearPen -
+    getGearPenalties(c) -
     getAfflictionPenalty(c, 'sneak')
   )
 }
@@ -127,8 +129,6 @@ export function getPrestidigitation(c: Character) {
 export function getHealth(c: Character) {
   return c.talents.CON + skill(c, 'health')
 }
-
-
 
 export function getKnowledge(c: Character) {
   return (

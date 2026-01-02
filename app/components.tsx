@@ -127,7 +127,7 @@ export function CharacterSelector({charList, selectedPage}: {charList: string[],
                     <button
                       onClick={() => {
                         const char = chars as CharacterType
-                        if(char.name && char.AGI ){
+                        if(char.name && char.attributes.AGI ){
                           handleSelectCharacterClick(char)
                         }else{
                           toggle(`${topKey}-${midKey}`)
