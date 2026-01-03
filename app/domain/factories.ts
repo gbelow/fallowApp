@@ -4,7 +4,6 @@ export function makeNewCharacter(path: string): Character {
   return ({
     path,
     name: '',
-    size: 3,
 
     armor: {
       name: 'Skin',
@@ -17,17 +16,25 @@ export function makeNewCharacter(path: string): Character {
       type: 'light'
     },
 
-    attributes: {
+    characteristics:{
+      size: 3,
       STR: 10,
       AGI: 10,
-      STA: 10,      
-    },
-
-    talents:{
+      STA: 10,    
       CON: 0,
       INT: 0,
       SPI: 0,
-      DEX: 0
+      DEX: 0,
+      melee: 0,
+      ranged: 0,
+      detection: 0,
+      spellcast: 0,
+      conviction1: 0,
+      conviction2: 0,
+      devotion: 0,
+      RES: 5,
+      INS: 5,
+      TGH: 5
     },
 
     skills: {
@@ -36,9 +43,9 @@ export function makeNewCharacter(path: string): Character {
       "reflex": 0,
       "accuracy": 0,
       "grapple": 0,
-      "SD":-2,
+      "SD":0,
   
-      "sneak": 0,
+      "stealth": 0,
       "prestidigitation": 0,
       "balance": 0,
       "strength": 0,
@@ -47,8 +54,6 @@ export function makeNewCharacter(path: string): Character {
       "climb": 0,
   
       "knowledge": 0,
-      "detect": 0,
-      "sense": 0,
       "explore": 0,
       "cunning": 0,
       "will": 0,
@@ -66,33 +71,16 @@ export function makeNewCharacter(path: string): Character {
     },
 
     movement: {
-      basic: '1m',
-      careful: '0.5m',
-      crawl: '0.33m',
+      basic: 1,
+      careful: 0.5,
+      crawl: 0.33,
       run: 0,
       jump: 0,
-      swim: '0.33m',
-      'fast swim': '0.5m',
+      swim: 0.33,
+      'fast swim': 0.5,
       stand: 0
     },
 
-    proficiencies: {
-      melee: 0,
-      ranged: 0,
-      detection: 0,
-      spellcast: 0,
-      convic1: 0,
-      convic2: 0,
-      devotion: 0
-    },
-
-    naturalResistances: {
-      RES: 5,
-      INS: 5,
-      TGH: 5
-    },
-
-    gearPen: 0,
     hasGauntlets: 0,
     hasHelm: 0,
 
@@ -138,13 +126,13 @@ export function makeNewCharacter(path: string): Character {
 }
 
 export function makeCharacterResources(char: Character) {
-  if (!char.attributes || typeof char.attributes.STA !== 'number') {
+  if (!char.characteristics || typeof char.characteristics.STA !== 'number') {
     throw new Error('Character must have valid attributes with STA value')
   }
 
   const rss = {
     afflictions: [],
-    resources: { AP: 6, STA: char.attributes.STA },
+    resources: { AP: 6, STA: char.characteristics.STA },
     survival: { hunger: 0, thirst: 0, exhaustion: 0 },
     injuries: { light: [0], serious: [0], deadly: [0] },
     hasActionSurge: true,

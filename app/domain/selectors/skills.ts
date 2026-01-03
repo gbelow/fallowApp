@@ -1,9 +1,8 @@
 import { Character } from '../types'
 import { getSM, getGauntletPenalty, getHelmPenalty, skill } from './helpers'
-import { getMelee, getRanged, getDetection, getSpellcast } from './proficiencies'
 import { getAfflictionPenalty } from './afflictions'
 import { getGearPenalties } from './gear'
-import { getAGI } from './attributes'
+import { getAGI, getMelee, getRanged, getDetection, getSpellcast, getSTR } from './characteristics'
 
 export function getStrike(c: Character) {
   return getMelee(c) + skill(c, 'strike') - getAfflictionPenalty(c, 'strike')
@@ -37,7 +36,7 @@ export function getReflex(c: Character) {
 export function getGrapple(c: Character) {
   const SM = getSM(c)
   return (
-    c.attributes.STR -
+    getSTR(c) -
     10 +
     5 * SM +
     skill(c, 'grapple') -
@@ -56,7 +55,7 @@ export function getCunning(c: Character) {
 
 export function getSD(c: Character) {
   const SM = getSM(c)
-  return -2 - SM + skill(c, 'SD') - getAfflictionPenalty(c, 'SD')
+  return -2 - SM + skill(c, 'SD') - (c.afflictions?.includes('immobile') ? -3 : 0)
 }
 
 // selectors/skills/physical.ts
@@ -97,7 +96,7 @@ export function getSwim(c: Character) {
 export function getStrength(c: Character) {
   const SM = getSM(c)
   return (
-    c.attributes.STR -
+    getSTR(c) -
     10 +
     5 * SM +
     skill(c, 'strength') -
@@ -105,21 +104,19 @@ export function getStrength(c: Character) {
   )
 }
 
-export function getSneak(c: Character) {
+export function getStealth(c: Character) {
   const SM = getSM(c)
   return (
-    getAGI(c) -
-    10 +
-    skill(c, 'sneak') -
+    skill(c, 'stealth') -
     3 * SM -
     getGearPenalties(c) -
-    getAfflictionPenalty(c, 'sneak')
+    getAfflictionPenalty(c, 'stealth')
   )
 }
 
 export function getPrestidigitation(c: Character) {
   return (
-    c.talents.DEX -
+    c.characteristics.DEX -
     3 * c.hasGauntlets +
     skill(c, 'prestidigitation') -
     getAfflictionPenalty(c, 'prestidigitation')
@@ -127,12 +124,12 @@ export function getPrestidigitation(c: Character) {
 }
 
 export function getHealth(c: Character) {
-  return c.talents.CON + skill(c, 'health')
+  return c.characteristics.CON + skill(c, 'health')
 }
 
 export function getKnowledge(c: Character) {
   return (
-    2 * c.talents.INT +
+    2 * c.characteristics.INT +
     skill(c, 'knowledge') -
     getAfflictionPenalty(c, 'knowledge')
   )
@@ -159,7 +156,7 @@ export function getStress(c: Character) {
 }
 
 export function getDevotion(c: Character) {
-  return c.talents.SPI + skill(c, 'devotion')
+  return c.characteristics.SPI + skill(c, 'devotion')
 }
 
 const magic =

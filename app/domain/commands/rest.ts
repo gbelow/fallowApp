@@ -5,7 +5,7 @@ export function restCharacter(c: Character): Character {
     return c
   }
 
-  const newSTA = c.resources.STA + Math.floor(c.attributes.STA / 4)
+  const newSTA = c.resources.STA + Math.floor(c.characteristics.STA / 4)
   const newAP = c.resources.AP - 4
 
   return {

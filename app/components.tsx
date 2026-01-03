@@ -67,12 +67,12 @@ export function CharacterSelector({charList, initialCharactersList}: {charList: 
   const [charactersList, setCharactersList] = useState<JsonObject>(initialCharactersList)
   const [isLoading, setIsLoading] = useState(false)
   const {selectedGameTab} = useNavigationStore()
-  const  characterStore = useCharacterStore()
+  const  loadCharacter = useCharacterStore((state) => state.loadCharacter)
   
   
   const handleSelectCharacterClick = (character: Character) => {
     bus.emit("select-character", { character });
-    characterStore.loadCharacter(character)
+    loadCharacter(character)
   };
 
   const handleSelectPlayerClick  = async (characterId: string) => {
@@ -133,7 +133,7 @@ export function CharacterSelector({charList, initialCharactersList}: {charList: 
                     <button
                       onClick={() => {
                         const char = chars as Character
-                        if(char.name && char.attributes.AGI ){
+                        if(char.name ){
                           handleSelectCharacterClick(char)
                         }else{
                           toggle(`${topKey}-${midKey}`)

@@ -19,7 +19,7 @@ export type Skills = {
   "grapple": number,
   "SD":number,
 
-  "sneak": number,
+  "stealth": number,
   "prestidigitation": number,
   "balance": number,
   "strength": number,
@@ -28,8 +28,6 @@ export type Skills = {
   "climb": number,
 
   "knowledge": number,
-  "detect": number,
-  "sense": number,
   "explore": number,
   "cunning": number,
   "will": number,
@@ -58,13 +56,13 @@ export type Armor = {
 }
 
 export type Movement = {
-  basic: string
-  careful: string
-  crawl: string
+  basic: number
+  careful: number
+  crawl: number
   run: number
   jump: number
-  swim: string
-  'fast swim': string
+  swim: number
+  'fast swim': number
   stand: number
 }
 
@@ -73,8 +71,8 @@ export type Proficiencies = {
   ranged: number
   detection: number
   spellcast: number
-  convic1: number
-  convic2: number
+  conviction1: number
+  conviction2: number
   devotion: number
 }
 
@@ -127,6 +125,8 @@ export type AfflictionItem = {
   controlable: boolean
 }
 
+export type Characteristics = Attributes & Talents & Proficiencies & NaturalResistances & { size: number }
+
 export type Afflictions = {
   prone: AfflictionItem,
   grappled: AfflictionItem,
@@ -166,20 +166,15 @@ export type Character = {
 
   path: string
   name: string
-  size: number
-
-  attributes: Attributes
-  talents: Talents
+  
+  characteristics: Characteristics
   skills: Skills
   movement: Movement
-  proficiencies: Proficiencies
-  naturalResistances: NaturalResistances
   
-  gearPen: number
   hasGauntlets: number
   hasHelm: number
   containers: Record<string, Container>
-
+  
   armor: Armor
   weapons: Record<string, Weapon>
 
