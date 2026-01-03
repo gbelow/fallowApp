@@ -4,17 +4,18 @@ import { useState } from "react";
 import { WeaponType } from "../types";
 import { makeFullRoll } from "./utils";
 import { dmgArr } from "../types";
+import { Character } from "../domain/types";
+import { makeCharacteristicSelector, makeSkillSelector } from "../domain/selectors/factories";
 
 
 
-export function WeaponPanel({characterWeapons, setCharacterWeapons, STR=10, strike=0, accuracy=0 }:
-  {
-    characterWeapons: {[key:string]: WeaponType}, 
-    setCharacterWeapons?: React.Dispatch<React.SetStateAction<{[key:string]: WeaponType}>>, 
-    STR:number, strike: number, accuracy:number 
-  }){
+export function WeaponPanel({character }:{character: Character}){
 
   const [lastAtk, setLastAtk] = useState({atk:0, properties: '', weapon: ''})
+  const strike = makeSkillSelector('strike')(character)
+  const accuracy = makeSkillSelector('accuracy')(character)
+  const STR = makeCharacteristicSelector('STR')(character)
+  const weapons = character.weapons
 
   const pressAtk = (range: string, heavyMod:number, properties:string, weapon: string) => {
     const roll = makeFullRoll()
@@ -30,7 +31,7 @@ export function WeaponPanel({characterWeapons, setCharacterWeapons, STR=10, stri
     <div className='flex flex-col justify-center w-84 md:w-full'>
       <span className="pb-1"> Weapon: {lastAtk.weapon} /  properties: {lastAtk.properties} / ROLL: {lastAtk.atk}  </span>
       {
-        Object.entries(characterWeapons).map(([key, el]) => {
+        Object.entries(weapons).map(([key, el]) => {
           
           return(
             <div key={key} className='flex flex-col justify-center border rounded p-1'>
@@ -38,12 +39,13 @@ export function WeaponPanel({characterWeapons, setCharacterWeapons, STR=10, stri
                 <span>Weapon: {key} </span>
                 <span>type: {el.handed} </span>
                 {
-                  setCharacterWeapons ?
-                  <>
-                    <span>Size: {el.scale}</span>
-                    <input type='button' value='unequip' onClick={() => { const {[key]: _ , ...rest } = characterWeapons; setCharacterWeapons(rest)}} className='border rounded p-1' />                    
-                  </> :
-                  null
+                  
+                  // setCharacterWeapons ?
+                  // <>
+                  //   <span>Size: {el.scale}</span>
+                  //   <input type='button' value='unequip' onClick={() => { const {[key]: _ , ...rest } = weapons; setCharacterWeapons(rest)}} className='border rounded p-1' />                    
+                  // </> :
+                  // null
                 }
               </div>
               <table className='md:w-full text-center text-xs'>

@@ -42,17 +42,6 @@ export function CharacterCreator() {
     deleteCharacter(name)
   }
 
-  const loadCharacter = (payload: {character: CharacterType}) => {
-
-    setPath(payload.character.path)
-    setName(payload.character.name)
-    setHasGauntlets(payload.character.hasGauntlets)
-    setHasHelm(payload.character.hasHelm)
-    setCharacterWeapons(payload.character.characterWeapons)
-    setArmor(payload.character.armor)
-    setNotes(payload.character.notes)
-    setPackItems(payload.character.packItems)
-  }
   
 
   useEffect(() => {
@@ -74,14 +63,6 @@ export function CharacterCreator() {
   }, [characterWeapons]);
 
 
-  useEffect(()=>{
-    bus.on("select-character", loadCharacter);
-
-    return () => {
-      bus.off("select-character", loadCharacter); // cleanup on unmount
-    };
-  },[])
-
   
   // size, race, abilities, armor penalties, injuries, movements, AP, STA, STA regen
   return (
@@ -92,7 +73,7 @@ export function CharacterCreator() {
         </div>
           <div className='flex flex-row justify-center gap-2'>
             <label htmlFor="name" className='font-bold'>Name: </label>
-            <TextItem keyName={'name'} title={'name'}/>
+            <TextItem keyName={'name'} mode='normal'/>
             {/* <input id='name' className='border rounded p-1 w-64' type='text' value={name} onChange={(e)=> setName(e.target.value)} /> */}
             <input id='del' className='border rounded bg-red-700 w-12 p-1' type='button' value={'delete'} onClick={()=> setShowConfirm(true)} />
             {/* <input id='log' className='border rounded w-12 p-1' type='button' value={'save'} onClick={handleLogCharacterClick} /> */}
@@ -185,15 +166,22 @@ export function CharacterCreator() {
           <SkillItem key={skey+'animancy'} skillName='animancy' title='animancy' />
         </div>
 
-        <textarea aria-label='notes' className='border rounded p-1 min-h-32' onChange={val => setNotes(val.target.value)} value={notes} />
+        <TextItem aria-label='notes' keyName='notes' mode='large'/>
+        {/* <textarea aria-label='notes' className='border rounded p-1 min-h-32' onChange={val => setNotes(val.target.value)} value={notes} /> */}
         
         {/* <button type='button' className='border rounded p-2' onClick={handleSaveCharacterClick}>Save</button> */}
       </div>
       <div className='flex flex-col text-center md:col-span-5  items-center mx-2 gap-2'>
-        {/* <ArmorPanel RESnat={RESnat} INSnat={INSnat} TGHnat={TGHnat} scaledArmor={scaledArmor} /> */}
-        {/* <WeaponPanel characterWeapons={characterWeapons} setCharacterWeapons={setCharacterWeapons} STR={attributes.STR} strike={skills.strike} accuracy={skills.accuracy} /> */}
+        {
+          store.character ? 
+          <>
+            <ArmorPanel character={store.character} />
+            <WeaponPanel character={store.character} />
+          </>
+          :
+          null
+        }
         <span>Items</span>
-        <textarea aria-label='pack' className='border rounded p-1 min-h-32 w-full' onChange={val => setPackItems(val.target.value)} value={packItems} />
       </div>
       {showConfirm && (
         <div className="fixed inset-0 flex items-center justify-center bg-black w-64 h-32 m-auto">
@@ -250,17 +238,22 @@ function ZtatDial ({stat, title}:{stat: keyof Characteristics, title: string}){
 }
 
 
-const TextItem = ({keyName, title}:{keyName: keyof Character, title: string}) => {
+const TextItem = ({keyName, mode}:{keyName: keyof Character, mode: 'normal' | 'large'}) => {
   const store = useCharacterStore()
   const value = store.character ? makeTextSelector(keyName)(store.character) : ''
-  const setValue = (e: React.ChangeEvent<HTMLInputElement>) => 
+  const setValue = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>  ) => 
     store.updateCharacter(makeTextUpdater(keyName, e.target.value))
 
   return(
-    <div className='flex flex-col w-20 md:w-20 overflow-hidden justify-center align-center content-center text-center'>
-      <label className='text-xs'>{title}</label>
-      <input className='p-1 border border-white rounded w-16 text-center' title={title} type='text'  value={value} onChange={setValue} />
-    </div>
+    <>
+      {
+        mode == 'large' ?
+        <textarea aria-label='notes' className='border rounded p-1 min-h-32' value={value+''} onChange={setValue} /> :
+        <div className='flex flex-col w-36 md:w-64 overflow-hidden justify-center align-center content-center text-center'>
+          <input className='p-1 border border-white rounded w-36 md:w-64 text-center' title={keyName} type='text'  value={value+''} onChange={setValue} />
+        </div>
+      }
+    </>
   )
 }
 

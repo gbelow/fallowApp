@@ -1,58 +1,57 @@
 'use client'
-import baseArmor from '../baseArmor.json'
+import { Character } from '../domain/types'
 
-export type ArmorType = typeof baseArmor
-export function ArmorPanel({scaledArmor, RESnat, TGHnat, INSnat}: {scaledArmor: ArmorType, RESnat: number, TGHnat: number, INSnat: number}){
+export function ArmorPanel({character}: {character: Character}){
   return(
     <>
-      <div>Armor: {scaledArmor.name}</div>
-        <table className='w-84 md:w-full text-center'>
-          <thead>
-            <tr >
-              <th></th>
-              <th>PROT</th>
-              <th>TGH</th>
-              <th>INS</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td>armor</td>
-              <td>{ scaledArmor.prot}</td>
-              <td>{ scaledArmor.TGH}</td>
-              <td>{ scaledArmor.INS}</td>
-            </tr>
-            <tr>
-              <td>light</td>
-              <td>{RESnat + scaledArmor.prot}</td>
-              <td>{TGHnat + scaledArmor.TGH}</td>
-              <td>{INSnat + scaledArmor.INS}</td>
-            </tr>
-            <tr>
-              <td>serious</td>
-              <td>{RESnat*2 + scaledArmor.prot}</td>
-              <td>{TGHnat*2 + scaledArmor.TGH}</td>
-              <td>{INSnat*2 + scaledArmor.INS}</td>
-            </tr>
-            <tr>
-              <td>deadly</td>
-              <td>{RESnat*3 + scaledArmor.prot}</td>
-              <td>{TGHnat*3 + scaledArmor.TGH}</td>
-              <td>{INSnat*3 + scaledArmor.INS}</td>
-            </tr>
-            <tr>
-              <td>sudden</td>
-              <td>{RESnat*6 + scaledArmor.prot}</td>
-              <td>{TGHnat*6 + scaledArmor.TGH}</td>
-              <td></td>
-            </tr>
-          </tbody>
-        </table>
-        <div className='flex gap-2 text-center justify-center'>
-          <span>RES {scaledArmor.RES}</span>
-          <span>Penal {scaledArmor.penalty}</span>
-          <span>Coverage {scaledArmor.cover}</span>
-        </div>
+    <div>Armor: {character.armor.name}</div>
+      <table className='w-84 md:w-full text-center'>
+        <thead>
+          <tr >
+            <th></th>
+            <th>PROT</th>
+            <th>TGH</th>
+            <th>INS</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>armor</td>
+            <td>{ character.armor.prot}</td>
+            <td>{ character.armor.TGH}</td>
+            <td>{ character.armor.INS}</td>
+          </tr>
+          <tr>
+            <td>light</td>
+            <td>{character.characteristics.RES + character.armor.prot}</td>
+            <td>{character.characteristics.TGH + character.armor.TGH}</td>
+            <td>{character.characteristics.INS + character.armor.INS}</td>
+          </tr>
+          <tr>
+            <td>serious</td>
+            <td>{character.characteristics.RES*2 + character.armor.prot}</td>
+            <td>{character.characteristics.TGH*2 + character.armor.TGH}</td>
+            <td>{character.characteristics.INS*2 + character.armor.INS}</td>
+          </tr>
+          <tr>
+            <td>deadly</td>
+            <td>{character.characteristics.RES*3 + character.armor.prot}</td>
+            <td>{character.characteristics.TGH*3 + character.armor.TGH}</td>
+            <td>{character.characteristics.INS*3 + character.armor.INS}</td>
+          </tr>
+          <tr>
+            <td>sudden</td>
+            <td>{character.characteristics.RES*6 + character.armor.prot}</td>
+            <td>{character.characteristics.TGH*6 + character.armor.TGH}</td>
+            <td></td>
+          </tr>
+        </tbody>
+      </table>
+      <div className='flex gap-2 text-center justify-center'>
+        <span>RES {character.armor.RES}</span>
+        <span>Penal {character.armor.penalty}</span>
+        <span>Coverage {character.armor.cover}</span>
+      </div>
     </>
   )
 }

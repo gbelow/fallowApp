@@ -47,16 +47,15 @@ export function makeMovementUpdater(moveName: keyof Movement, value: number){
   })
 }
 
-export function makeTextSelector (key: keyof Character){
+export function makeTextSelector (keyName: keyof Character){
   return((character: Character) => {
-    if (!character || character[key]) return 0;
-    return character[key]
+    if (!character || !character[keyName]) return '';
+    return character[keyName]
   })
 }
 
-export function makeTextUpdater(key: keyof Character , value: string){
+export function makeTextUpdater(keyName: keyof Character , value: string){
   return((character: Character) => {
-    console.log(value, key)
-    return {...character, [key]: value}
+    return ({...character, [keyName]: value})
   })
 }
