@@ -1,67 +1,34 @@
 'use client'
 
-import { useEffect,  useState } from 'react'
-import bus from "../eventBus";
-import baseArmor from '../baseArmor.json'
-import baseWeapon from '../baseWeapon.json'
-import { deleteCharacter } from '../actions';
-import { skillsList, CharacterType, ArmorType, WeaponType, movementList } from '../types';
-import { scaleArmor } from './utils';
+import { useState } from 'react'
+import { deleteCharacter, upsertBaseCharacter } from '../actions';
 import { WeaponPanel } from './WeaponPanel';
 import { ArmorPanel } from './ArmorPanel';
-import baseCharacter from '../baseCharacter.json'
 import { useCharacterStore } from '../stores/useCharacterStore';
 import { Character, Characteristics, Movement, Skills } from '../domain/types';
 import { makeCharacteristicSelector, makeCharacteristicUpdater, makeMovementSelector, makeMovementUpdater, makeSkillSelector, makeSkillUpdater, makeTextSelector, makeTextUpdater } from '../domain/selectors/factories';
+import { putGauntlets, putHelm } from '../domain/commands/equipArmor';
+import { useAppStore } from '../stores/useAppStore';
 
 export function CharacterCreator() {
 
-  const [name, setName] = useState('')
   const [showConfirm, setShowConfirm] = useState(false);
-  
 
-  const [path, setPath] = useState('')
-
-  const [skey, setSkey] = useState(0)  
-
-
-  const [hasGauntlets, setHasGauntlets ] = useState(0)
-  const [hasHelm, setHasHelm ] = useState(0)
-
-  const [armor, setArmor] = useState(baseArmor) 
-  const [scaledArmor, setScaledArmor] = useState(baseArmor) 
-  const [characterWeapons, setCharacterWeapons] = useState({[baseWeapon.name]:baseWeapon}) 
-
-  const [notes, setNotes ] = useState('')
-  const [packItems, setPackItems ] = useState('')
-
-  const store = useCharacterStore()
+  const {character, updateCharacter} = useCharacterStore(s => s)
+  const {updateBaseCharacterList} = useAppStore(s => s)
   
 
   const handleDeleteCharacterClick = (name: string) => {
     deleteCharacter(name)
+    updateBaseCharacterList()
+  }  
+
+  const handleSaveCharacterClick = () => {
+    if(!character) return
+    upsertBaseCharacter(character)
+    updateBaseCharacterList()
+
   }
-
-  
-
-  useEffect(() => {
-    const handleEquipArmor = (payload: { armor: ArmorType }) => {
-      setArmor(payload.armor)
-    };
-    const handleEquipWeapon = (payload: { weapon: WeaponType }) => {
-      const newCharWeapons = {...characterWeapons, [payload.weapon.name+payload.weapon.scale]:payload.weapon}
-      setCharacterWeapons(newCharWeapons)
-    };
-
-    bus.on("equip-armor", handleEquipArmor);
-    bus.on("equip-weapon", handleEquipWeapon);
-
-    return () => {
-      bus.off("equip-armor", handleEquipArmor); // cleanup on unmount
-      bus.off("equip-weapon", handleEquipWeapon); // cleanup on unmount
-    };
-  }, [characterWeapons]);
-
 
   
   // size, race, abilities, armor penalties, injuries, movements, AP, STA, STA regen
@@ -74,14 +41,13 @@ export function CharacterCreator() {
           <div className='flex flex-row justify-center gap-2'>
             <label htmlFor="name" className='font-bold'>Name: </label>
             <TextItem keyName={'name'} mode='normal'/>
-            {/* <input id='name' className='border rounded p-1 w-64' type='text' value={name} onChange={(e)=> setName(e.target.value)} /> */}
-            <input id='del' className='border rounded bg-red-700 w-12 p-1' type='button' value={'delete'} onClick={()=> setShowConfirm(true)} />
-            {/* <input id='log' className='border rounded w-12 p-1' type='button' value={'save'} onClick={handleLogCharacterClick} /> */}
+            {/* <input id='del' className='border rounded bg-red-700 w-12 p-1' type='button' value={'delete'} onClick={()=> setShowConfirm(true)} /> */}
+            <input id='log' className='border rounded w-12 p-1' type='button' value={'save'} onClick={handleSaveCharacterClick } />
           </div>
         <div className='flex flex-row gap-2 justify-center'>
           <div>AP: {6}</div>
-          <div>STA: {store.character?.characteristics.STA}</div>
-          <div>STA regen: {Math.floor((store.character?.characteristics.STA ?? 0)/4)}</div>
+          <div>STA: {character?.characteristics.STA}</div>
+          <div>STA regen: {Math.floor((character?.characteristics.STA ?? 0)/4)}</div>
         </div>
         <div className='flex flex-row gap-2 justify-center'>
           <Movementinput movementName={'basic'}  title={'basic (1AP)'} />
@@ -96,74 +62,74 @@ export function CharacterCreator() {
           <Movementinput movementName={'stand'}  title={'stand up'} />
         </div>
         <div className='flex flex-row gap-2 justify-center'>
-          <ZtatDial stat={'STR'} title={'STR'} />
-          <ZtatDial stat={'AGI'} title={'AGI'} />
-          <ZtatDial stat={'STA'} title={'STA'} />
-          <ZtatDial stat={'CON'} title={'CON'} />
-          <ZtatDial stat={'DEX'} title={'DEX'} />
-          <ZtatDial stat={'INT'} title={'INT'} />
-          <ZtatDial stat={'SPI'} title={'SPI'} />
+          <StatDial stat={'STR'} title={'STR'} />
+          <StatDial stat={'AGI'} title={'AGI'} />
+          <StatDial stat={'STA'} title={'STA'} />
+          <StatDial stat={'CON'} title={'CON'} />
+          <StatDial stat={'DEX'} title={'DEX'} />
+          <StatDial stat={'INT'} title={'INT'} />
+          <StatDial stat={'SPI'} title={'SPI'} />
         </div>
         <div className='flex flex-row gap-2 justify-center'>
-          <ZtatDial stat={'size'} title={'size'} />
-          <ZtatDial stat={'RES'} title={'RES'} />
-          <ZtatDial stat={'TGH'} title={'SPI'} />
-          <ZtatDial stat={'INS'} title={'INS'} />
+          <StatDial stat={'size'} title={'size'} />
+          <StatDial stat={'RES'} title={'RES'} />
+          <StatDial stat={'TGH'} title={'SPI'} />
+          <StatDial stat={'INS'} title={'INS'} />
           {/* <StatDial stat={gearPen} natStat={gearPen} setStat={setGearPen} title={'Gear pen'} /> */}
           <div className='flex flex-col'>
             <label>Gauntlet</label>
-            <input type='checkbox' aria-label={'gaunt'} name={'gaunt'} checked={!!hasGauntlets} onChange={(e) => setHasGauntlets(e.target.checked ? 1 : 0)} />
+            <input type='checkbox' aria-label={'gaunt'} name={'gaunt'} checked={!!character?.hasGauntlets} onChange={() => updateCharacter(putGauntlets)} />
           </div>
           <div className='flex flex-col'>
             <label>Full Helm</label>
-            <input type='checkbox' aria-label={'helm'} name={'helm'} checked={!!hasHelm} onChange={(e) => setHasHelm(e.target.checked ? 1 : 0)} />
+            <input type='checkbox' aria-label={'helm'} name={'helm'} checked={!!character?.hasHelm} onChange={() => updateCharacter(putHelm)} />
           </div>
 
         </div>
         <div className='flex flex-row gap-2 justify-center'>
-          <ZtatDial stat={'melee'} title={'Corpo'} />
-          <ZtatDial stat={'ranged'} title={'Distância'} />
-          <ZtatDial stat={'detection'} title={'Detecção'} />
-          <ZtatDial stat={'spellcast'} title={'Feitiçaria'} />
-          <ZtatDial stat={'conviction1'} title={'Conviction1'} />
-          <ZtatDial stat={'conviction2'} title={'Conviction2'} />
+          <StatDial stat={'melee'} title={'Corpo'} />
+          <StatDial stat={'ranged'} title={'Distância'} />
+          <StatDial stat={'detection'} title={'Detecção'} />
+          <StatDial stat={'spellcast'} title={'Feitiçaria'} />
+          <StatDial stat={'conviction1'} title={'Conviction1'} />
+          <StatDial stat={'conviction2'} title={'Conviction2'} />
         </div>
 
         <div className='flex flex-row gap-2 justify-center'>
-          <SkillItem key={skey+'strike'} skillName='strike' title='strike' />
-          <SkillItem key={skey+'accuracy'} skillName='accuracy' title='accuracy' />
-          <SkillItem key={skey+'defend'} skillName='defend' title='defend' />
-          <SkillItem key={skey+'reflex'} skillName='reflex' title='reflex' />
-          <SkillItem key={skey+'grapple'} skillName='grapple' title='grapple' />
-          <SkillItem key={skey+'cunning'} skillName='cunning' title='cunning' />
-          <SkillItem key={skey+'SD'} skillName='SD' title='SD' />
+          <SkillItem key={'strike'} skillName='strike' title='strike' />
+          <SkillItem key={'accuracy'} skillName='accuracy' title='accuracy' />
+          <SkillItem key={'defend'} skillName='defend' title='defend' />
+          <SkillItem key={'reflex'} skillName='reflex' title='reflex' />
+          <SkillItem key={'grapple'} skillName='grapple' title='grapple' />
+          <SkillItem key={'cunning'} skillName='cunning' title='cunning' />
+          <SkillItem key={'SD'} skillName='SD' title='SD' />
           
         </div>
         <div className='flex flex-row gap-2 justify-center'>
-          <SkillItem key={skey+'balance'} skillName='balance' title='balance' />
-          <SkillItem key={skey+'climb'} skillName='climb' title='climb' />
-          <SkillItem key={skey+'swim'} skillName='swim' title='swim' />
-          <SkillItem key={skey+'strength'} skillName='strength' title='strength' />
-          <SkillItem key={skey+'stealth'} skillName='stealth' title='stealth' />
-          <SkillItem key={skey+'prestidigitation'} skillName='prestidigitation' title='prestidigitation' />
-          <SkillItem key={skey+'health'} skillName='health' title='health' />
+          <SkillItem key={'balance'} skillName='balance' title='balance' />
+          <SkillItem key={'climb'} skillName='climb' title='climb' />
+          <SkillItem key={'swim'} skillName='swim' title='swim' />
+          <SkillItem key={'strength'} skillName='strength' title='strength' />
+          <SkillItem key={'stealth'} skillName='stealth' title='stealth' />
+          <SkillItem key={'prestidigitation'} skillName='prestidigitation' title='prestidigitation' />
+          <SkillItem key={'health'} skillName='health' title='health' />
         </div>
         <div className='flex flex-row gap-2 justify-center'>
-          <SkillItem key={skey+'knowledge'} skillName='knowledge' title='knowledge' />
-          <SkillItem key={skey+'explore'} skillName='explore' title='explore' />
-          <SkillItem key={skey+'will'} skillName='will' title='will' />
-          <SkillItem key={skey+'charm'} skillName='charm' title='charm' />
-          <SkillItem key={skey+'stress'} skillName='stress' title='stress' />
-          <SkillItem key={skey+'devotion'} skillName='devotion' title='devotion' />
+          <SkillItem key={'knowledge'} skillName='knowledge' title='knowledge' />
+          <SkillItem key={'explore'} skillName='explore' title='explore' />
+          <SkillItem key={'will'} skillName='will' title='will' />
+          <SkillItem key={'charm'} skillName='charm' title='charm' />
+          <SkillItem key={'stress'} skillName='stress' title='stress' />
+          <SkillItem key={'devotion'} skillName='devotion' title='devotion' />
         </div>
         <div className='flex flex-row gap-2 justify-center'>
-          <SkillItem key={skey+'combustion'} skillName='combustion' title='combustion' />
-          <SkillItem key={skey+'eletromag'} skillName='eletromag' title='eletromag' />
-          <SkillItem key={skey+'radiation'} skillName='radiation' title='radiation' />
-          <SkillItem key={skey+'entropy'} skillName='entropy' title='entropy' />
-          <SkillItem key={skey+'biomancy'} skillName='biomancy' title='biomancy' />
-          <SkillItem key={skey+'telepathy'} skillName='telepathy' title='telepathy' />
-          <SkillItem key={skey+'animancy'} skillName='animancy' title='animancy' />
+          <SkillItem key={'combustion'} skillName='combustion' title='combustion' />
+          <SkillItem key={'eletromag'} skillName='eletromag' title='eletromag' />
+          <SkillItem key={'radiation'} skillName='radiation' title='radiation' />
+          <SkillItem key={'entropy'} skillName='entropy' title='entropy' />
+          <SkillItem key={'biomancy'} skillName='biomancy' title='biomancy' />
+          <SkillItem key={'telepathy'} skillName='telepathy' title='telepathy' />
+          <SkillItem key={'animancy'} skillName='animancy' title='animancy' />
         </div>
 
         <TextItem aria-label='notes' keyName='notes' mode='large'/>
@@ -173,20 +139,20 @@ export function CharacterCreator() {
       </div>
       <div className='flex flex-col text-center md:col-span-5  items-center mx-2 gap-2'>
         {
-          store.character ? 
+          character ? 
           <>
-            <ArmorPanel character={store.character} />
-            <WeaponPanel character={store.character} />
+            <ArmorPanel character={character} />
+            <WeaponPanel character={character} />
           </>
           :
           null
         }
         <span>Items</span>
       </div>
-      {showConfirm && (
+      {showConfirm && character && (
         <div className="fixed inset-0 flex items-center justify-center bg-black w-64 h-32 m-auto">
           <div className="p-4 rounded shadow-md w-64">
-            <p className="mb-4">Are you sure you want to delete {name}?</p>
+            <p className="mb-4">Are you sure you want to delete {character?.name}?</p>
             <div className="flex justify-end gap-2">
               <button
                 onClick={() => setShowConfirm(false)}
@@ -195,7 +161,7 @@ export function CharacterCreator() {
                 Cancel
               </button>
               <button
-                onClick={() => {handleDeleteCharacterClick(name); setShowConfirm(false)}}
+                onClick={() => {handleDeleteCharacterClick(character?.name ?? ''); setShowConfirm(false)}}
                 className="px-3 py-1 bg-red-500 text-white rounded"
               >
                 Confirm
@@ -209,10 +175,10 @@ export function CharacterCreator() {
 }
 
 function SkillItem({ title, skillName}:{title: string, skillName: keyof Skills}){ 
-  const store = useCharacterStore()
-  const value = store.character ? makeSkillSelector(skillName)(store.character) : 0
+  const {character, updateCharacter} = useCharacterStore(s => s)
+  const value = character ? makeSkillSelector(skillName)(character) : 0
   const setValue = (e: React.ChangeEvent<HTMLInputElement>) => 
-    store.updateCharacter(makeSkillUpdater(skillName, parseInt(e.target.value))) 
+    updateCharacter(makeSkillUpdater(skillName, parseInt(e.target.value))) 
 
   return(
     <div className='flex flex-col w-10 md:w-16 overflow-hidden'>
@@ -223,11 +189,11 @@ function SkillItem({ title, skillName}:{title: string, skillName: keyof Skills})
   )
 }
 
-function ZtatDial ({stat, title}:{stat: keyof Characteristics, title: string}){
-  const store = useCharacterStore()
-  const value = store.character ? makeCharacteristicSelector(stat)(store.character) : 0
+function StatDial ({stat, title}:{stat: keyof Characteristics, title: string}){
+  const {character, updateCharacter} = useCharacterStore(s => s)
+  const value = character ? makeCharacteristicSelector(stat)(character) : 0
   const setValue = (e: React.ChangeEvent<HTMLInputElement>) => 
-    store.updateCharacter(makeCharacteristicUpdater(stat, parseInt(e.target.value))) 
+    updateCharacter(makeCharacteristicUpdater(stat, parseInt(e.target.value))) 
 
   return(
     <div className='flex flex-col w-10 md:w-16 overflow-hidden'>
@@ -239,10 +205,10 @@ function ZtatDial ({stat, title}:{stat: keyof Characteristics, title: string}){
 
 
 const TextItem = ({keyName, mode}:{keyName: keyof Character, mode: 'normal' | 'large'}) => {
-  const store = useCharacterStore()
-  const value = store.character ? makeTextSelector(keyName)(store.character) : ''
+  const {character, updateCharacter} = useCharacterStore(s => s)
+  const value = character ? makeTextSelector(keyName)(character) : ''
   const setValue = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>  ) => 
-    store.updateCharacter(makeTextUpdater(keyName, e.target.value))
+    updateCharacter(makeTextUpdater(keyName, e.target.value))
 
   return(
     <>
@@ -258,10 +224,10 @@ const TextItem = ({keyName, mode}:{keyName: keyof Character, mode: 'normal' | 'l
 }
 
 function Movementinput  ({movementName, title}:{movementName: keyof Movement, title: string}){
-  const store = useCharacterStore()
-  const value = store.character ? makeMovementSelector(movementName)(store.character) : 0
+  const {character, updateCharacter} = useCharacterStore(s => s)
+  const value = character ? makeMovementSelector(movementName)(character) : 0
   const setValue = (e: React.ChangeEvent<HTMLInputElement>) => 
-    store.updateCharacter(makeMovementUpdater(movementName, (parseFloat(e.target.value))))
+    updateCharacter(makeMovementUpdater(movementName, (parseFloat(e.target.value))))
 
   return(
     <div className='flex flex-col w-20 md:w-20 overflow-hidden justify-center align-center content-center text-center'>

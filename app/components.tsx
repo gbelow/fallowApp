@@ -7,8 +7,8 @@ import { ArmorType, WeaponType } from './types';
 import { PlayPanel } from './components/PlayPanel';
 import { CharacterCreator } from './components/CharacterCreator';
 import { scaleWeapon } from './components/utils';
-import { JsonObject, createNewCharacter, deleteBaseCharacter, getBasicCharList, getCharacter, getCharacterList } from './actions';
-import { useNavigationStore } from './stores/useNavigationStore';
+import { JsonObject, upsertBaseCharacter, deleteBaseCharacter, getBasicCharList, getCharacter } from './actions';
+import { useAppStore } from './stores/useAppStore';
 import { makeNewCharacter } from './domain/factories';
 import { Character } from './domain/types';
 import { useCharacterStore } from './stores/useCharacterStore';
@@ -60,18 +60,16 @@ export function WeaponSelector(){
 
 
 
-export function CharacterSelector({charList, initialCharactersList}: {charList: string[], initialCharactersList: JsonObject}){
+export function CharacterSelector({charList, }: {charList: string[], }){
 
   const [open, setOpen] = useState<{ [key: string]: boolean }>({});
   const [openCampaignChars, setOpenCampaignChars] = useState(false)
-  const [charactersList, setCharactersList] = useState<JsonObject>(initialCharactersList)
-  const [isLoading, setIsLoading] = useState(false)
-  const {selectedGameTab} = useNavigationStore()
+  const {selectedGameTab} = useAppStore((s)=> s)
   const  loadCharacter = useCharacterStore((state) => state.loadCharacter)
+  const { baseCharacterList, updateBaseCharacterList } = useAppStore((s)=> s )
   
   
   const handleSelectCharacterClick = (character: Character) => {
-    bus.emit("select-character", { character });
     loadCharacter(character)
   };
 
@@ -84,38 +82,19 @@ export function CharacterSelector({charList, initialCharactersList}: {charList: 
     setOpen((prev) => ({ ...prev, [key]: !prev[key] }));
   };
 
-  useEffect(() => {
-    if(isLoading){
-      getBasicCharList().then(resp => {
-        setCharactersList(resp)
-        setIsLoading(false)
-      })
-
-    }
-  }, [isLoading])
-
-  useEffect(()=>{
-    const getlist = () => setIsLoading(true)
-    bus.on("save-character", getlist);
-
-    return () => {
-      bus.off("save-character", getlist); // cleanup on unmount
-    };
-  }, [])
-
   const createCharacter = (path:string) => {
-    createNewCharacter(path, '', makeNewCharacter(path))
-    setIsLoading(true)
+    upsertBaseCharacter( makeNewCharacter(path))
+    updateBaseCharacterList()
   }
 
   const handleDeleteCharacter = (path:string, name:string) => {
     deleteBaseCharacter(path, name)
-    setIsLoading(true)
+    updateBaseCharacterList()
   }
 
   return (
     <div className="bg-gray-900 text-white p-2">
-      {charactersList && Object.entries(charactersList).sort((a,b) => a[0] > b[0] ? 1 : -1).map(([topKey, sub]) => (
+      {baseCharacterList && Object.entries(baseCharacterList).sort((a,b) => a[0] > b[0] ? 1 : -1).map(([topKey, sub]) => (
         <div key={topKey} className="mb-2">
           {/* Top level */}
           <button
@@ -197,17 +176,12 @@ export function CharacterSelector({charList, initialCharactersList}: {charList: 
   );
 }
 
-export function Sidebar({initialCharList, initialCharactersList}: {initialCharList: string[], initialCharactersList: JsonObject}){
+export function Sidebar({initialCharList}: {initialCharList: string[]}){
 
   const [selectedSidebar, setSelectedSidebar] = useState('') 
-  const [charList, setCharList] = useState<string[]>(initialCharList)
-
-  // Keep client-side refetching for when characters are saved/updated
-  useEffect(() => {
-    getCharacterList().then(resp => {
-      setCharList(resp)
-    })
-  },[])
+  const [charList] = useState<string[]>(initialCharList)
+  const { baseCharacterList } = useAppStore((s)=> s )
+  
 
   return(
     <>
@@ -222,7 +196,7 @@ export function Sidebar({initialCharList, initialCharactersList}: {initialCharLi
         selectedSidebar == 'Weapon' ?
         <WeaponSelector /> :
         selectedSidebar == 'Character' ?
-        <CharacterSelector charList={charList} initialCharactersList={initialCharactersList}/>
+        <CharacterSelector charList={charList}/>
         : null
       }
     </>
@@ -230,9 +204,9 @@ export function Sidebar({initialCharList, initialCharactersList}: {initialCharLi
 }
 
 
-export function App({initialCharactersList, initialCharList}: {initialCharactersList: JsonObject, initialCharList: string[]}){
+export function App({ initialCharList}: { initialCharList: string[]}){
 
-  const {selectedGameTab, setSelectedGameTab} = useNavigationStore()
+  const {selectedGameTab, setSelectedGameTab} = useAppStore((s)=> s)
 
   const [open, setOpen] = useState(false)
 
@@ -249,7 +223,7 @@ export function App({initialCharactersList, initialCharList}: {initialCharacters
 
       <main className="grid grid-cols-12 w-full h-full">
       <div className="hidden md:block col-span-2 border pr-1 px-1 h-full">
-        <Sidebar initialCharList={initialCharList} initialCharactersList={initialCharactersList} />
+        <Sidebar initialCharList={initialCharList}  />
       </div>
 
       {/* mobile top menu for sidebar */}
@@ -277,7 +251,7 @@ export function App({initialCharactersList, initialCharList}: {initialCharacters
           >
             ✕ Close
           </button>
-          <Sidebar initialCharList={initialCharList} initialCharactersList={initialCharactersList} />
+          <Sidebar initialCharList={initialCharList} />
         </div>
       )}
 

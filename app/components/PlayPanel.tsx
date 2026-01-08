@@ -5,12 +5,12 @@ import { ArmorPanel } from './ArmorPanel';
 import { WeaponPanel } from './WeaponPanel';
 import { ActiveCharType, CharacterType, WeaponType, charResources, penaltyTable, Afflictionstype, AfflictionItemType, ArmorType,  } from '../types';
 import { makeFullRoll, scaleArmor } from './utils';
-import { useNavigationStore } from '../stores/useNavigationStore';
+import { useAppStore } from '../stores/useAppStore';
 
 
 export function PlayPanel(){
 
-  const {selectedGameTab} = useNavigationStore()
+  const {selectedGameTab} = useAppStore((s) => s)
   const [characters, setCharacters] = useState<{[key:string]:ActiveCharType}>({})
 
   const [currentCharacter, setCurrentCharacter] = useState<ActiveCharType>()

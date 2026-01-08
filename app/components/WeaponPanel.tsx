@@ -1,7 +1,6 @@
 'use client'
 
 import { useState } from "react";
-import { WeaponType } from "../types";
 import { makeFullRoll } from "./utils";
 import { dmgArr } from "../types";
 import { Character } from "../domain/types";

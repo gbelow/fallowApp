@@ -17,8 +17,6 @@ export const getDM = (c: Character): number => {
   return dmgArr[size-1]
 }
 
-export const getGauntletPenalty = (c: Character) => c.hasGauntlets ? 3 : 0
-export const getHelmPenalty = (c: Character) => c.hasHelm ? 3 : 0
 
 export const skill = (c: Character, key: keyof Character['skills']) => c.skills[key as keyof Character['skills']] ?? 0
 

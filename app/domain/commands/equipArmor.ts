@@ -19,3 +19,19 @@ export function equipArmor(
 
   return { ...character, armor }
 }
+
+export function putGauntlets(character: Character): Character {
+  
+  return({
+    ...character,
+    ['hasGauntlets']: character.hasGauntlets ? 0 : 1
+  })
+}
+
+export function putHelm(character: Character): Character {
+  
+  return({
+    ...character,
+    ['hasHelm']: character.hasHelm ? 0 : 1
+  })
+}

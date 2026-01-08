@@ -7,6 +7,7 @@ import path from "path";
 
 
 export type JsonValue = string | number | boolean | null | JsonObject | JsonValue[];
+
 export interface JsonObject {
   [key: string]: JsonValue;
 }
@@ -41,18 +42,15 @@ export async function getBasicCharList(){
   return characterData
 }
 
-export async function createNewCharacter(
-  folderPath: string,
-  fileName: string,
-  data: Character
-) {
-  const targetDir = path.join('app/characters', folderPath);
+export async function upsertBaseCharacter(data: Character) {
+
+  const targetDir = path.join('app/characters', data.path);
 
   // Ensure the directory exists
   fs.mkdirSync(targetDir, { recursive: true });
 
   // Define the target file path
-  const filePath = path.join(targetDir, `${fileName}.json`);
+  const filePath = path.join(targetDir, `${data.name}.json`);
 
   // Write the file (pretty-printed)
   fs.writeFileSync(filePath, JSON.stringify(data, null, 2), "utf-8");

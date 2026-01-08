@@ -1,5 +1,5 @@
 import { Character } from '../types'
-import { getSM, getGauntletPenalty, getHelmPenalty, skill } from './helpers'
+import { getSM, skill } from './helpers'
 import { getAfflictionPenalty } from './afflictions'
 import { getGearPenalties } from './gear'
 import { getAGI, getMelee, getRanged, getDetection, getSpellcast, getSTR } from './characteristics'
@@ -11,7 +11,7 @@ export function getStrike(c: Character) {
 export function getAccuracy(c: Character) {
   return (
     getRanged(c) -
-    3 * getGauntletPenalty(c) +
+    3 * c.hasGauntlets +
     skill(c, 'accuracy') -
     getAfflictionPenalty(c, 'accuracy')
   )
@@ -26,7 +26,7 @@ export function getReflex(c: Character) {
   return (
     getDetection(c) +
     getRanged(c) -
-    3 * getHelmPenalty(c) -
+    3 * c.hasHelm -
     SM +
     skill(c, 'reflex') -
     getAfflictionPenalty(c, 'reflex')
@@ -47,7 +47,7 @@ export function getGrapple(c: Character) {
 export function getCunning(c: Character) {
   return (
     getDetection(c) -
-    3 * getHelmPenalty(c) +
+    3 * c.hasHelm +
     skill(c, 'cunning') -
     getAfflictionPenalty(c, 'cunning')
   )
@@ -76,7 +76,7 @@ export function getClimb(c: Character) {
     10 +
     skill(c, 'climb') -
     2 * SM -
-    3 * getGauntletPenalty(c) -
+    3 * c.hasGauntlets -
     getGearPenalties(c) -
     getAfflictionPenalty(c, 'climb')
   )
