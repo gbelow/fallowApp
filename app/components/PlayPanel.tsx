@@ -13,6 +13,9 @@ import { makeCharacteristicSelector, makeInjuryUpdater, makeMovementSelector, ma
 import { actionSurge } from '../domain/commands/actionSurge';
 import { restCharacter } from '../domain/commands/rest';
 import { injuryMap } from '../domain/tables';
+import { nextRound } from '../domain/commands/nextRound';
+import { resetCombat } from '../domain/commands/resetCombat';
+import { getAfflictions } from '../domain/selectors/afflictions';
 
 
 export function PlayPanel(){
@@ -51,27 +54,13 @@ export function PlayPanel(){
     characterUpdater( injuryUpdater)
   }
 
-  // const updateSurvival = (val:number, stat:string) => {
-  //   if(currentCharacter){
-  //     updateResource('survival', {...currentCharacter.resources.survival, [stat]: val})
-  //     const afflicts = {...currentCharacter.resources.afflictions}
-  //     if(stat == 'hunger'){
-  //       if(val > 15) {afflicts.weakened.isActive = true} else {afflicts.weakened.isActive = false}
-  //       if(val > 60) {afflicts.malnourished.isActive = true} else {afflicts.malnourished.isActive = false}
-  //     }
-  //     if(stat == 'thirst'){
-  //       if(val > 10) {afflicts.thirsty.isActive = true} else {afflicts.thirsty.isActive = false}
-  //       if(val > 15) {afflicts.dehydrated.isActive = true} else {afflicts.dehydrated.isActive = false}
-  //     }
-  //     if(stat == 'exhaustion'){
-  //       if(val > currentCharacter.STA/2) {afflicts.tired.isActive = true} else {afflicts.tired.isActive = false}
-  //       if(val > currentCharacter.STA) {afflicts.exhausted.isActive = true} else {afflicts.exhausted.isActive = false}
-  //     }
-  //     const newChar = {...currentCharacter, resources: {...currentCharacter.resources, survival:{...currentCharacter.resources.survival, [stat]: val}, afflictions: afflicts } }
-  //     setCurrentCharacter(newChar)
-  //     setCharacters({...characters, [newChar.resources.fightName]: newChar })
-  //   }
-  // }
+  const passRound = () => {
+    updateCombatState(nextRound)
+  }
+
+  const resetFight = () => {
+    updateCombatState(resetCombat)
+  }
 
 
   const rollSkill = (name:string, value: number) => {
@@ -87,8 +76,8 @@ export function PlayPanel(){
           <span>
             Round: {round}
           </span>
-          {/* <input type='button' value='nextRound' aria-label='nextRound' className='p-1 border hover:bg-gray-500 rounded' onClick={nextRound} />               */}
-          {/* <input type='button' value='resetGame' aria-label='resetGame' className='p-1 border hover:bg-gray-500 rounded ml-auto mr-2' onClick={resetGame} /> */}
+          <input type='button' value='nextRound' aria-label='nextRound' className='p-1 border hover:bg-gray-500 rounded' onClick={passRound} />              
+          <input type='button' value='resetGame' aria-label='resetGame' className='p-1 border hover:bg-gray-500 rounded ml-auto mr-2' onClick={resetFight} />
         </div>
         <div className='flex flex-row gap-2 w-full overflow-auto p-3'>
           {
@@ -310,11 +299,12 @@ function SimpleMove({moveName, title}: {moveName: keyof Movement, title: string}
 }
 
 function AfflictionsPannel(){
-  const {afflictions} = useGetActiveCharacter()
+  const character = useGetActiveCharacter()
+  const afflictions = getAfflictions(character)
   const afflictionsList = Object.keys(afflictionDefinitions) as CharacterAfflictions
   const characterUpdater = useActiveCharacterUpdater()
   const setAffliction = (item: keyof Afflictions) => 
-    characterUpdater((c) => ({...c, afflictions: symmetricDifference( c.afflictions ?? [], item) as CharacterAfflictions}))
+    characterUpdater((c) => ({...c, afflictions: symmetricDifference( getAfflictions(c) ?? [], item) as CharacterAfflictions}))
 
   return(
     <div className='flex flex-row w-84 md:w-full flex-wrap gap-2 justify-center text-xs'>

@@ -118,7 +118,6 @@ export type Resources = {
 }
 
 export type AfflictionItem = {
-  isActive: boolean, 
   mobility?: number,
   vision?:number,
   mental?: number,

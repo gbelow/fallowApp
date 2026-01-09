@@ -1,29 +1,46 @@
 import { Character } from '../types'
 import { SkillPenaltyTable, afflictions as afflictionDefinitions } from '../tables'
+import { isCampaignCharacter } from '@/app/stores/useCombatStore'
+
+export function getAfflictions(character: Character){
+  if(!isCampaignCharacter(character)) return []
+
+  const afflictions = new Set(character.afflictions)
+  const rss = character.resources
+
+  if(rss.hunger > 15) afflictions.add('weakened') 
+  if(rss.hunger > 60) afflictions.add('malnourished')
+
+  if(rss.thirst > 10) afflictions.add('thirsty') 
+  if(rss.thirst > 15) afflictions.add('dehydrated')
+
+  if(rss.exhaustion > character.resources.STA/2) afflictions.add('tired')
+  if(rss.exhaustion > character.resources.STA) afflictions.add('exhausted')
+  
+  return [...afflictions]
+}
 
 export function getAfflictionPenalty(
   character: Character,
   skill: keyof Character['skills']
 ): number {
-  if (!character.afflictions || character.afflictions.length === 0) {
+  const afflictions = getAfflictions(character)
+  if (afflictions.length === 0) {
     return 0
   }
-
+  
   let totalPenalty = 0
-
+  
   const injuryPenalty = getInjuryPenalty(character)
-
-  for (const afflictionName of character.afflictions) {
+  
+  for (const afflictionName of afflictions) {
     // Type guard: ensure afflictionName is a valid key
     if (!(afflictionName in afflictionDefinitions)) {
       // Skip invalid affliction names (defensive programming)
       continue
     }
     const afflictionDef = afflictionDefinitions[afflictionName]
-    if (!afflictionDef || !afflictionDef.isActive) {
-      continue
-    }
-
+    
     // Check each penalty category that affects this skill
     for (const [category, affectedSkills] of Object.entries(SkillPenaltyTable)) {
       if (affectedSkills.includes(skill)) {

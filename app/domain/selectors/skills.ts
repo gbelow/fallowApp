@@ -1,6 +1,6 @@
 import { Character } from '../types'
 import { getSM, skill } from './helpers'
-import { getAfflictionPenalty } from './afflictions'
+import { getAfflictionPenalty, getAfflictions } from './afflictions'
 import { getGearPenalties } from './gear'
 import { getAGI, getMelee, getRanged, getDetection, getSpellcast, getSTR } from './characteristics'
 
@@ -55,7 +55,7 @@ export function getCunning(c: Character) {
 
 export function getSD(c: Character) {
   const SM = getSM(c)
-  return -2 - SM + skill(c, 'SD') - (c.afflictions?.includes('immobile') ? -3 : 0)
+  return -2 - SM + skill(c, 'SD') - (getAfflictions(c).includes('immobile') ? +3 : 0)
 }
 
 // selectors/skills/physical.ts
