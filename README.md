@@ -1,183 +1,220 @@
-FallowRPG – Character Generator & Game Manager
 
-A state-heavy, rules-driven web application built to model a complex tabletop RPG system with real gameplay constraints.
+# **FallowRPG**
 
-This project focuses on type-safe domain modeling, derived state, and predictable UI behavior under a large number of interacting rules (equipment, injuries, afflictions, size scaling, action economy).
+### Deterministic Frontend Architecture for Complex Interactive Systems
 
-Built as a realistic example of how I approach complex frontend logic, Next.js App Router architecture, and data consistency in interactive applications.
+**Live Demo:** https://fallow-fdxbyst5n-gbelows-projects.vercel.app/
 
+**FallowRPG** is a web application built to explore how complex, highly interdependent rulesets can be modeled in a way that keeps the **frontend predictable, testable, and resilient** under heavy interaction.
 
-🎯 Project Goals
+While themed as a tabletop RPG assistance tool, the project’s primary focus is **frontend architecture**: extracting a deterministic domain layer that dramatically reduces UI complexity and state divergence in React applications.
 
-This project was built to explore and demonstrate:
+---
 
-Complex derived state without global state libraries
+## 🚨 Quick Links
 
-Deterministic calculations from mutable player inputs
+* [Why This Project Exists](#why-this-project-exists)
+* [Architecture Overview](#architecture-overview)
+* [Domain–UI Relationship](#domainui-relationship)
+* [Project Structure](#project-structure)
+* [Minimal Feature Context](#minimal-feature-context)
+* [Getting Started](#getting-started)
+* [Design Decisions & Tradeoffs](#design-decisions--tradeoffs)
+* [Tech Stack](#tech-stack)
+* [License & Author](#license--author)
 
-Strong TypeScript modeling for game rules and constraints
+---
 
-Clear separation of UI, domain logic, and persistence
+## Why This Project Exists
 
-Scalable UI architecture for feature-dense tools
+This project is intentionally **over-scoped in domain complexity** to stress-test frontend architecture decisions.
 
-The RPG domain intentionally creates edge cases that resemble real-world business logic: cascading modifiers, conflicting rules, partial invalid states, and contextual calculations.
+It explores:
 
-✨ Key Features
-Character & Domain Modeling
+* Deterministic modeling of cascading, interdependent rules
+* Preventing state explosion **without global derived-state libraries**
+* Type-driven enforcement of invariants in interactive systems
+* Keeping React components **thin, declarative, and predictable**
+* Making UI behavior stable even under frequent, non-linear updates
 
-Attribute-driven character system (STR, AGI, STA, CON, INT, SPI, DEX)
+The goal is **not** to ship a complete game. 
 
-30+ skills derived from base stats and modifiers
+The goal is to demonstrate how a complex system can remain **coherent, explainable, and maintainable** as interaction density increases — a common failure point in large frontend codebases. This project prioritizes **clarity under complexity**, not framework cleverness.
 
-Size-based scaling affecting combat, movement, and survivability
+---
 
-Equipment system with automatic penalties and bonuses
+## How to Evaluate This Project
 
-Fully deterministic stat recalculation on every change
+This project is best evaluated by examining how rule changes propagate through the system.
+Most architectural decisions are visible in the domain layer and its relationship to the UI,
+rather than in feature completeness or visual polish.
 
-Gameplay & Session Management
+---
 
-Action Point (PA) and Stamina (STA) economy
+## Architecture Overview
 
-Injury system with severity-based penalties
+At a high level, the system is structured as:
 
-Affliction system that dynamically modifies skill categories
+```
+Domain (types, rules, selectors, updaters)
+        ↓
+React hooks & thin state layers
+        ↓
+UI components
+```
 
-Survival mechanics (hunger, thirst, exhaustion)
+### Key Principle
 
-Dice rolling and combat resolution helpers
+> **React is treated as an integration layer; authoritative game logic is not implemented inside components or hooks.**
 
-Turn and round tracking for live sessions
+All authoritative logic lives in a deterministic domain layer that can be:
 
-Persistence & Data Handling
+* reasoned about in isolation
+* recomputed safely at any time
+* consumed by the UI without defensive synchronization logic
 
-Character persistence using Upstash Redis
+---
 
-JSON-based character templates stored in the filesystem
+## Domain–UI Relationship
 
-Separation between player characters and NPCs
+The most challenging and intentional part of this project was designing a **domain layer that is UI-agnostic, yet frontend-driven**.
 
-Server Actions used for all mutations
+### Domain Layer
 
-🧠 Engineering Highlights (What this repo demonstrates)
+* Pure, synchronous, deterministic logic
+* No React dependencies
+* No awareness of stores, components, or rendering
+* Models characters, stats, equipment, injuries, and derived values
+* Optimized for synchronous evaluation in response to user interaction
 
-Type-first design: domain rules are encoded in TypeScript types and helpers
+### UI Layer
 
-Derived state over stored state: values are recalculated, not duplicated
+* Consumes domain outputs
+* Does not own or directly mutate derived values
+* Renders projections of domain state
+* Remains simple even as rules grow in complexity
 
-Predictable UI updates under heavy rule interaction
+This inversion dramatically reduces:
 
-Minimal client state leakage using server actions
+* prop drilling
+* stale derived state
+* synchronization bugs
+* mental load when changing rules
 
-Event-based coordination for cross-component updates
+---
 
-No any, no implicit null state (intentional design choice)
+## Project Structure
 
-This project avoids Redux on purpose to demonstrate controlled, localized state management under complexity.
-
-🛠️ Tech Stack
-
-Framework: Next.js 15.5 (App Router)
-
-UI: React 19
-
-Language: TypeScript (strict mode)
-
-Styling: Tailwind CSS 4
-
-Persistence: Upstash Redis
-
-Build: Turbopack
-
-📁 Project Structure (Simplified)
+```text
 app/
-├── components/        # UI and interaction logic
-├── characters/        # JSON character templates
-├── actions.ts         # Server Actions (mutations)
-├── redis.ts           # Persistence layer
-├── eventBus.ts        # Cross-component coordination
-├── types.ts           # Domain and system types
-└── page.tsx
+├── components/      # Thin UI & interaction panels
+├── */.json          # JSON templates (domain inputs: characters, equipment, etc.)
+├── domain/          # Deterministic rules, factories, selectors
+├── hooks/           # UI-facing access to domain/state
+├── stores/          # Localized Zustand slices (non-authoritative)
+├── actions.ts       # Server actions (persistence boundaries)
+└── page.tsx         # Application entry point
+```
 
-🚀 Getting Started
-Prerequisites
+> ⚠️ **Note on Zustand**
+> Zustand is used sparingly for localized coordination.
+> It is **not** used as a global derived-state store.
+> All authoritative game logic remains in the domain layer.
 
-Node.js 20+
+---
 
-Upstash Redis account
+## Minimal Feature Context
 
-Setup
-git clone https://github.com/yourusername/chargenfallow.git
-cd chargenfallow
+Game mechanics exist to **anchor abstractions**, not to showcase feature breadth.
+
+They were chosen specifically because they create **non-linear, cascading effects**, which are useful for testing deterministic modeling.
+
+Examples include:
+
+* Characters with multiple interdependent attributes
+* Skills affected by size, injuries, and equipment
+* Injuries and afflictions that apply category-based penalties
+* Action and stamina economies with derived constraints
+* Combat actions involving multiple characters
+
+These mechanics ensure that small changes can have wide-reaching effects — exactly the kind of scenario that breaks naïve frontend state management.
+
+---
+
+## Getting Started
+
+### Prerequisites
+
+* Node.js **v20+**
+* Upstash Redis account (for persistence)
+
+### Setup
+
+```bash
+git clone https://github.com/gbelow/fallowrpg-character-manager.git
+cd fallowrpg-character-manager
 npm install
+```
 
+Create `.env`:
 
-Create .env.local:
-
+```env
 UPSTASH_REDIS_URL=...
 UPSTASH_REDIS_TOKEN=...
+```
 
+Run locally:
 
-Run:
-
+```bash
 npm run dev
+```
 
+Open:
 
-Open http://localhost:3000
+```
+http://localhost:3000
+```
 
-🎮 How It’s Used
+---
 
-Create or load a character template
+## Design Decisions & Tradeoffs
 
-Modify stats, skills, equipment, and conditions
+This project prioritizes long-term coherence and change tolerance over short-term feature velocity. The central architectural decision was to model the game as a deterministic domain that fully owns rules, invariants, and data interpretation, with the UI acting purely as a consumer of domain outputs. This allows rule changes to be implemented by modifying the domain layer alone, without requiring coordinated updates across components, stores, or persistence logic.
 
-Observe automatic recalculation of all dependent values
+State in the application is treated as derived by definition: the domain describes how the system behaves, not merely the shape of stored data. As a result, changing data or rules implies updating the domain logic rather than patching downstream consumers. This consolidation was intentional—it trades flexibility at the edges for clarity at the core, and prevents the UI from silently diverging from the rules it is meant to represent.
 
-Run live combat or survival scenarios
+Global state libraries were deliberately avoided for derived logic. Redux was rejected due to its boilerplate cost and focus on action-based mutation rather than memoized computation. Zustand is used selectively as a coordination layer, primarily to manage memoization boundaries and prevent unnecessary re-renders under heavy interaction. It does not own rules or derived values; those remain in the domain.
 
-Persist characters between sessions
+For persistence, Redis was chosen over a relational database because the system operates on self-contained aggregates rather than relational queries. Characters and related entities are loaded and saved as whole objects, without joins. This simplifies iteration but introduces the responsibility of handling data evolution explicitly. The system assumes that data shape changes are intentional and versioned, with the domain acting as the authoritative interpreter of stored data rather than relying on implicit schema guarantees.
 
-🔧 Game Mechanics (High Level)
+JSON files are used for domain inputs (characters, equipment, rules tables) both for transparency and for ease of bulk editing. This choice made experimentation and reshaping faster during development and reinforced the separation between data definition and rule evaluation. While not optimal for all production scenarios, it was valuable for exploring how rule changes propagate through the system.
 
-Size Modifier (1–7): affects damage, movement, and skill interaction
+This architecture required more upfront design and refactoring than a feature-first approach. However, the resulting system is significantly more scalable: boundaries are explicit, responsibilities are clear, and future expansion is expected to be faster and safer precisely because the difficult decisions have already been centralized.
 
-Action Economy: PA for actions, STA for bursts and recovery
+These tradeoffs were intentional.
 
-Injury Severity: escalating penalties (light → deadly)
+If continued, the next step would be to extract the domain into a standalone rules engine,
+formalizing the boundaries discovered during development.
 
-Afflictions: category-based skill penalties
+---
 
-🧩 Design Tradeoffs
+## Tech Stack
 
-Redis used instead of SQL to keep persistence schema-less
+* **Framework:** Next.js (App Router, Server Actions)
+* **UI:** React 19, TailwindCSS v4
+* **Language:** TypeScript (strict)
+* **Persistence:** Upstash Redis, Filesystem
+* **Build Tooling:** Turbopack
 
-No external state manager to keep logic close to components
+---
 
-Domain rules live outside UI components where possible
+## License & Author
 
-Focused on correctness and clarity over visual polish
+**Private project**
+Not licensed for commercial or public distribution.
 
-🛣️ Possible Next Steps
+**Made by Guilherme Below**
+Full-Stack Engineer
 
-Move domain logic into a dedicated rules engine module
+---
 
-Add automated tests for rule interactions
-
-Add choosable convictions with their respective bonuses
-
-Add Containers and their capacities
-
-Armor and weapon customization
-
-
-
-📄 License
-
-Private project. Not licensed for public or commercial use.
-
-👤 Author
-
-Built by Guilherme Below
-Frontend / Full-Stack Engineer
-Focus on complex UI logic, TypeScript, and interactive systems

@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { makeFullRoll } from "./utils";
-import { dmgArr } from "../types";
+import { dmgArr } from "../domain/tables";
 import { makeCharacteristicSelector, makeSkillSelector } from "../domain/selectors/factories";
 import { useActiveCharacterUpdater } from "../hooks/useActiveCharacterUpdater";
 import { useGetActiveCharacter } from "../hooks/useGetActiveCharacter";

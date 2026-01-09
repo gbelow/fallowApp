@@ -1,12 +1,14 @@
+import { dmgArr, SMArr } from "../domain/tables"
+import { Armor, Weapon } from "../domain/types"
 
-import { ArmorType, WeaponType, dmgArr, SMArr } from "../types"
 
-export function scaleArmor(armor: ArmorType, scale: number){
+
+export function scaleArmor(armor: Armor, scale: number){
   const arm = {...armor, RES: Math.floor(armor.RES*dmgArr[scale-1]), TGH: Math.floor(armor.TGH*dmgArr[scale-1]), INS: Math.floor(armor.INS*dmgArr[scale-1]), prot:Math.floor( armor.prot*dmgArr[scale-1]), cover: armor.cover-SMArr[scale-1]}  
   return arm
 }
 
-export function scaleWeapon(weapon: WeaponType, scale: number){
+export function scaleWeapon(weapon: Weapon, scale: number){
     const weap = {...weapon, scale, attacks: weapon.attacks.map(el => ({...el, impact: Math.floor(el.impact*dmgArr[scale-1]), RES: Math.floor(el.RES*dmgArr[scale-1]), TGH: Math.floor(el.TGH*dmgArr[scale-1])}))}
     return weap
 }
