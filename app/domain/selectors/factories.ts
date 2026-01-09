@@ -1,5 +1,5 @@
 import { movementSelectors, skillSelectors } from ".";
-import { Character, Characteristics, Movement, Skills } from "../types";
+import { CampaignCharacter, Character, Characteristics, Injuries, Movement, Resources, Skills } from "../types";
 import { characteristicSelectors } from ".";
 
 export function makeSkillSelector (skillName: keyof Skills){
@@ -59,3 +59,32 @@ export function makeTextUpdater(keyName: keyof Character , value: string){
     return ({...character, [keyName]: value})
   })
 }
+
+export function makeResourceSelector (keyName: keyof Resources){
+  return((character: CampaignCharacter) => {
+    if (!character || !character.resources[keyName]) return 0;
+    return character.resources[keyName]
+  })
+}
+
+export function makeResourceUpdater(keyName: keyof Resources , value: number){
+  return((character: CampaignCharacter) => {
+    return ({...character, resources:{...character.resources, [keyName]: value}})
+  })
+}
+
+export function makeInjurySelector (keyName: keyof Injuries){
+  return((character: CampaignCharacter) => {
+    if (!character || !character.injuries[keyName]) return [];
+    return character.injuries[keyName]
+  })
+}
+
+export function makeInjuryUpdater(keyName: keyof Injuries , index: number, value: number){
+  return((character: CampaignCharacter) => {
+    const newInjury = [...character.injuries[keyName]]
+    newInjury[index] = value
+    return ({...character, injuries:{...character.injuries, [keyName]: newInjury}})
+  })
+}
+

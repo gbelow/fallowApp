@@ -1,6 +1,5 @@
 {
   "name": "hands",
-  "handed":"small", 
   "penalty":0,
   "scale":3,
   "attacks":[
@@ -14,7 +13,8 @@
       "TGH": 0,
       "AP": 3,
       "deflection":0,        
-      "props": "agarrar, sacar"
+      "props": "agarrar, sacar",
+      "handed": "small"
     },
     {
       "type": "melee",
@@ -26,7 +26,8 @@
       "TGH": 0,
       "AP": 3,
       "deflection":0,        
-      "props": "pesado I, sacar"
+      "props": "pesado I, sacar",
+      "handed": "small" 
     }
   ]
 }

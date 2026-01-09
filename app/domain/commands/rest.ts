@@ -11,8 +11,9 @@ export function restCharacter(c: Character): Character {
   return {
     ...c,
     resources: {
+      ...c.resources,
       STA: newSTA,
-      AP: newAP
+      AP: newAP,
     }
   }
 }

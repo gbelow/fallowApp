@@ -164,9 +164,13 @@ Move domain logic into a dedicated rules engine module
 
 Add automated tests for rule interactions
 
-Multiplayer session syncing
+Add choosable convictions with their respective bonuses
 
-Read-only spectator mode
+Add Containers and their capacities
+
+Armor and weapon customization
+
+
 
 📄 License
 

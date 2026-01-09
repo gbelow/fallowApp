@@ -141,8 +141,8 @@ export function CharacterCreator() {
         {
           character ? 
           <>
-            <ArmorPanel character={character} />
-            <WeaponPanel character={character} />
+            <ArmorPanel/>
+            <WeaponPanel />
           </>
           :
           null

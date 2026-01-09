@@ -1,7 +1,8 @@
 'use client'
-import { Character } from '../domain/types'
+import { useGetActiveCharacter } from '../hooks/useGetActiveCharacter'
 
-export function ArmorPanel({character}: {character: Character}){
+export function ArmorPanel(){
+  const character = useGetActiveCharacter()
   return(
     <>
     <div>Armor: {character.armor.name}</div>

@@ -1,3 +1,4 @@
+import { scaleArmor } from "../selectors/helpers"
 import { Character, Armor } from '../types'
 
 export function equipArmor(
@@ -17,7 +18,7 @@ export function equipArmor(
     throw new Error('Armor must have valid RES, TGH, and INS values')
   }
 
-  return { ...character, armor }
+  return { ...character, armor: scaleArmor(armor, character.characteristics.size) }
 }
 
 export function putGauntlets(character: Character): Character {

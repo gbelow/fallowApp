@@ -13,9 +13,6 @@ export function equipWeapon(
   if (!weapon.attacks || !Array.isArray(weapon.attacks) || weapon.attacks.length === 0) {
     throw new Error('Weapon must have at least one attack')
   }
-  if (typeof weapon.handed !== 'string' || !['small', 'one', 'two'].includes(weapon.handed)) {
-    throw new Error('Weapon must have a valid handed type (small, one, or two)')
-  }
 
   return {
     ...character,

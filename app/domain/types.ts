@@ -83,7 +83,8 @@ export type NaturalResistances = {
 }
 
 export type WeaponAttack = {
-  type: 'melee' | 'ranged'
+  type: string
+  handed: string
   impact: number
   heavyMod: number
   penMod: number
@@ -97,7 +98,6 @@ export type WeaponAttack = {
 
 export type Weapon = {
   name: string
-  handed: 'small' | 'one' | 'two'
   penalty: number
   scale: number
   attacks: WeaponAttack[]
@@ -109,7 +109,9 @@ export type Injuries = {
   deadly: number[],
 }
 
-export type SurvivalStats = {
+export type Resources = {
+  AP: number,
+  STA: number,
   hunger: number,
   thirst: number,
   exhaustion: number
@@ -149,6 +151,8 @@ export type Afflictions = {
   sick: AfflictionItem,
 }
 
+export type CharacterAfflictions = (keyof Afflictions)[]
+
 export type Item = {
   size: number,
   name: string,
@@ -163,7 +167,6 @@ export type Container = {
 }
 
 export type Character = {
-
   path: string
   name: string
   
@@ -177,14 +180,17 @@ export type Character = {
   
   armor: Armor
   weapons: Record<string, Weapon>
-
+  
   notes: string
-
+  
   // runtime-capable (empty for base)
-  injuries?: Injuries
-  afflictions?: (keyof Afflictions)[]
-  resources?: {AP: number, STA: number}
-  survival?: SurvivalStats,
-  fightName?: string
-  hasActionSurge?: boolean
+  
+  id?:  string | null | undefined
+  injuries?: Injuries | undefined
+  afflictions?: CharacterAfflictions | undefined
+  resources?: Resources | undefined
+  fightName?: string | undefined
+  hasActionSurge?: boolean | undefined
 }
+
+export type CampaignCharacter = Required<Character>

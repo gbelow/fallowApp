@@ -1,57 +1,69 @@
 // stores/useCharacterStore.ts
 import { create } from 'zustand'
-import { Character } from '../domain/types'
+import { CampaignCharacter, Character } from '../domain/types'
 import { makeCharacterResources } from '../domain/factories'
 
-type PlayCharacterStore = {
-  characters: Record<string, Character>
+export type CombatStore = {
+  characters: Record<string, CampaignCharacter>
   activeCharacterId: string | null
   round: number
   inTurnCharacter: string
   
-  addCharacter: (character: Character) => void
+  addCharacter: (character: Character | CampaignCharacter) => void
   setActiveCharacter: (id: string) => void
+  getActiveCharacter: (id: string | void) => CampaignCharacter | null
 
-  updateCharacter: (
-    id: string,
-    updater: (c: Character) => Character
+  updateActiveCharacter: (
+    updater: (c: CampaignCharacter) => CampaignCharacter
   ) => void
 
   removeCharacter: (id: string) => void
+
+  updateCombatState: (updater: (state: CombatStore) => CombatStore) => void
 }
 
-export const useCharacterStore = create<PlayCharacterStore>((set) => ({ 
+export const useCombatStore = create<CombatStore>((set, get) => ({ 
   characters: {},
   activeCharacterId: null,
   round: 0,
   inTurnCharacter: '',
 
+  updateCombatState: (updater) => {
+    set( updater)
+  },
+
   addCharacter: (character) =>
     set((s) => {
-      const id = crypto.randomUUID()
-      const char = !character.resources ? addCharacterResources(character) : character
+      const char = addCharacterResources(character, s.characters)
       return({
         characters: {
           ...s.characters,
-          [id]: {...char, id, fightName: makeFightName(char, s.characters)}
+          [String(char.id)]: char
         }
       })
     }),
 
-  setActiveCharacter: (id) =>
-    set({ activeCharacterId: id }),
+  setActiveCharacter: (id) => {
+    set({ activeCharacterId: id })
+  },
 
-  updateCharacter: (id, updater) =>
+  getActiveCharacter: () => {
+    const {characters, activeCharacterId} = get()
+    if(!activeCharacterId) return null
+    return characters[activeCharacterId]
+  },
+
+  updateActiveCharacter: (updater) =>
     set((s) => {
-      const current = s.characters[id]
-      if (!current) return s
+      const current = s.getActiveCharacter()      
+      if (!current || !current.id) return s
 
       const updated = updater(current)
 
       return {
         characters: {
           ...s.characters,
-          [id]: updated
+          [current.id]: updated
         }
       }
     }),
@@ -67,14 +79,30 @@ export const useCharacterStore = create<PlayCharacterStore>((set) => ({
 function makeFightName(char: Character, characters: Record<string, Character>){
   let newName = char.name
   let count = 1
-  while(characters[newName] != undefined){
+  while(Object.values(characters).find(el => el.fightName == newName) ){
     count++
     newName = char.name + count
   }
   return newName
 }
 
-function addCharacterResources(char: Character): Character {
+export function addCharacterResources(char: Character, characters: Record<string, Character>) : CampaignCharacter {
+  const fightName = makeFightName(char, characters)
+  const id = crypto.randomUUID()
   const resources = makeCharacterResources(char)
-  return { ...char, ...resources }
+  if(!isCampaignCharacter(char))  return { ...char, ...resources, id, fightName }
+  return { ...char, fightName }
+}
+
+export function isCampaignCharacter(
+  c: Character
+): c is CampaignCharacter {
+  return (
+    c.id !== undefined &&
+    c.injuries !== undefined &&
+    c.afflictions !== undefined &&
+    c.resources !== undefined &&
+    c.fightName !== undefined &&
+    c.hasActionSurge !== undefined
+  );
 }

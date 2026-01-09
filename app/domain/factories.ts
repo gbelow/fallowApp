@@ -87,7 +87,6 @@ export function makeNewCharacter(path: string): Character {
     weapons: {
       hands: {
         name: 'hands',
-        handed: 'small',
         penalty: 0,
         scale: 3,
         attacks: [
@@ -101,7 +100,8 @@ export function makeNewCharacter(path: string): Character {
             TGH: 20,
             AP: 3,
             deflection: 0,
-            props: 'grapple, draw'
+            props: 'grapple, draw',
+            handed:"small"
           },
           {
             type: 'melee',
@@ -113,7 +113,8 @@ export function makeNewCharacter(path: string): Character {
             TGH: 20,
             AP: 3,
             deflection: 0,
-            props: 'heavy I, draw'
+            props: 'heavy I, draw',
+            handed:"small"
           }
         ]
       }
@@ -132,9 +133,8 @@ export function makeCharacterResources(char: Character) {
 
   const rss = {
     afflictions: [],
-    resources: { AP: 6, STA: char.characteristics.STA },
-    survival: { hunger: 0, thirst: 0, exhaustion: 0 },
-    injuries: { light: [0], serious: [0], deadly: [0] },
+    resources: { AP: 6, STA: char.characteristics.STA, hunger: 0, thirst: 0, exhaustion: 0 },
+    injuries: { light: [0, 0, 0, 0, 0, 0], serious: [0, 0, 0], deadly: [0, 0] },
     hasActionSurge: true,
   }
   return rss

@@ -1,7 +1,6 @@
 {
   "hands": {
     "name": "hands",
-    "handed":"small", 
     "penalty":0,
     "scale":3,
     "attacks":[
@@ -15,7 +14,8 @@
         "TGH": 0,
         "AP": 3,
         "deflection":0,        
-        "props": "grapple, draw"
+        "props": "grapple, draw",
+        "handed":"small"
       },
       {
         "type": "melee",
@@ -27,7 +27,8 @@
         "TGH": 0,
         "AP": 3,
         "deflection":0,        
-        "props": "heavy I, draw"
+        "props": "heavy I, draw",
+        "handed":"small"
       }
     ]
   },
@@ -47,7 +48,8 @@
         "TGH": 20,
         "AP": 3,
         "deflection":0,        
-        "props": "DEF, draw, precise"
+        "props": "DEF, draw, precise",
+        "handed":"small"
       }
     ]
   },
@@ -67,7 +69,8 @@
         "TGH": 40,
         "AP": 3,
         "deflection":0,
-        "props": "DEF, heavy I, precise "
+        "props": "DEF, heavy I, precise ",
+        "handed":"small"
       }
     ]
   },
@@ -87,7 +90,8 @@
         "TGH": 50,
         "AP": 3,
         "deflection":0,
-        "props": "DEF, heavy I, cleave, draw "
+        "props": "DEF, heavy I, cleave, draw ",
+        "handed":"one"
       }
     ]
   },
@@ -107,7 +111,8 @@
         "TGH": 50,
         "AP": 3,
         "deflection":0,
-        "props": "draw, precise "
+        "props": "draw, precise ",
+        "handed":"one"
       },
       {
         "type": "melee",
@@ -119,7 +124,8 @@
         "TGH": 50,
         "AP": 3,
         "deflection":0,
-        "props": "DEF, heavy I, draw "
+        "props": "DEF, heavy I, draw ",
+        "handed":"one"
       }
     ]
   },
@@ -139,7 +145,8 @@
         "TGH": 40,
         "AP": 3,
         "deflection":0,
-        "props": "draw, precise "
+        "props": "draw, precise ",
+        "handed":"one"
       }      
     ]
   },
@@ -159,7 +166,8 @@
         "TGH": 50,
         "AP": 4,
         "deflection":0,
-        "props": "braced, precise, heavy I "
+        "props": "braced, precise, heavy I ",
+        "handed":"two"
       },
       {
         "type": "melee",
@@ -171,7 +179,8 @@
         "TGH": 30,
         "AP": 3,
         "deflection":0,
-        "props": "DEF, heavy I "
+        "props": "DEF, heavy I ",
+        "handed":"one"
       }
     ]
   },
@@ -191,7 +200,8 @@
         "TGH": 50,
         "AP": 3,
         "deflection":0,
-        "props": "heavy II"
+        "props": "heavy II",
+        "handed":"one"
       },
       {
         "type": "melee",
@@ -203,7 +213,8 @@
         "TGH": 30,
         "AP": 3,
         "deflection":0,
-        "props": "DEF, heavy I "
+        "props": "DEF, heavy I ",
+        "handed":"one"
       }      
     ]
   },
@@ -223,7 +234,8 @@
         "TGH": 50,
         "AP": 4,
         "deflection":0,
-        "props": "heavy I"
+        "props": "heavy I",
+        "handed":"one"
       },
       {
         "type": "melee",
@@ -235,7 +247,8 @@
         "TGH": 30,
         "AP": 3,
         "deflection":0,
-        "props": "DEF, heavy I "
+        "props": "DEF, heavy I ",
+        "handed":"one"
       }      
     ]
   },
@@ -255,7 +268,8 @@
         "TGH": 50,
         "AP": 3,
         "deflection":0,
-        "props": "heavy I, DEF"
+        "props": "heavy I, DEF",
+        "handed":"two"
       },
       {
         "type": "melee",
@@ -267,7 +281,8 @@
         "TGH": 50,
         "AP": 3,
         "deflection":0,
-        "props": "precise"
+        "props": "precise",
+        "handed":"two"
       },
       {
         "type": "melee",
@@ -279,7 +294,8 @@
         "TGH": 50,
         "AP": 4,
         "deflection":0,
-        "props": "precise, heavy I, cleave"
+        "props": "precise, heavy I, cleave",
+        "handed":"two"
       }    
     ]
   },
@@ -299,7 +315,8 @@
         "TGH": 50,
         "AP": 4,
         "deflection":0,
-        "props": "heavy II, DEF, cleave"
+        "props": "heavy II, DEF, cleave",
+        "handed":"two"
       },
       {
         "type": "melee",
@@ -311,7 +328,8 @@
         "TGH": 50,
         "AP": 3,
         "deflection":0,
-        "props": "precise, braced, heavy I"
+        "props": "precise, braced, heavy I",
+        "handed":"two"
       }
     ]
   },
@@ -331,7 +349,8 @@
         "TGH": 50,
         "AP": 3,
         "deflection":0,
-        "props": "precise, braced"
+        "props": "precise, braced",
+        "handed":"two"
       }      
     ]
   },
@@ -351,7 +370,8 @@
         "TGH": 50,
         "AP": 4,
         "deflection":0,
-        "props": "heavy II"
+        "props": "heavy II",
+        "handed":"two"
       },
       {
         "type": "melee",
@@ -363,7 +383,8 @@
         "TGH": 50,
         "AP": 3,
         "deflection":0,
-        "props": "braced, precise, heavy I "
+        "props": "braced, precise, heavy I ",
+        "handed":"two"
       },
       {
         "type": "melee",
@@ -375,7 +396,8 @@
         "TGH": 50,
         "AP": 3,
         "deflection":0,
-        "props": "gancho "
+        "props": "gancho ",
+        "handed":"two"
       },
       {
         "type": "melee",
@@ -387,7 +409,8 @@
         "TGH": 30,
         "AP": 3,
         "deflection":0,
-        "props": "DEF, heavy I "
+        "props": "DEF, heavy I ",
+        "handed":"two"
       } 
     ]
   },
@@ -407,7 +430,8 @@
         "TGH": 100,
         "AP": 4,
         "deflection":0,
-        "props": "heavy III"
+        "props": "heavy III",
+        "handed":"two"
       },
       {
         "type": "melee",
@@ -419,7 +443,8 @@
         "TGH": 50,
         "AP": 3,
         "deflection":0,
-        "props": "braced, precise, heavy I "
+        "props": "braced, precise, heavy I ",
+        "handed":"two"
       },
       {
         "type": "melee",
@@ -431,7 +456,8 @@
         "TGH": 50,
         "AP": 3,
         "deflection":0,
-        "props": "gancho "
+        "props": "gancho ",
+        "handed":"two"
       },
       {
         "type": "melee",
@@ -443,7 +469,8 @@
         "TGH": 30,
         "AP": 3,
         "deflection":0,
-        "props": "DEF, heavy I "
+        "props": "DEF, heavy I ",
+        "handed":"two"
       } 
     ]
   },
@@ -463,7 +490,8 @@
         "TGH": 25,
         "AP": 3,
         "deflection":1,
-        "props": "DEF, heavy I"
+        "props": "DEF, heavy I",
+        "handed":"one"
       }
     ]
   },
@@ -483,7 +511,8 @@
         "TGH": 10,
         "AP": 4,
         "deflection":0,
-        "props": "precise"
+        "props": "precise",
+        "handed":"two"
       }
       
     ]
@@ -504,7 +533,8 @@
         "TGH": 10,
         "AP": 5,
         "deflection":0,
-        "props": "precise, STR 13"
+        "props": "precise, STR 13",
+        "handed":"two"
       }
     ]
   },
@@ -524,7 +554,8 @@
         "TGH": 10,
         "AP": 5,
         "deflection":0,
-        "props": "precise, STR 16"
+        "props": "precise, STR 16",
+        "handed":"two"
       }
     ]
   },
@@ -544,7 +575,8 @@
         "TGH": 10,
         "AP": 3,
         "deflection":0,
-        "props": "grapple, heavy I"
+        "props": "grapple, heavy I",
+        "handed":"small"
       }
     ]
   },
@@ -564,7 +596,8 @@
         "TGH": 10,
         "AP": 3,
         "deflection":0,
-        "props": "grapple"
+        "props": "grapple",
+        "handed":"small"
       }
     ]
   }

@@ -8,6 +8,7 @@ export function actionSurge(c: Character): Character {
       ...c,
       hasActionSurge: false,
       resources: {
+        ...c.resources,
         STA: c.resources.STA - cost,
         AP: c.resources.AP + 6
       }

@@ -1,29 +1,33 @@
 'use client'
-import { useEffect, useState } from 'react'
-import bus from "./eventBus";
+import { useState } from 'react'
 import armors from './armors.json'
-import weapons from './weapons.json'
-import { ArmorType, WeaponType } from './types';
+import baseWeapons from './weapons.json'
 import { PlayPanel } from './components/PlayPanel';
 import { CharacterCreator } from './components/CharacterCreator';
 import { scaleWeapon } from './components/utils';
-import { JsonObject, upsertBaseCharacter, deleteBaseCharacter, getBasicCharList, getCharacter } from './actions';
+import { upsertBaseCharacter, deleteBaseCharacter, getCharacter } from './actions';
 import { useAppStore } from './stores/useAppStore';
 import { makeNewCharacter } from './domain/factories';
-import { Character } from './domain/types';
+import { Armor, Character, Weapon } from './domain/types';
 import { useCharacterStore } from './stores/useCharacterStore';
+import { equipArmor } from './domain/commands/equipArmor';
+import { equipWeapon } from './domain/commands/equipWeapon';
+import { scaleArmor } from './domain/selectors/helpers';
+import { useActiveCharacterUpdater } from './hooks/useActiveCharacterUpdater';
+import { useCombatStore } from './stores/useCombatStore';
 
 
 export function ArmorSelector(){
+  const characterUpdater = useActiveCharacterUpdater()
 
-  const handleEquipArmorClick = (armor: ArmorType) => {
-    bus.emit("equip-armor", { armor });
+  const handleEquipArmorClick = (armor: Armor) => {
+    characterUpdater((c) => equipArmor(c, scaleArmor(armor, c.characteristics.size)))    
   };
 
   return(
     <div className='text-center w-full'>
       {
-        Object.values(armors).map(el => {
+        Object.values(armors as Record<string, Armor>).map((el: Armor) => {
           return(
             <input type={'button'} key={el.name} className='text-center w-full hover:bg-gray-500 p-1 ' value={el.name} aria-label={el.name} onClick={() => handleEquipArmorClick(el)}/>
           )
@@ -36,20 +40,28 @@ export function ArmorSelector(){
 
 export function WeaponSelector(){
 
-  const handleEquipWeaponClick = (weapon: WeaponType) => {
-    bus.emit("equip-weapon", { weapon });
+  const characterUpdater = useActiveCharacterUpdater()
+
+  const handleEquipWeaponClick = (weapon: Weapon) => {
+    characterUpdater((c) => equipWeapon(c, weapon))
   };
 
-  const [sWeapons, setSWeapons] = useState(weapons)
+  const typedBaseWeapons : Record<string, Weapon> = baseWeapons 
+
+  const [weapons, setWeapons] = useState(typedBaseWeapons)
 
   return(
     <div className='text-center w-full'>
       {
-        Object.values(sWeapons).map((el:WeaponType) => {
+        Object.values(weapons).map((el:Weapon) => {
           return(
             <div className='flex flex-row justify-around text-center w-full  ' key={el.name}>
-              <input type={'button'}  className='text-center  hover:bg-gray-500 p-1 w-32' value={el.name} aria-label={el.name} onClick={() => el ? handleEquipWeaponClick(scaleWeapon(el, el.scale)): null}/>
-              <input className='w-8' type='number' inputMode="numeric" aria-label={el.name} value={el.scale} onChange={(val) => setSWeapons({...sWeapons, [el.name]: {...el, scale: val.target.value}})} />
+              <input type={'button'}  className='text-center  hover:bg-gray-500 p-1 w-32' value={el.name} aria-label={el.name} 
+                onClick={() => el ? handleEquipWeaponClick(scaleWeapon(el, el.scale)) : null}
+              />
+              <input className='w-8' type='number' inputMode="numeric" aria-label={el.name} value={el.scale} 
+                onChange={(val) => setWeapons({...weapons, [el.name]: {...el, scale: parseInt(val.target.value)}})} 
+              />
             </div>
           )
         })
@@ -66,11 +78,13 @@ export function CharacterSelector({charList, }: {charList: string[], }){
   const [openCampaignChars, setOpenCampaignChars] = useState(false)
   const {selectedGameTab} = useAppStore((s)=> s)
   const  loadCharacter = useCharacterStore((state) => state.loadCharacter)
+  const  addCharacter = useCombatStore((state) => state.addCharacter)
   const { baseCharacterList, updateBaseCharacterList } = useAppStore((s)=> s )
   
   
   const handleSelectCharacterClick = (character: Character) => {
-    loadCharacter(character)
+    if (selectedGameTab == 'edit') loadCharacter(character)
+    if (selectedGameTab == 'play') addCharacter(character)
   };
 
   const handleSelectPlayerClick  = async (characterId: string) => {

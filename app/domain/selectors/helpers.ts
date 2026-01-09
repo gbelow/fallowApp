@@ -1,4 +1,4 @@
-import { Character } from '../types'
+import { Armor, Character, Weapon } from '../types'
 import { dmgArr, SMArr } from '../tables'
 
 export const getSM = (c: Character): number => {
@@ -17,6 +17,48 @@ export const getDM = (c: Character): number => {
   return dmgArr[size-1]
 }
 
+
+export function scaleArmor(armor: Armor, scale: number): Armor {
+  // Validate scale is within bounds (1-7, where scale-1 maps to array indices 0-6)
+  const clampedScale = Math.max(1, Math.min(7, scale))
+  const scaleIndex = clampedScale - 1
+  
+  if (scaleIndex < 0 || scaleIndex >= dmgArr.length || scaleIndex >= SMArr.length) {
+    throw new Error(`Invalid scale value: ${scale}. Scale must be between 1 and ${dmgArr.length}.`)
+  }
+
+  const arm = {
+    ...armor,
+    RES: Math.floor(armor.RES * dmgArr[scaleIndex]),
+    TGH: Math.floor(armor.TGH * dmgArr[scaleIndex]),
+    INS: Math.floor(armor.INS * dmgArr[scaleIndex]),
+    prot: Math.floor(armor.prot * dmgArr[scaleIndex]),
+    cover: armor.cover - SMArr[scaleIndex]
+  }
+  return arm
+}
+
+export function scaleWeapon(weapon: Weapon, scale: number): Weapon {
+  // Validate scale is within bounds (1-7, where scale-1 maps to array indices 0-6)
+  const clampedScale = Math.max(1, Math.min(7, scale))
+  const scaleIndex = clampedScale - 1
+  
+  if (scaleIndex < 0 || scaleIndex >= dmgArr.length) {
+    throw new Error(`Invalid scale value: ${scale}. Scale must be between 1 and ${dmgArr.length}.`)
+  }
+
+  const weap = {
+    ...weapon,
+    scale: clampedScale,
+    attacks: weapon.attacks.map(el => ({
+      ...el,
+      impact: Math.floor(el.impact * dmgArr[scaleIndex]),
+      RES: Math.floor(el.RES * dmgArr[scaleIndex]),
+      TGH: Math.floor(el.TGH * dmgArr[scaleIndex])
+    }))
+  }
+  return weap
+}
 
 export const skill = (c: Character, key: keyof Character['skills']) => c.skills[key as keyof Character['skills']] ?? 0
 

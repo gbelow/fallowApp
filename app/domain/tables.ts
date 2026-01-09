@@ -1,4 +1,4 @@
-import { AfflictionItem, Afflictions } from "./types"
+import { Afflictions } from "./types"
 
 export const SkillPenaltyTable = {
   "mobility": [
@@ -67,6 +67,7 @@ export const SkillPenaltyTable = {
 
 export const SMArr = [-2,-1,0,1,2,3,4]
 export const dmgArr = [0.5, 0.75, 1, 1.5, 2, 3, 4]
+export const injuryMap = {light:2, serious: 10, deadly: 20}
 
 export const afflictions: Afflictions = {
   prone: {isActive: false, mobility: 3, controlable: true},
