@@ -1,11 +1,15 @@
 'use client'
 import { useGetActiveCharacter } from '../hooks/useGetActiveCharacter'
+import baseArmor from '../baseArmor.json'
+import { makeNewCharacter } from '../domain/factories'
 
 export function ArmorPanel(){
   const character = useGetActiveCharacter()
+  const armor = character ? character.armor : baseArmor
+  const characteristics = character ? character.characteristics : makeNewCharacter('').characteristics
   return(
     <>
-    <div>Armor: {character.armor.name}</div>
+    <div>Armor: {armor.name}</div>
       <table className='w-84 md:w-full text-center'>
         <thead>
           <tr >
@@ -18,40 +22,40 @@ export function ArmorPanel(){
         <tbody>
           <tr>
             <td>armor</td>
-            <td>{ character.armor.prot}</td>
-            <td>{ character.armor.TGH}</td>
-            <td>{ character.armor.INS}</td>
+            <td>{ armor.prot}</td>
+            <td>{ armor.TGH}</td>
+            <td>{ armor.INS}</td>
           </tr>
           <tr>
             <td>light</td>
-            <td>{character.characteristics.RES + character.armor.prot}</td>
-            <td>{character.characteristics.TGH + character.armor.TGH}</td>
-            <td>{character.characteristics.INS + character.armor.INS}</td>
+            <td>{characteristics.RES + armor.prot}</td>
+            <td>{characteristics.TGH + armor.TGH}</td>
+            <td>{characteristics.INS + armor.INS}</td>
           </tr>
           <tr>
             <td>serious</td>
-            <td>{character.characteristics.RES*2 + character.armor.prot}</td>
-            <td>{character.characteristics.TGH*2 + character.armor.TGH}</td>
-            <td>{character.characteristics.INS*2 + character.armor.INS}</td>
+            <td>{characteristics.RES*2 + armor.prot}</td>
+            <td>{characteristics.TGH*2 + armor.TGH}</td>
+            <td>{characteristics.INS*2 + armor.INS}</td>
           </tr>
           <tr>
             <td>deadly</td>
-            <td>{character.characteristics.RES*3 + character.armor.prot}</td>
-            <td>{character.characteristics.TGH*3 + character.armor.TGH}</td>
-            <td>{character.characteristics.INS*3 + character.armor.INS}</td>
+            <td>{characteristics.RES*3 + armor.prot}</td>
+            <td>{characteristics.TGH*3 + armor.TGH}</td>
+            <td>{characteristics.INS*3 + armor.INS}</td>
           </tr>
           <tr>
             <td>sudden</td>
-            <td>{character.characteristics.RES*6 + character.armor.prot}</td>
-            <td>{character.characteristics.TGH*6 + character.armor.TGH}</td>
+            <td>{characteristics.RES*6 + armor.prot}</td>
+            <td>{characteristics.TGH*6 + armor.TGH}</td>
             <td></td>
           </tr>
         </tbody>
       </table>
       <div className='flex gap-2 text-center justify-center'>
-        <span>RES {character.armor.RES}</span>
-        <span>Penal {character.armor.penalty}</span>
-        <span>Coverage {character.armor.cover}</span>
+        <span>RES {armor.RES}</span>
+        <span>Penal {armor.penalty}</span>
+        <span>Coverage {armor.cover}</span>
       </div>
     </>
   )

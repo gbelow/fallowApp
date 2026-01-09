@@ -4,7 +4,7 @@ import { ArmorPanel } from './ArmorPanel';
 import { WeaponPanel } from './WeaponPanel';
 import {afflictions as afflictionDefinitions} from '../domain/tables'
 import { makeFullRoll } from './utils';
-import { CombatStore, isCampaignCharacter, useCombatStore } from '../stores/useCombatStore';
+import { CombatStore, useCombatStore } from '../stores/useCombatStore';
 import { Afflictions, CharacterAfflictions, Characteristics, Injuries, Movement, Resources, Skills } from '../domain/types';
 import { useActiveCharacterUpdater } from '../hooks/useActiveCharacterUpdater';
 import { startTurn } from '../domain/commands/startTurn';
@@ -16,6 +16,7 @@ import { injuryMap } from '../domain/tables';
 import { nextRound } from '../domain/commands/nextRound';
 import { resetCombat } from '../domain/commands/resetCombat';
 import { getAfflictions } from '../domain/selectors/afflictions';
+import { isCampaignCharacter } from '../domain/utils';
 
 
 export function PlayPanel(){
@@ -242,7 +243,7 @@ function InjuryControl({cures, setInj, type}: {cures: number, type:keyof Injurie
 function SimpleResource({rssName}: {rssName: keyof Resources}){
 
   const character = useGetActiveCharacter()
-  const value = isCampaignCharacter(character) ? makeResourceSelector(rssName)(character) : 0
+  const value = character && isCampaignCharacter(character) ? makeResourceSelector(rssName)(character) : 0
   const charUpdater = useActiveCharacterUpdater()
   
   const updater = (value: number) => 
@@ -288,7 +289,7 @@ function ZimpleSkill({skillName, rollSkill}: {skillName: keyof Skills, rollSkill
 
 function SimpleMove({moveName, title}: {moveName: keyof Movement, title: string}){
   const character = useGetActiveCharacter()
-  const value = makeMovementSelector(moveName)(character)
+  const value = character ? makeMovementSelector(moveName)(character) : 0
 
   return(
     <div className='flex flex-col border rounded text-center p-1 w-20 md:w-28 overflow-hidden text-xs'>
@@ -300,7 +301,7 @@ function SimpleMove({moveName, title}: {moveName: keyof Movement, title: string}
 
 function AfflictionsPannel(){
   const character = useGetActiveCharacter()
-  const afflictions = getAfflictions(character)
+  const afflictions = character ? getAfflictions(character) : []
   const afflictionsList = Object.keys(afflictionDefinitions) as CharacterAfflictions
   const characterUpdater = useActiveCharacterUpdater()
   const setAffliction = (item: keyof Afflictions) => 

@@ -1,6 +1,7 @@
 import { movementSelectors, skillSelectors } from ".";
 import { CampaignCharacter, Character, Characteristics, Injuries, Movement, Resources, Skills } from "../types";
 import { characteristicSelectors } from ".";
+import { isCampaignCharacter } from "../utils";
 
 export function makeSkillSelector (skillName: keyof Skills){
   return((character: Character) => {
@@ -81,7 +82,8 @@ export function makeInjurySelector (keyName: keyof Injuries){
 }
 
 export function makeInjuryUpdater(keyName: keyof Injuries , index: number, value: number){
-  return((character: CampaignCharacter) => {
+  return((character: Character) => {
+    if(!isCampaignCharacter(character)) return character
     const newInjury = [...character.injuries[keyName]]
     newInjury[index] = value
     return ({...character, injuries:{...character.injuries, [keyName]: newInjury}})

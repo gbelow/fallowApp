@@ -1,4 +1,5 @@
-import { CampaignCharacter, Character } from "../domain/types";
+import { CampaignCharacter, CampaignCharacterUpdater, Character } from "../domain/types";
+import { isCampaignCharacter } from "../domain/utils";
 import { useAppStore } from "../stores/useAppStore";
 import { useCharacterStore } from "../stores/useCharacterStore";
 import { useCombatStore } from "../stores/useCombatStore";
@@ -15,8 +16,8 @@ export function useActiveCharacterUpdater(){
     }
     if(appStore.selectedGameTab == 'play'){
       const activeCharacter = combatStore.getActiveCharacter()
-      if(!activeCharacter ) return
-      combatStore.updateActiveCharacter(updater as (s:CampaignCharacter) => CampaignCharacter)
+      if(!activeCharacter || !isCampaignCharacter(activeCharacter)) return
+      combatStore.updateActiveCharacter(updater as CampaignCharacterUpdater)
     }
   })
 }

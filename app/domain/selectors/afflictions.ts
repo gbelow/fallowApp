@@ -1,10 +1,9 @@
 import { Character } from '../types'
 import { SkillPenaltyTable, afflictions as afflictionDefinitions } from '../tables'
-import { isCampaignCharacter } from '@/app/stores/useCombatStore'
+import { isCampaignCharacter } from '../utils'
 
 export function getAfflictions(character: Character){
   if(!isCampaignCharacter(character)) return []
-
   const afflictions = new Set(character.afflictions)
   const rss = character.resources
 
@@ -24,6 +23,8 @@ export function getAfflictionPenalty(
   character: Character,
   skill: keyof Character['skills']
 ): number {
+  if(!isCampaignCharacter(character)) return 0
+
   const afflictions = getAfflictions(character)
   if (afflictions.length === 0) {
     return 0

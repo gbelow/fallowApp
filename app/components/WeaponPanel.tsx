@@ -13,10 +13,10 @@ export function WeaponPanel(){
   const character = useGetActiveCharacter()
 
   const [lastAtk, setLastAtk] = useState({atk:0, properties: '', weapon: ''})
-  const strike = makeSkillSelector('strike')(character)
-  const accuracy = makeSkillSelector('accuracy')(character)
-  const STR = makeCharacteristicSelector('STR')(character) 
-  const weapons = character.weapons 
+  const strike = character ? makeSkillSelector('strike')(character) : 0
+  const accuracy = character ? makeSkillSelector('accuracy')(character) : 0
+  const STR = character ? makeCharacteristicSelector('STR')(character) : 10
+  const weapons = character ? character.weapons : {}
 
   const pressAtk = (range: string, heavyMod:number, properties:string, weapon: string) => {
     const roll = makeFullRoll()

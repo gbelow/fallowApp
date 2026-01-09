@@ -1,7 +1,7 @@
 // stores/useCharacterStore.ts
 import { create } from 'zustand'
 import { CampaignCharacter, Character } from '../domain/types'
-import { makeCharacterResources } from '../domain/factories'
+import { addCharacterResources } from '../domain/utils'
 
 export type CombatStore = {
   characters: Record<string, CampaignCharacter>
@@ -75,34 +75,3 @@ export const useCombatStore = create<CombatStore>((set, get) => ({
       return { characters: rest }
     })
 }))
-
-function makeFightName(char: Character, characters: Record<string, Character>){
-  let newName = char.name
-  let count = 1
-  while(Object.values(characters).find(el => el.fightName == newName) ){
-    count++
-    newName = char.name + count
-  }
-  return newName
-}
-
-export function addCharacterResources(char: Character, characters: Record<string, Character>) : CampaignCharacter {
-  const fightName = makeFightName(char, characters)
-  const id = crypto.randomUUID()
-  const resources = makeCharacterResources(char)
-  if(!isCampaignCharacter(char))  return { ...char, ...resources, id, fightName }
-  return { ...char, fightName }
-}
-
-export function isCampaignCharacter(
-  c: Character
-): c is CampaignCharacter {
-  return (
-    c.id !== undefined &&
-    c.injuries !== undefined &&
-    c.afflictions !== undefined &&
-    c.resources !== undefined &&
-    c.fightName !== undefined &&
-    c.hasActionSurge !== undefined
-  );
-}

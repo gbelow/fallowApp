@@ -193,3 +193,7 @@ export type Character = {
 }
 
 export type CampaignCharacter = Required<Character>
+
+
+export type CharacterUpdater = (c: Character) => Character
+export type CampaignCharacterUpdater = (c: CampaignCharacter) => CampaignCharacter

@@ -1,11 +1,10 @@
-import { makeNewCharacter } from "../domain/factories";
 import { CampaignCharacter, Character } from "../domain/types";
 import { useAppStore } from "../stores/useAppStore";
 import { useCharacterStore } from "../stores/useCharacterStore";
-import { addCharacterResources, useCombatStore } from "../stores/useCombatStore";
+import {  useCombatStore } from "../stores/useCombatStore";
 
 
-export function useGetActiveCharacter(): Character | CampaignCharacter {
+export function useGetActiveCharacter(): Character | CampaignCharacter | null {
   const characterStore = useCharacterStore()
   const combatStore = useCombatStore()
   const appStore = useAppStore(s => s)
@@ -17,6 +16,6 @@ export function useGetActiveCharacter(): Character | CampaignCharacter {
     if(appStore.selectedGameTab == 'play' && combatChar ){
       return combatChar
     }
-    return addCharacterResources(makeNewCharacter(''), combatStore.characters)
+    return null
 
 }
